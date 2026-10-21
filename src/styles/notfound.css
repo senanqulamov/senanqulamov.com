@@ -1,0 +1,40 @@
+.nf {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+.nf .h-xl {
+  font-size: clamp(90px, 22vw, 380px);
+}
+.nf {
+  touch-action: none;
+  user-select: none;
+}
+.nf-in {
+  position: relative;
+  z-index: 2;
+}
+.nf-hint {
+  font-size: 14px;
+  color: var(--fg);
+  margin: 0 0 14px;
+}
+.nf-meter {
+  width: min(240px, 60vw);
+  height: 2px;
+  margin: 0 auto 26px;
+  background: var(--line);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.nf-meter i {
+  display: block;
+  height: 100%;
+  background: var(--irid);
+  transform-origin: left;
+  transform: scaleX(0);
+}
+.nf .lede {
+  margin: 20px auto 10px;
+}

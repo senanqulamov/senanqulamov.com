@@ -1,0 +1,217 @@
+.stack {
+  position: relative;
+}
+.scard {
+  position: sticky;
+  top: calc(110px + var(--k) * 16px);
+  min-height: min(70vh, 620px);
+  margin-bottom: 14vh;
+  padding: clamp(26px, 3vw, 48px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 40px;
+  transform-origin: center top;
+  will-change: transform;
+  background: var(--bg-2);
+  border-radius: 30px;
+  border: 1px solid var(--line);
+  box-shadow: 0 -20px 60px -30px rgba(0, 0, 0, 0.5);
+}
+.scard:last-child {
+  margin-bottom: 0;
+}
+.scard .sn {
+  font-size: 13px;
+  color: var(--fg-2);
+}
+.scard h3 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(32px, 4.2vw, 72px);
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+  margin: 18px 0 18px;
+}
+.scard p {
+  color: var(--fg-2);
+  margin: 0;
+  max-width: 24em;
+  font-size: clamp(16px, 1.2vw, 19px);
+}
+.scard ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-self: end;
+}
+.scard li {
+  padding: 13px 0;
+  border-top: 1px solid var(--line);
+  font-size: 15px;
+}
+.scard .good {
+  margin-top: 20px;
+  font-size: 14px;
+  color: var(--fg-2);
+}
+.scard .rel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+.scard .rel a {
+  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--line);
+}
+.scard .rel a:hover {
+  background: var(--fg);
+  color: var(--bg);
+}
+.ways {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 6vh;
+}
+.way {
+  padding: 30px;
+  transition: transform 0.7s var(--ease);
+}
+.way:hover {
+  transform: translateY(-6px);
+}
+.way i {
+  display: block;
+  font-style: normal;
+  font-family: var(--display);
+  font-size: 40px;
+  font-weight: 200;
+  margin-bottom: 30px;
+}
+.way b {
+  display: block;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 22px;
+  letter-spacing: -0.03em;
+  margin-bottom: 10px;
+}
+.way p {
+  margin: 0;
+  color: var(--fg-2);
+  font-size: 15px;
+}
+.process {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 6vh;
+  counter-reset: st;
+}
+.step {
+  padding-top: 20px;
+  counter-increment: st;
+}
+.step::before {
+  content: "0" counter(st);
+  display: block;
+  font-size: 12px;
+  color: var(--fg-2);
+  margin-bottom: 24px;
+  font-variant-numeric: tabular-nums;
+}
+.step b {
+  display: block;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 20px;
+  letter-spacing: -0.03em;
+  margin-bottom: 8px;
+}
+.step p {
+  margin: 0;
+  color: var(--fg-2);
+  font-size: 15px;
+}
+.acc {
+  list-style: none;
+  margin: 6vh 0 0;
+  padding: 0;
+}
+.acc > li {
+  border-top: 1px solid var(--line);
+}
+.acc > li:last-child {
+  border-bottom: 1px solid var(--line);
+}
+.acc button {
+  width: 100%;
+  background: none;
+  border: 0;
+  padding: clamp(18px, 2vw, 28px) 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+  text-align: left;
+  cursor: pointer;
+}
+.acc button b {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(19px, 1.8vw, 28px);
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+.acc li.open .pm {
+  transform: rotate(180deg);
+  background: var(--fg);
+}
+.acc li.open .pm::before,
+.acc li.open .pm::after {
+  background: var(--bg);
+}
+.acc li.open .pm::after {
+  transform: translate(-50%, -50%) rotate(0);
+}
+.acc .body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.7s var(--ease);
+}
+.acc li.open .body {
+  grid-template-rows: 1fr;
+}
+.acc .body > div {
+  overflow: hidden;
+}
+.acc .body p {
+  margin: 0;
+  padding: 0 60px 26px 0;
+  color: var(--fg-2);
+  max-width: 40em;
+}
+@media (max-width: 980px) {
+  .scard {
+    grid-template-columns: 1fr;
+    top: calc(90px + var(--k) * 10px);
+  }
+  .scard {
+    position: relative;
+    top: auto !important;
+    min-height: 0;
+    margin-bottom: 14px;
+    padding: 24px;
+    transform: none !important;
+    filter: none !important;
+  }
+  .scard h3 {
+    font-size: clamp(28px, 8vw, 40px);
+  }
+}
+.scard .btn-row {
+  margin-top: 24px;
+}

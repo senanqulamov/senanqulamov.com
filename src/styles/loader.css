@@ -1,0 +1,163 @@
+#loader {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: calc(26px + env(safe-area-inset-top, 0px)) var(--gut) calc(26px + env(safe-area-inset-bottom, 0px));
+  transition: opacity 0.9s var(--ease);
+}
+#loader.gone {
+  opacity: 0;
+  pointer-events: none;
+}
+.l-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  font-size: 13px;
+  color: var(--fg-2);
+}
+.l-bot {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.odo-w {
+  display: flex;
+  align-items: flex-start;
+}
+.odo {
+  display: flex;
+  font-family: var(--display);
+  font-weight: 200;
+  font-size: clamp(84px, 17vw, 260px);
+  line-height: 1.15;
+  letter-spacing: -0.05em;
+  height: 1.15em;
+  overflow: hidden;
+}
+.odo .col {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.9s var(--ease);
+}
+.odo .col span {
+  height: 1.15em;
+  display: block;
+}
+.odo-w i {
+  font-style: normal;
+  font-family: var(--display);
+  font-weight: 200;
+  font-size: clamp(26px, 5vw, 76px);
+  margin: 0.3em 0 0 0.15em;
+  color: var(--fg-2);
+}
+.l-bar {
+  position: absolute;
+  left: var(--gut);
+  right: var(--gut);
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  height: 1px;
+  background: var(--line);
+}
+.l-bar i {
+  position: absolute;
+  inset: 0;
+  background: var(--fg);
+  transform-origin: left;
+  transform: scaleX(0);
+}
+#loader {
+  background: transparent;
+}
+#loader .odo {
+  font-size: clamp(56px, 9vw, 150px);
+}
+#loader .odo-w i {
+  font-size: clamp(18px, 2.6vw, 40px);
+}
+#loader {
+  background: transparent;
+  overflow: hidden;
+}
+.l-bot {
+  position: absolute;
+  left: var(--gut);
+  right: var(--gut);
+  bottom: calc(30px + env(safe-area-inset-bottom, 0px));
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+#loader .odo {
+  font-size: clamp(46px, 6vw, 100px);
+}
+.l-top {
+  position: relative;
+  z-index: 2;
+}
+@media (max-width: 700px) {
+  .l-coord {
+    display: none;
+  }
+}
+.l-bot {
+  position: absolute;
+  left: var(--gut);
+  right: var(--gut);
+  bottom: calc(34px + env(safe-area-inset-bottom, 0px));
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+}
+.l-word3 {
+  font-size: 13px;
+  color: var(--fg-2);
+}
+#loader .odo {
+  font-size: clamp(40px, 5vw, 84px);
+}
+.l-enter3 {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(60px + env(safe-area-inset-bottom, 0px));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+.l-enter3.on {
+  opacity: 1;
+  pointer-events: auto;
+}
+.l-go3 {
+  background: none;
+  border: 0;
+  color: #fff;
+  mix-blend-mode: difference;
+  font-family: var(--display);
+  font-size: clamp(14px, 1.2vw, 18px);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  padding: 10px 18px;
+  animation: breathe 2.4s ease-in-out infinite;
+}
+#loader {
+  cursor: pointer;
+}
+@keyframes breathe {
+  50% {
+    opacity: 0.45;
+  }
+}

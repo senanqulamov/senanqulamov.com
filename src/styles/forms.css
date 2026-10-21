@@ -1,0 +1,166 @@
+.two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.fl {
+  position: relative;
+  display: block;
+  margin-bottom: 16px;
+}
+.fl input,
+.fl textarea,
+.fl select {
+  width: 100%;
+  padding: 26px 18px 10px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--fg) 3%, transparent);
+  outline: none;
+  transition:
+    border-color 0.4s,
+    background 0.4s,
+    box-shadow 0.4s;
+  font-size: 16px;
+  appearance: none;
+  -webkit-appearance: none;
+}
+.fl textarea {
+  min-height: 150px;
+  resize: none;
+  line-height: 1.5;
+}
+.fl > span.lb {
+  position: absolute;
+  left: 19px;
+  top: 19px;
+  font-size: 16px;
+  color: var(--fg-2);
+  pointer-events: none;
+  transform-origin: left top;
+  transition:
+    transform 0.45s var(--ease),
+    color 0.3s;
+}
+.fl input:focus + .lb,
+.fl input:not(:placeholder-shown) + .lb,
+.fl textarea:focus + .lb,
+.fl textarea:not(:placeholder-shown) + .lb,
+.fl select + .lb {
+  transform: translateY(-11px) scale(0.74);
+}
+.fl input:focus,
+.fl textarea:focus,
+.fl select:focus {
+  border-color: transparent;
+  background: color-mix(in srgb, var(--fg) 6%, transparent);
+  box-shadow:
+    0 0 0 1px var(--fg),
+    0 10px 40px -12px color-mix(in srgb, var(--lilac) 45%, transparent);
+}
+.fl input:focus + .lb,
+.fl textarea:focus + .lb {
+  color: var(--fg);
+}
+.fl .bar {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--irid);
+  transform: scaleX(0);
+  transition: transform 0.6s var(--ease);
+}
+.fl:focus-within .bar {
+  transform: scaleX(1);
+}
+.fl .msg {
+  display: block;
+  font-size: 12px;
+  margin: 6px 4px 0;
+  min-height: 0;
+  color: var(--live);
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.4s var(--ease);
+}
+.fl.err input,
+.fl.err textarea {
+  box-shadow: 0 0 0 1px var(--live);
+}
+.fl.err .msg {
+  max-height: 40px;
+}
+.fl.err {
+  animation: shake 0.45s var(--ease);
+}
+.fl .ok {
+  position: absolute;
+  right: 16px;
+  top: 22px;
+  width: 18px;
+  height: 18px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.fl .ok path {
+  stroke-dasharray: 20;
+  stroke-dashoffset: 20;
+  transition: stroke-dashoffset 0.5s var(--ease) 0.1s;
+}
+.fl.valid .ok {
+  opacity: 1;
+}
+.fl.valid .ok path {
+  stroke-dashoffset: 0;
+}
+.fl .cnt {
+  position: absolute;
+  right: 16px;
+  bottom: 12px;
+  font-size: 11px;
+  color: var(--fg-2);
+}
+.fl.sel::after {
+  content: "";
+  position: absolute;
+  right: 20px;
+  top: 26px;
+  width: 8px;
+  height: 8px;
+  border-right: 1.5px solid var(--fg);
+  border-bottom: 1.5px solid var(--fg);
+  transform: rotate(45deg);
+  pointer-events: none;
+  transition: transform 0.4s var(--ease);
+}
+.fl.sel:focus-within::after {
+  transform: translateY(4px) rotate(225deg);
+}
+.fl select option {
+  background: var(--bg-2);
+  color: var(--fg);
+}
+.fl input[type="date"] {
+  min-height: 62px;
+}
+.fl input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(var(--inv, 1));
+  opacity: 0.6;
+}
+@keyframes shake {
+  20% {
+    transform: translateX(-8px);
+  }
+  40% {
+    transform: translateX(7px);
+  }
+  60% {
+    transform: translateX(-4px);
+  }
+  80% {
+    transform: translateX(2px);
+  }
+}

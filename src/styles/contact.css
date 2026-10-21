@@ -1,0 +1,68 @@
+.ct-big {
+  font-size: clamp(56px, 11vw, 210px);
+  text-align: center;
+}
+.mail-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 7vh;
+}
+.mail {
+  display: inline-block;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(20px, 3.6vw, 60px);
+  letter-spacing: -0.04em;
+  padding: 0.5em 1em;
+  border-radius: 200px;
+  border: 1px solid var(--line);
+  background: var(--glass);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition:
+    background 0.5s,
+    color 0.5s;
+  word-break: break-all;
+  text-align: center;
+}
+.mail:hover {
+  background: var(--fg);
+  color: var(--bg);
+}
+.c-sub {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+}
+.doors {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 12vh;
+}
+.door {
+  padding: 24px 0;
+  border-top: 1px solid var(--line);
+  display: block;
+  transition: border-color 0.5s;
+}
+.door:hover {
+  border-color: var(--fg);
+}
+.door b {
+  display: block;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 24px;
+  letter-spacing: -0.03em;
+  margin-bottom: 6px;
+}
+.door span {
+  color: var(--fg-2);
+  font-size: 15px;
+}
+.page-head.centered .lede {
+  margin: 30px auto 0;
+}
