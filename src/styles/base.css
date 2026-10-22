@@ -887,11 +887,6 @@ html.vt-run::view-transition-new(root) {
 .cur {
   display: none;
 }
-body:has(.lens[data-mode="label"]) .lens-dot,
-body:has(.lens[data-mode="drag"]) .lens-dot,
-body:has(.lens[data-mode="text"]) .lens-dot {
-  opacity: 0;
-}
 .has-on .book3d:not(.on) {
   --br: 0.32;
 }

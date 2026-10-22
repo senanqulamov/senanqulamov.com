@@ -26,6 +26,7 @@ const display = Unbounded({
   display: "swap",
 });
 const text = Geist({ subsets: ["latin", "latin-ext", "cyrillic"], variable: "--font-text", display: "swap" });
+const useAnalytics = process.env.NODE_ENV === "production" && process.env.VERCEL === "1";
 
 const description =
   "Senan Qulamov is an engineer from Baku: Tech Lead at PMIS (BP), founder of BidBary, and for seven years a therapist.";
@@ -81,7 +82,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <div id="toast" role="status" aria-live="polite" />
           <Experience lang={lang} />
         </LangProvider>
-        <Analytics />
+        {useAnalytics && <Analytics />}
       </body>
     </html>
   );

@@ -305,9 +305,11 @@
 .lb-bg {
   position: absolute;
   inset: 0;
-  background: color-mix(in srgb, var(--bg) 92%, transparent);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: radial-gradient(
+    circle at 50% 45%,
+    color-mix(in srgb, var(--bg) 100%, var(--fg) 3%),
+    var(--bg) 62%
+  );
 }
 .lb-top {
   position: relative;
@@ -328,13 +330,24 @@
 .lb-stage {
   position: relative;
   flex: 1;
-  display: grid;
-  place-items: center;
-  padding: 10px clamp(16px, 7vw, 120px);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding: 6vh 0;
   min-height: 0;
+  touch-action: pan-y;
+  user-select: none;
+}
+.lb-track {
+  display: flex;
+  align-items: center;
+  gap: clamp(20px, 3vw, 44px);
+  width: max-content;
+  will-change: transform;
 }
 .lb-frame {
-  width: min(1200px, 100%);
+  flex: 0 0 min(1200px, 88vw);
+  width: min(1200px, 88vw);
   max-height: 100%;
   display: flex;
   flex-direction: column;
@@ -344,10 +357,20 @@
   border: 1px solid var(--line);
   box-shadow: 0 60px 140px -40px rgba(0, 0, 0, 0.7);
   transform-origin: 50% 50%;
+  will-change: transform, opacity;
+  opacity: 0.38;
+  transform: scale(0.92);
+  transition:
+    opacity 0.6s var(--ease),
+    transform 0.6s var(--ease);
+}
+.lb-frame.is-active {
+  opacity: 1;
+  transform: scale(1);
 }
 .lb-view {
   overflow: auto;
-  max-height: calc(100vh - 260px);
+  max-height: calc(88vh - 180px);
   overscroll-behavior: contain;
 }
 .lb-view img {
@@ -355,11 +378,12 @@
   display: block;
 }
 .lb-arrow {
-  position: absolute;
+  position: fixed;
   top: 50%;
   width: 56px;
   height: 56px;
-  margin-top: -28px;
+  margin-top: 0;
+  transform: translateY(-50%);
   border-radius: 50%;
   border: 1px solid var(--line-2);
   background: var(--glass);
@@ -377,15 +401,24 @@
   background: var(--fg);
   color: var(--bg);
 }
+.lb-arrow:focus-visible {
+  outline: 2px solid var(--ice);
+  outline-offset: 4px;
+}
+.lb-arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: none;
+}
 .lb-arrow svg {
   width: 20px;
   height: 20px;
 }
-.lb-arrow.prev {
-  left: var(--gut);
+.lb-arrow-prev {
+  left: 24px;
 }
-.lb-arrow.next {
-  right: var(--gut);
+.lb-arrow-next {
+  right: 24px;
 }
 .lb-thumbs {
   position: relative;
@@ -424,6 +457,11 @@
   object-position: 50% 0;
 }
 @media (max-width: 980px) {
+  .lb-arrow {
+    display: none;
+  }
+}
+@media (pointer: coarse) {
   .lb-arrow {
     display: none;
   }

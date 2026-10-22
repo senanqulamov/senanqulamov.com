@@ -16,6 +16,7 @@ export const ChatCore = (() => {
   const subs = new Set<(ev: string, m?: any) => void>();
   let busy = false;
   let lang = sessionStorage.getItem("sq-chatlang") as Lang | null;
+  let manualLang = false;
   const asked = new Set(hist.filter((m) => m.who === "bot").map((m) => m.a.id));
   const save = () => sessionStorage.setItem("sq-chat2", JSON.stringify(hist.slice(-40)));
   const emit = (ev: string, m?: any) => subs.forEach((f) => f(ev, m));
@@ -39,22 +40,7 @@ export const ChatCore = (() => {
     save();
     setState("speak");
     emit("msg", m);
-    const spoken = Voice.say(spokenText(a), a.lang || L(), { onSyl: mouth, onEnd: () => setState("idle") });
-    if (!spoken) {
-      const words = a.say.split(/\s+/);
-      let i = 0;
-      const step = () => {
-        if (i >= words.length) {
-          setState("idle");
-          return;
-        }
-        const n = Voice.syllables(words[i]);
-        for (let k = 0; k < n; k++) setTimeout(() => mouth(0.6 + Math.random() * 0.4), k * 70);
-        i++;
-        setTimeout(step, reduce ? 1 : Math.max(90, n * 80));
-      };
-      step();
-    }
+    void Voice.say(spokenText(a), a.lang || L(), { onSyl: mouth, onEnd: () => setState("idle") });
     busy = false;
   }
   return {
@@ -74,10 +60,16 @@ export const ChatCore = (() => {
     setState,
     mouth,
     spokenText,
-    setLang(l: Lang) {
+    setLang(l: Lang, manual = false) {
+      Voice.stop();
+      setState("idle");
       lang = l;
+      manualLang ||= manual;
       sessionStorage.setItem("sq-chatlang", l);
       emit("lang", l);
+    },
+    setSiteLang(l: Lang) {
+      if (!manualLang) this.setLang(l);
     },
     follow() {
       const last = [...hist].reverse().find((m) => m.who === "bot");

@@ -251,7 +251,7 @@ export function ChatUI(host: HTMLElement, { compact = false } = {}) {
   });
   $$("[data-cl]", host).forEach((b) =>
     b.addEventListener("click", () => {
-      ChatCore.setLang(b.dataset.cl as Lang);
+      ChatCore.setLang(b.dataset.cl as Lang, true);
       SFX.tick();
       MiniFace.nod(0.8);
     }),
@@ -300,7 +300,7 @@ export function ChatUI(host: HTMLElement, { compact = false } = {}) {
         onSyl: ChatCore.mouth,
         onEnd: () => ChatCore.setState("idle"),
       });
-    }
+    } else ChatCore.setState("idle");
   });
   $h(".cx-gear").addEventListener("click", (e) => {
     const o = set.hidden;

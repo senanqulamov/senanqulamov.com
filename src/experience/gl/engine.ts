@@ -86,6 +86,7 @@ export function initGL() {
       uMouth: { value: 0 },
       uSmile: { value: 0.3 },
       uWide: { value: 0 },
+      uReduce: { value: reduce ? 1 : 0 },
       tTitle: { value: null },
       tEnv: { value: null },
       uPos: { value: V2() },
@@ -94,7 +95,7 @@ export function initGL() {
       uTint: { value: new THREE.Vector3(1, 1, 1) },
       uTintAmt: { value: 0 },
     },
-    { STEPS: lowEnd ? 56 : 84 },
+    { STEPS: lowEnd ? 40 : 48 },
   );
   const flow = mkPass(FLOW, {
     tPrev: { value: null },

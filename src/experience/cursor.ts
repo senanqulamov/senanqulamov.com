@@ -1,138 +1,196 @@
-// The custom cursor, magnetic buttons and the tilt on cards.
+// The pointer has one immediate dot and one spring-driven ring. Hover changes read layout once.
 
-import { $, $$, esc, lerp } from "./dom";
-import { coarse } from "./env";
+import { $, esc } from "./dom";
+import { coarse, reduce } from "./env";
 import { mouse } from "./state";
 
-document.addEventListener("pointerover", (e) => {
-  const b = (e.target as HTMLElement).closest && (e.target as HTMLElement).closest<HTMLElement>(".btn,.chip");
-  if (!b || b.contains(e.relatedTarget as Node)) return;
-  const r = b.getBoundingClientRect();
-  b.style.setProperty("--x", e.clientX - r.left + "px");
-  b.style.setProperty("--y", e.clientY - r.top + "px");
-});
-document.addEventListener("pointerout", (e) => {
-  const b = (e.target as HTMLElement).closest && (e.target as HTMLElement).closest<HTMLElement>(".btn,.chip");
-  if (!b || b.contains(e.relatedTarget as Node)) return;
-  const r = b.getBoundingClientRect();
-  b.style.setProperty("--x", e.clientX - r.left + "px");
-  b.style.setProperty("--y", e.clientY - r.top + "px");
-});
-document.addEventListener(
-  "pointermove",
-  (e) => {
-    if (coarse) return;
-    const t =
-      (e.target as HTMLElement).closest && (e.target as HTMLElement).closest<HTMLElement>("[data-tilt]");
-    if (!t) return;
-    const r = t.getBoundingClientRect(),
-      x = (e.clientX - r.left) / r.width,
-      y = (e.clientY - r.top) / r.height;
-    t.style.transform = `perspective(900px) rotateX(${((0.5 - y) * 8).toFixed(2)}deg) rotateY(${((x - 0.5) * 10).toFixed(2)}deg) translateZ(0)`;
-    t.style.setProperty("--gx", x * 100 + "%");
-    t.style.setProperty("--gy", y * 100 + "%");
-  },
-  { passive: true },
-);
-document.addEventListener("pointerout", (e) => {
-  const t =
-    (e.target as HTMLElement).closest && (e.target as HTMLElement).closest<HTMLElement>("[data-tilt]");
-  if (t && !t.contains(e.relatedTarget as Node)) t.style.transform = "";
-});
+type Rect = { left: number; top: number; width: number; height: number; radius: string };
 
 export const Cursor = (() => {
   const ring = $("#curRing"),
     dot = $("#curDot"),
-    lab = $("#curLabel");
+    label = $("#curLabel");
+  if (coarse || !ring || !dot || !label) return { tick() {} };
+
   let x = mouse.x,
     y = mouse.y,
-    s = 1,
-    ts = 1,
-    mode = "",
     vx = 0,
     vy = 0,
-    down = false;
-  const SIZE = { "": 14, link: 58, label: 112, drag: 112, text: 4 };
-  function set(m: string, t = "") {
-    mode = m;
-    ring.dataset.mode = m;
-    lab.innerHTML = t || "";
-  }
-  document.addEventListener("pointerover", (e) => {
-    const t = e.target as HTMLElement;
-    if (
-      t.closest<HTMLElement>("input:not([type=range]):not([type=checkbox]):not([type=radio]),textarea,select")
-    ) {
-      set("text");
+    down = false,
+    visible = false;
+  let mode = "default",
+    target: HTMLElement | null = null,
+    magnetic: HTMLElement | null = null,
+    rect: Rect | null = null;
+  let dirtyRect = false,
+    labelWidth = 0,
+    mx = 0,
+    my = 0;
+  const setMode = (next: string, text = "") => {
+    mode = next;
+    ring.dataset.mode = next;
+    label.innerHTML = text;
+  };
+  const readRect = () => {
+    if (!magnetic) return (rect = null);
+    const r = magnetic.getBoundingClientRect();
+    rect = {
+      left: r.left,
+      top: r.top,
+      width: r.width,
+      height: r.height,
+      radius: getComputedStyle(magnetic).borderRadius,
+    };
+    dirtyRect = false;
+  };
+  const clearTarget = () => {
+    if (magnetic) magnetic.style.transform = "";
+    target = null;
+    magnetic = null;
+    rect = null;
+    mx = 0;
+    my = 0;
+    setMode("default");
+  };
+  const updateTarget = (node: HTMLElement) => {
+    const next = node.closest<HTMLElement>(
+      "[data-mag],[data-drag],[data-cursor],input,textarea,select,a,button,label,summary,[role=button],.book3d",
+    );
+    if (next === target) {
+      if (next?.dataset.drag !== undefined) {
+        if (next.dataset.dragging === "true") setMode("default");
+        else if (mode !== "drag") {
+          setMode(
+            "drag",
+            `<i aria-hidden="true">‹</i>${esc(next.dataset.drag || "Drag")}<i aria-hidden="true">›</i>`,
+          );
+          labelWidth = label.offsetWidth;
+        }
+      }
       return;
     }
-    const d = t.closest<HTMLElement>("[data-drag]");
-    if (d) {
-      set(
+    target = next;
+    if (magnetic && magnetic !== next?.closest<HTMLElement>("[data-mag]")) magnetic.style.transform = "";
+    magnetic = next?.closest<HTMLElement>("[data-mag]") || null;
+    mx = 0;
+    my = 0;
+    if (magnetic) readRect();
+    if (!next) return setMode("default");
+    if (next.matches("input:not([type=range]):not([type=checkbox]):not([type=radio]),textarea,select"))
+      return setMode("text");
+    if (next.dataset.drag !== undefined) {
+      if (next.dataset.dragging === "true") return setMode("default");
+      setMode(
         "drag",
-        `<svg viewBox="0 0 24 24" width="14" aria-hidden="true"><path d="M8 6 2 12l6 6M16 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>${esc(d.dataset.drag || "Drag")}`,
+        `<i aria-hidden="true">‹</i>${esc(next.dataset.drag || "Drag")}<i aria-hidden="true">›</i>`,
       );
+      labelWidth = label.offsetWidth;
       return;
     }
-    const lb = t.closest<HTMLElement>("[data-cursor]"),
-      ext = t.closest<HTMLElement>("a[target=_blank]");
-    if (lb) {
-      set("label", esc(lb.dataset.cursor) + (ext ? ' <span aria-hidden="true">↗</span>' : ""));
+    if (next.dataset.cursor !== undefined) {
+      setMode("label", `${esc(next.dataset.cursor)} <i aria-hidden="true">→</i>`);
+      labelWidth = label.offsetWidth;
       return;
     }
-    if (ext) {
-      set("label", 'Open <span aria-hidden="true">↗</span>');
-      return;
-    }
-    if (t.closest<HTMLElement>("a,button,label,summary,[role=button],.book3d")) {
-      set("link");
-      return;
-    }
-    set("");
+    setMode("link");
+  };
+  document.addEventListener(
+    "pointermove",
+    (event) => {
+      const hit = document.elementFromPoint(event.clientX, event.clientY) as HTMLElement | null;
+      if (hit) updateTarget(hit);
+      else clearTarget();
+      visible = true;
+      document.body.classList.add("cursor-on");
+    },
+    { passive: true },
+  );
+  document.addEventListener("pointerover", (event) => {
+    updateTarget(event.target as HTMLElement);
+    visible = true;
+    document.body.classList.add("cursor-on");
   });
+  document.addEventListener("pointerout", (event) => {
+    const related = event.relatedTarget as Node | null;
+    if (target && (!related || !target.contains(related))) clearTarget();
+  });
+  document.addEventListener("pointerdown", () => (down = true), { passive: true });
+  document.addEventListener("pointerup", () => (down = false), { passive: true });
   document.addEventListener("pointerleave", () => {
-    ring.classList.add("off");
+    visible = false;
+    document.body.classList.remove("cursor-on");
   });
-  document.addEventListener("pointerenter", () => {
-    ring.classList.remove("off");
+  addEventListener("blur", () => {
+    visible = false;
+    document.body.classList.remove("cursor-on");
   });
-  addEventListener("pointerdown", () => (down = true));
-  addEventListener("pointerup", () => (down = false));
+  addEventListener("pointerover", () => {
+    visible = true;
+    document.body.classList.add("cursor-on");
+  });
+  addEventListener("focus", () => (dirtyRect = true));
+  addEventListener("scroll", () => (dirtyRect = true), { passive: true });
+  addEventListener("resize", () => (dirtyRect = true));
+
   return {
     tick() {
-      if (coarse) return;
-      const k = mode === "" ? 0.32 : 0.2;
-      const nx = lerp(x, mouse.x, k),
-        ny = lerp(y, mouse.y, k);
+      if (dirtyRect) readRect();
+      if (magnetic && rect) {
+        const cx = rect.left + rect.width / 2 + mx;
+        const cy = rect.top + rect.height / 2 + my;
+        const dx = mouse.x - cx;
+        const dy = mouse.y - cy;
+        const range = Math.max(rect.width, rect.height) * 0.9;
+        const active = Math.hypot(dx, dy) < range;
+        mx += ((active ? dx * 0.3 : 0) - mx) * 0.18;
+        my += ((active ? dy * 0.3 : 0) - my) * 0.18;
+        magnetic.style.transform = `translate3d(${mx.toFixed(2)}px,${my.toFixed(2)}px,0)`;
+      }
+      const offset = target?.dataset.cursorOffset ? Number(target.dataset.cursorOffset) || 0 : 0;
+      const tx = rect ? rect.left + rect.width / 2 + mx : mouse.x + offset;
+      const ty = rect ? rect.top + rect.height / 2 + my : mouse.y + offset;
+      const response = reduce ? 1 : 0.18;
+      const nx = x + (tx - x) * response,
+        ny = y + (ty - y) * response;
       vx = nx - x;
       vy = ny - y;
       x = nx;
       y = ny;
-      ts = SIZE[mode] ?? 14;
-      if (down) ts *= 0.75;
-      s = lerp(s, ts, 0.18);
-      const sp = mode === "" ? Math.min(Math.hypot(vx, vy) / 30, 0.6) : 0,
-        ang = Math.atan2(vy, vx);
-      ring.style.transform = `translate(${x}px,${y}px) rotate(${ang}rad) scale(${1 + sp},${1 - sp * 0.4})`;
-      ring.style.width = ring.style.height = s.toFixed(1) + "px";
-      lab.style.transform = `translate(-50%,-50%) rotate(${-ang}rad)`;
-      dot.style.transform = `translate(${mouse.x}px,${mouse.y}px)`;
+      let width = 36,
+        height = 36,
+        radius = "50%";
+      if (mode === "link") width = height = 56;
+      if (mode === "text") {
+        width = 2;
+        height = 22;
+        radius = "1px";
+      }
+      if (mode === "label" || mode === "drag") {
+        width = Math.max(76, labelWidth + 30);
+        height = 32;
+        radius = "999px";
+      }
+      if (rect) {
+        width = rect.width + 8;
+        height = rect.height + 8;
+        radius = rect.radius;
+      }
+      const speed = reduce ? 0 : Math.min(Math.hypot(vx, vy) / 18, 0.25);
+      const angle = Math.atan2(vy, vx);
+      const squash = mode === "drag" ? Math.min(Math.abs(vx) / 24, 0.12) : 0;
+      ring.style.width = `${width}px`;
+      ring.style.height = `${height}px`;
+      ring.style.borderRadius = radius;
+      ring.style.opacity = visible ? "1" : "0";
+      ring.style.transform = `translate3d(${x}px,${y}px,0) rotate(${angle}rad) scale(${(down ? 0.85 : 1) * (1 + speed + squash)},${(down ? 0.85 : 1) * (1 - speed * 0.6 - squash)})`;
+      label.style.transform = `translate(-50%,-50%) rotate(${-angle}rad)`;
+      dot.style.opacity =
+        visible && mode !== "link" && mode !== "text" && mode !== "label" && mode !== "drag" && !rect
+          ? "1"
+          : "0";
+      dot.style.transform = `translate3d(${mouse.x}px,${mouse.y}px,0)`;
     },
   };
 })();
-export function magTick() {
-  if (coarse) return;
-  $$("[data-mag]").forEach((el) => {
-    const r = el.getBoundingClientRect();
-    if (r.bottom < 0 || r.top > innerHeight) return;
-    const cx = r.left + r.width / 2 - ((el as any)._mx || 0),
-      cy = r.top + r.height / 2 - ((el as any)._my || 0),
-      dx = mouse.x - cx,
-      dy = mouse.y - cy,
-      d = Math.hypot(dx, dy),
-      R = Math.max(r.width, r.height) * 0.85;
-    (el as any)._mx = lerp((el as any)._mx || 0, d < R ? dx * 0.28 : 0, 0.14);
-    (el as any)._my = lerp((el as any)._my || 0, d < R ? dy * 0.36 : 0, 0.14);
-    el.style.transform = `translate(${(el as any)._mx.toFixed(2)}px,${(el as any)._my.toFixed(2)}px)`;
-  });
-}
+
+export function magTick() {}

@@ -38,6 +38,11 @@ export const Essay = (() => {
     let off = 0;
     const walk = (n) => {
       [...n.childNodes].forEach((c) => {
+        if (c.nodeType === 1 && (c as HTMLElement).matches(".drop-word, .drop, .drop-rest, .sr")) {
+          const word = (c as HTMLElement).dataset.word;
+          if (word) off += word.length;
+          return;
+        }
         if (c.nodeType === 3) {
           const f = document.createDocumentFragment();
           c.nodeValue.split(/(\s+)/).forEach((w) => {
@@ -74,7 +79,7 @@ export const Essay = (() => {
     const top = el.getBoundingClientRect().top + scrollY - innerHeight * 0.32;
     lenis ? lenis.scrollTo(top, { duration: 1.1 }) : scrollTo({ top, behavior: "smooth" });
     const words = $$(".ww", el);
-    const u = new SpeechSynthesisUtterance(el.textContent);
+    const u = new SpeechSynthesisUtterance(el.dataset.readText || el.textContent);
     if (voice) u.voice = voice;
     u.rate = rate;
     u.lang = "en-GB";

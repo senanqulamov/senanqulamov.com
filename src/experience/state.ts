@@ -40,6 +40,7 @@ export type PageRuntime = {
   sections: HTMLElement[];
   skew: HTMLElement[];
   stacks: HTMLElement[];
+  metrics?: Map<HTMLElement, { top: number; height: number; bottom: number }>;
   tick?: (dt: number, now: number) => void;
 };
 

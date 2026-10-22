@@ -55,7 +55,7 @@ const Face = (() => {
               ChatCore.lang,
               { onSyl: ChatCore.mouth, onEnd: () => ChatCore.setState("idle") },
             );
-          }
+          } else ChatCore.setState("idle");
         });
       cleanup.push(() => {
         if (GL) GL.face.on = false;

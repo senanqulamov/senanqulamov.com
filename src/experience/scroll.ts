@@ -12,6 +12,33 @@ import { hdr } from "./header";
 import { lostDrops } from "./pages/notfound";
 
 export const intro: (() => void)[] = [];
+let refreshQueued = false;
+
+export function cacheScrollLayout() {
+  if (!page) return;
+  const elements = new Set<HTMLElement>([
+    ...page.sections,
+    ...page.stacks,
+    ...["#hero", "[data-s='contact']", "#faceSlot"].map((selector) => $(selector, $("#view"))).filter(Boolean),
+  ]);
+  const metrics = new Map<HTMLElement, { top: number; height: number; bottom: number }>();
+  elements.forEach((el) => {
+    const top = el.offsetTop;
+    const height = el.offsetHeight;
+    metrics.set(el, { top, height, bottom: top + height });
+  });
+  page.metrics = metrics;
+}
+
+export function queueScrollRefresh() {
+  if (refreshQueued) return;
+  refreshQueued = true;
+  requestAnimationFrame(() => {
+    refreshQueued = false;
+    cacheScrollLayout();
+    ScrollTrigger.refresh();
+  });
+}
 function inFold(el: Element) {
   const r = el.getBoundingClientRect();
   return r.top < innerHeight * 0.92;
@@ -225,13 +252,15 @@ export function scrollTick(force = false) {
   let cur: HTMLElement = null;
   if (secs.length) {
     let i = 0;
+    const midDoc = y + mid;
+    const metrics = page.metrics || new Map();
     for (let k = 0; k < secs.length; k++) {
-      if (secs[k].getBoundingClientRect().top <= mid) i = k;
+      if ((metrics.get(secs[k])?.top ?? Infinity) <= midDoc) i = k;
     }
     const s = secs[i],
       n = secs[i + 1],
-      r = s.getBoundingClientRect(),
-      t = clamp((mid - r.top) / r.height, 0, 1);
+      metric = metrics.get(s),
+      t = metric ? clamp((midDoc - metric.top) / metric.height, 0, 1) : 0;
     cur = s;
     const a = scenes[s.dataset.s] || scenes.page,
       b = n ? scenes[n.dataset.s] || scenes.page : a,
@@ -251,24 +280,27 @@ export function scrollTick(force = false) {
   }
   const view = $("#view");
   const ct = $("[data-s='contact']", view);
-  scene.join = ct ? smoothstep(0.1, 0.9, (innerHeight - ct.getBoundingClientRect().top) / innerHeight) : 0;
+  const contact = ct && page.metrics?.get(ct);
+  scene.join = contact ? smoothstep(0.1, 0.9, (innerHeight - (contact.top - y)) / innerHeight) : 0;
   if (route && route.k === "notfound") scene.join = lostDrops.join;
   if (route && route.k === "ask") {
     const fs = $("#faceSlot", view);
     if (fs) {
-      const r = fs.getBoundingClientRect();
-      if (r.bottom > 0 && r.top < innerHeight) {
+      const metric = page.metrics?.get(fs);
+      const top = metric ? metric.top - y : Infinity;
+      if (metric && metric.bottom - y > 0 && top < innerHeight) {
         scene.m = 6;
-        scene.u = (r.left + r.width / 2) / innerWidth;
-        scene.v = (r.top + r.height * 0.4) / innerHeight;
-        scene.s = (Math.min(r.width, r.height) * 0.36 * 3.125) / innerHeight;
+        scene.u = 0.5;
+        scene.v = (top + metric.height * 0.4) / innerHeight;
+        scene.s = (metric.height * 0.36 * 3.125) / innerHeight;
         scene.dim = 1;
       }
     }
   }
   if (GL) {
     const hero = route && route.k === "home" ? $("#hero", view) : null;
-    const hb = hero ? hero.getBoundingClientRect() : null;
+    const heroMetric = hero && page.metrics?.get(hero);
+    const hb = heroMetric && { top: heroMetric.top - y, bottom: heroMetric.bottom - y };
     const heroOn =
       !!hb && hb.bottom > innerHeight * 0.45 && !menuOpen && !GLT.busy && body.classList.contains("ready");
     GL.heroLensT = heroOn ? 1 : 0;
@@ -322,8 +354,9 @@ export function scrollTick(force = false) {
       c.style.filter = "";
       return;
     }
-    const nt = n.getBoundingClientRect().top,
-      ctop = c.getBoundingClientRect().top;
+    const nt = page.metrics?.get(n)?.top,
+      ctop = page.metrics?.get(c)?.top;
+    if (nt == null || ctop == null) return;
     const p = clamp(1 - (nt - ctop) / (innerHeight * 0.75), 0, 1);
     c.style.transform = `scale(${(1 - p * 0.07).toFixed(4)}) rotateX(${(p * 6).toFixed(2)}deg)`;
     c.style.filter = `brightness(${(1 - p * 0.4).toFixed(3)})`;

@@ -97,25 +97,15 @@ export function Lightbox({ t }: { t: Translate }) {
           {t("Close")}
         </button>
       </div>
-      <div className="lb-stage" id="lbStage" data-drag={t("Swipe")}>
-        <div className="lb-frame" id="lbFrame">
-          <div className="bw-bar">
-            <i />
-            <i />
-            <i />
-            <span id="lbHost" />
-          </div>
-          <div className="lb-view" data-lenis-prevent>
-            <img id="lbImg" alt="Project screen" />
-          </div>
-        </div>
+      <div className="lb-stage" id="lbStage" data-drag="Drag" data-cursor-offset="24">
+        <div className="lb-track" id="lbTrack" aria-live="polite" />
       </div>
-      <button className="lb-arrow prev" id="lbPrev" aria-label="Previous screen">
+      <button className="lb-arrow lb-arrow-prev" id="lbPrev" aria-label="Previous screen">
         <svg viewBox="0 0 24 24">
           <path d="M15 5 8 12l7 7" fill="none" stroke="currentColor" strokeWidth="1.8" />
         </svg>
       </button>
-      <button className="lb-arrow next" id="lbNext" aria-label="Next screen">
+      <button className="lb-arrow lb-arrow-next" id="lbNext" aria-label="Next screen">
         <svg viewBox="0 0 24 24">
           <path d="m9 5 7 7-7 7" fill="none" stroke="currentColor" strokeWidth="1.8" />
         </svg>

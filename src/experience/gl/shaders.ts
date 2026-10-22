@@ -1,43 +1,17 @@
 // GLSL for the chrome object, the composite pass and the post effects.
 
+import { SPIRIT_GLSL } from "./spirit";
+
 export const COMMON = `
 float hash(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}
 float vnoise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(hash(i),hash(i+vec2(1,0)),f.x),mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),f.x),f.y);}
 mat2 rot(float a){float c=cos(a),s=sin(a);return mat2(c,-s,s,c);}`;
 export const VERT = `varying vec2 vUv;void main(){vUv=position.xy*.5+.5;gl_Position=vec4(position.xy,0.,1.);}`;
 export const RAY = `precision highp float;varying vec2 vUv;
-uniform vec2 uRes;uniform float uTime,uMorph,uScale,uIntro,uJoin,uSpin,uGather,uBurst,uLight,uVel,uText,uMelt,uLens,uDropY,uDropR,uHold;uniform sampler2D tTitle,tEnv;uniform vec2 uLook;uniform float uBlink,uMouth,uSmile,uWide;uniform vec2 uPos,uMouse,uTilt;uniform vec3 uTint;uniform float uTintAmt;
+uniform vec2 uRes;uniform float uTime,uMorph,uScale,uIntro,uJoin,uSpin,uGather,uBurst,uLight,uVel,uText,uMelt,uLens,uDropY,uDropR,uHold,uReduce;uniform sampler2D tTitle,tEnv;uniform vec2 uLook;uniform float uBlink,uMouth,uSmile,uWide;uniform vec2 uPos,uMouse,uTilt;uniform vec3 uTint;uniform float uTintAmt;
 ${COMMON}
+${SPIRIT_GLSL}
 float smin(float a,float b,float k){float h=clamp(.5+.5*(b-a)/k,0.,1.);return mix(b,a,h)-k*h*(1.-h);}
-float smax(float a,float b,float k){return -smin(-a,-b,k);}
-float sdEl(vec3 p,vec3 r){float k0=length(p/r);float k1=length(p/(r*r));return k0*(k0-1.)/k1;}
-float sdCap(vec3 p,vec3 a,vec3 b,float r){vec3 pa=p-a,ba=b-a;float h=clamp(dot(pa,ba)/dot(ba,ba),0.,1.);return length(pa-ba*h)-r;}
-float face(vec3 p){
-  p.y+=.12; vec3 q=vec3(abs(p.x),p.y,p.z);
-  float d=sdEl(p-vec3(0.,.16,-.06),vec3(.74,.92,.82));
-  d=smin(d,sdEl(p-vec3(0.,-.36,.1),vec3(.5,.44,.56)),.24);
-  d=smin(d,sdEl(p-vec3(0.,-.62,.2),vec3(.24,.16,.24)),.18);
-  d=smin(d,sdEl(q-vec3(.37,-.08,.42),vec3(.24,.18,.24)),.16);
-  float sock=sdEl(q-vec3(.29,.13,.62),vec3(.19,.12,.17)); d=smax(d,-sock,.09);
-  d=smin(d,sdEl(q-vec3(.28,.3,.63),vec3(.23,.055,.1)),.08);
-  float nose=sdCap(p,vec3(0.,.2,.72),vec3(0.,-.1,.93),.065); nose=smin(nose,sdEl(p-vec3(0.,-.13,.88),vec3(.11,.075,.09)),.07);
-  nose=smin(nose,sdEl(q-vec3(.07,-.15,.82),vec3(.055,.045,.06)),.04); d=smin(d,nose,.07);
-  d=smax(d,-sdEl(q-vec3(.045,-.19,.88),vec3(.022,.016,.03)),.012);
-  float mo=uMouth*.075; float sm=uSmile*.05;
-  vec3 lp=p; lp.y-=lp.x*lp.x*uSmile*1.3;
-  float upl=sdEl(lp-vec3(0.,-.335+mo*.25,.8),vec3(.19,.04,.075)); float lol=sdEl(lp-vec3(0.,-.425-mo,.78),vec3(.165,.048,.075));
-  d=smin(d,min(upl,lol),.035);
-  d=smax(d,-sdEl(lp-vec3(0.,-.378-mo*.4,.83),vec3(.155-sm*.2,.006+mo,.07)),.015);
-  d=smin(d,sdEl(q-vec3(.76,.06,-.05),vec3(.065,.19,.13)),.07);
-  d=smin(d,sdCap(p,vec3(0.,-.7,-.12),vec3(0.,-1.2,-.16),.33),.16);
-  d=smin(d,sdCap(q,vec3(.18,-1.02,-.16),vec3(.82,-1.36,-.2),.26),.22);
-  d=smin(d,sdEl(p-vec3(0.,-1.62,-.18),vec3(1.05,.5,.5)),.28);
-  vec3 eo=q-vec3(.29,.13,.585); float eye=length(eo)-.125;
-  vec2 lk=uLook*vec2(.06,.05); vec3 pc=vec3((p.x<0.?-.29:.29)+lk.x,.13+lk.y,.705);
-  eye=smax(eye,-(length(p-pc)-.045),.01);
-  float lid=sdEl(eo,vec3(.142,.142,.142)); float ly=mix(-.16,.07+uWide*.025,clamp(uBlink,0.,1.)); lid=max(lid,-(eo.y-ly)); lid=max(lid,-(eo.z+.02));
-  d=min(d,min(eye,lid+.002));
-  return d*.9; }
 float sdTorus(vec3 p,vec2 t){vec2 q=vec2(length(p.xz)-t.x,p.y);return length(q)-t.y;}
 float sdRBox(vec3 p,vec3 b,float r){vec3 q=abs(p)-b+r;return length(max(q,0.))+min(max(q.x,max(q.y,q.z)),0.)-r;}
 float shape(vec3 p,float i){
@@ -52,11 +26,11 @@ float shape(vec3 p,float i){
     for(int k=0;k<3;k++){float fk=float(k);vec3 o=vec3(cos(t*.9+fk*2.09)*1.05,0.,sin(t*.9+fk*2.09)*1.05);o.yz*=rot(-1.15);d=smin(d,length(p-o)-.07,.18);} return d;}
   if(i<4.5){ float s=length(p)-1.02; vec3 q=p*4.2; q.xy*=rot(t*.08); float g=abs(dot(sin(q+t*.25),cos(q.zxy)))/4.2-.035; return max(s,g)*.8;}
   if(i<5.5){ float x=mix(1.05,.0,uJoin); float a=length(p-vec3(-x,sin(t*.8)*.08,0.))-.62; float b=length(p-vec3(x,-sin(t*.8)*.08,0.))-.62; return smin(a,b,.45+uJoin*.15); }
-  return face(p);
+  return spiritSdf(p);
 }
 float map(vec3 p){
   p.xy-=uPos; float sc=max(uScale*uIntro,.02); p/=sc; p.y/=1.+abs(uVel)*.08; p.x*=1.+abs(uVel)*.04;
-  float fw=clamp(uMorph-5.,0.,1.); p.xz*=rot(mix(uTilt.x+uTime*.05,uLook.x*.42,fw)); p.yz*=rot(mix(uTilt.y,uLook.y*.3,fw));
+  float fw=clamp(uMorph-5.,0.,1.); p.xz*=rot(mix(uTilt.x+uTime*.05,uLook.x*.14,fw)); p.yz*=rot(mix(uTilt.y,uLook.y*.1,fw));
   float a=floor(uMorph),f=uMorph-a; float d=shape(p,a);
   if(f>.001){ float e=shape(p,a+1.); d=mix(d,e,smoothstep(0.,1.,f)); d+=sin(f*3.14159)*.06*sin(p.x*6.+uTime)*sin(p.y*5.); }
   return d*sc;
@@ -99,12 +73,13 @@ void main(){
   irid=mix(irid,uTint*1.1,uTintAmt*.55);
   vec3 e=mix(envD(r),envL(r),uLight);
   if(uHold>.01){ vec3 hc=texture2D(tEnv,vec2(.5)+r.xy*vec2(.42,.42)).rgb; e=mix(e,hc*1.25,uHold*.8*smoothstep(-.3,.5,r.z+.3)); }
-  vec3 col=e*mix(vec3(.85),irid*1.25,mix(.55,.4,uLight))+irid*fr*mix(.85,.5,uLight);
+  vec3 col=uMorph>5.5?spiritChrome(r,n,v,uLight):e*mix(vec3(.85),irid*1.25,mix(.55,.4,uLight))+irid*fr*mix(.85,.5,uLight);
   col+=vec3(.9,.95,1.)*pow(max(dot(r,normalize(vec3(-.6,.65,.45))),0.),90.)*1.5;
   col*=.9+.1*vnoise(p.xy*40.);
   col+=mix(vec3(.9,.95,1.),irid,.35)*emb*.28;
   if(uLens>.5){ col=col*(fr*.8+.05); }
-  if(uMorph>5.2){ float ao=0.,sc=1.; for(int k=1;k<6;k++){ float h=.02+.05*float(k); ao+=(h-map(p+n*h))*sc; sc*=.7; } ao=clamp(1.-ao*3.2,0.,1.); col*=mix(1.,ao,.9); col+=vec3(.25,.22,.3)*pow(fr,3.)*(1.-uLight)*.4; }
+  if(uMorph>5.2&&uMorph<5.8){ float ao=0.,sc=1.; for(int k=1;k<6;k++){ float h=.02+.05*float(k); ao+=(h-map(p+n*h))*sc; sc*=.7; } ao=clamp(1.-ao*3.2,0.,1.); col*=mix(1.,ao,.9); col+=vec3(.25,.22,.3)*pow(fr,3.)*(1.-uLight)*.4; }
+  if(uMorph>5.5){ vec3 markP=p; markP.xy-=uPos; markP/=max(uScale*uIntro,.02); col+=spiritEmission(markP); }
   gl_FragColor=vec4(col*ea,ea);
 }`;
 export const FLOW = `precision highp float;varying vec2 vUv;uniform sampler2D tPrev;uniform vec2 uM,uV,uSpC;uniform float uAsp,uDiss,uSp,uSpR;

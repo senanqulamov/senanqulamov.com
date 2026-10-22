@@ -15,6 +15,7 @@ import { SFX } from "./sound";
 import { GL, route, scene } from "./state";
 import { GLT, setTransitioning } from "./transitions";
 import { wait } from "./dom";
+import { ChatCore } from "./director/chat";
 
 const names: Record<Lang, string> = { en: "English", az: "Azərbaycanca", ru: "Русский" };
 let busy = false;
@@ -25,6 +26,7 @@ export async function switchLang(next: Lang) {
   document.cookie = `${LANG_COOKIE}=${next};path=/;max-age=31536000;samesite=lax`;
   const swap = async () => {
     setLang(next);
+    ChatCore.setSiteLang(next);
     document.documentElement.lang = next;
     await refreshRoute();
     scrollTick(true);
@@ -37,6 +39,7 @@ export async function switchLang(next: Lang) {
     await GLT.emboss(titleOf(route), 380);
     await gsap.to(GL, { emboss: 0, duration: 0.22, ease: "power2.in" });
     setLang(next);
+    ChatCore.setSiteLang(next);
     GL.setTitle(titleOf(route));
     SFX.glass(["en", "az", "ru"].indexOf(next) * 2 + 1);
     await gsap.to(GL, { emboss: 1, duration: 0.4, ease: "power2.out" });
