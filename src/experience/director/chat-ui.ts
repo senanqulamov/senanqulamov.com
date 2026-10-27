@@ -31,6 +31,8 @@ const CXT: Record<string, Record<string, string>> = {
     copy: "Copy",
     settings: "Voice settings",
     test: "Test",
+    mic: "Speak your question",
+    newmsg: "New message ↓",
   },
   az: {
     ph: "İş, qiymət və ya boş vaxt haqqında soruşun",
@@ -77,9 +79,9 @@ export function ChatUI(host: HTMLElement, { compact = false } = {}) {
   host.innerHTML = `<div class="cx${compact ? " cx-compact" : ""}" data-lenis-prevent>
     <div class="cx-top"><div class="cx-langs" role="group" aria-label="Chat language">${["en", "az", "ru"].map((l) => `<button type="button" data-cl="${l}">${l.toUpperCase()}</button>`).join("")}</div><button type="button" class="cx-voice" aria-pressed="false"></button><button type="button" class="cx-gear" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="16" cy="7" r="2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="10" cy="17" r="2" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></button><button type="button" class="cx-new"></button></div>
     <div class="cx-set" hidden><label><span class="cx-set-v"></span><select class="cx-vsel"></select></label><label><span class="cx-set-s"></span><input type="range" class="cx-rate" min="0.8" max="1.3" step="0.05"></label><button type="button" class="chip cx-test"></button><p class="cx-vnote"></p></div>
-    <div class="cx-log" aria-live="polite"></div>
+    <div class="cx-log" role="log" aria-live="polite" aria-relevant="additions text"></div><button class="cx-newmsg" type="button" hidden></button>
     <div class="cx-follow"></div>
-    <form class="cx-form"><textarea rows="1" enterkeyhint="send" aria-label="Message"></textarea><button class="cx-send" type="submit" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></form>
+    <form class="cx-form"><textarea rows="1" enterkeyhint="send" aria-label="Message"></textarea><button class="cx-mic" type="button" aria-label="Speak your question"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4M8 21h8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button><button class="cx-send" type="submit" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></form>
     <p class="cx-note"></p></div>`;
   const $h = <T extends HTMLElement = HTMLElement>(s: string) => $<T>(s, host),
     log = $h(".cx-log"),
@@ -88,11 +90,16 @@ export function ChatUI(host: HTMLElement, { compact = false } = {}) {
     send = $h<HTMLButtonElement>(".cx-send"),
     vb = $h(".cx-voice"),
     set = $h(".cx-set"),
-    sel = $h<HTMLSelectElement>(".cx-vsel");
+    sel = $h<HTMLSelectElement>(".cx-vsel"),
+    mic = $h<HTMLButtonElement>(".cx-mic"),
+    newmsg = $h<HTMLButtonElement>(".cx-newmsg");
   const chrome = () => {
     const t = T();
     ta.placeholder = t.ph;
     send.setAttribute("aria-label", String(t.send));
+    const ui = { en: ["Speak your question", "New message ↓"], az: ["Sual\u0131n\u0131z\u0131 deyin", "Yeni mesaj ↓"], ru: ["\u0417\u0430\u0434\u0430\u0439\u0442\u0435 \u0432\u043e\u043f\u0440\u043e\u0441 \u0433\u043e\u043b\u043e\u0441\u043e\u043c", "\u041d\u043e\u0432\u043e\u0435 \u0441\u043e\u043e\u0431\u0449\u0435\u043d\u0438\u0435 ↓"] }[ChatCore.lang] || ["Speak your question", "New message ↓"];
+    mic.setAttribute("aria-label", ui[0]);
+    newmsg.textContent = ui[1];
     $h(".cx-new").textContent = t.nw;
     $h(".cx-note").textContent = t.note;
     $h(".cx-gear").setAttribute("aria-label", String(t.settings));
@@ -148,8 +155,9 @@ export function ChatUI(host: HTMLElement, { compact = false } = {}) {
     if (m.fresh && !reduce) {
       directorSpeak(tt, esc(a.say));
       m.fresh = false;
-      {
-        gsap.from($$("li,.cx-acts > *", d), {
+      const extras = $$("li,.cx-acts > *", d);
+      if (extras.length) {
+        gsap.from(extras, {
           opacity: 0,
           y: 8,
           duration: 0.5,
@@ -178,8 +186,12 @@ export function ChatUI(host: HTMLElement, { compact = false } = {}) {
     d.innerHTML = `<span class="cx-av" aria-hidden="true"></span><div class="cx-b"><span class="typing"><i></i><i></i><i></i></span><small>${T().think}</small></div>`;
     return d;
   };
-  const scroll = () => {
-    log.scrollTo({ top: log.scrollHeight, behavior: reduce ? "auto" : "smooth" });
+  const nearBottom = () => log.scrollHeight - log.scrollTop - log.clientHeight < 72;
+  const scroll = (force = false) => {
+    if (force || nearBottom()) {
+      log.scrollTo({ top: log.scrollHeight, behavior: reduce ? "auto" : "smooth" });
+      newmsg.hidden = true;
+    } else newmsg.hidden = false;
   };
   const follow = () => {
     const f = ChatCore.follow();
@@ -202,11 +214,24 @@ export function ChatUI(host: HTMLElement, { compact = false } = {}) {
   };
   function full() {
     log.innerHTML = "";
-    ChatCore.hist.forEach((m) => log.appendChild(bubble(m)));
+    let prev: Message | undefined;
+    ChatCore.hist.forEach((m) => {
+      if (prev && m.t - prev.t > 300000) {
+        const stamp = document.createElement("time");
+        stamp.className = "cx-stamp";
+        stamp.dateTime = new Date(m.t).toISOString();
+        stamp.textContent = new Intl.DateTimeFormat(undefined, { hour: "numeric", minute: "2-digit" }).format(m.t);
+        log.appendChild(stamp);
+      }
+      const node = bubble(m);
+      if (m.who === "bot" && prev?.who === "bot") $(".cx-av", node)?.remove();
+      log.appendChild(node);
+      prev = m;
+    });
     log.insertAdjacentHTML("beforeend", welcome());
     if (ChatCore.hist.length > 1) follow();
     else fol.innerHTML = "";
-    log.scrollTop = log.scrollHeight;
+    scroll(true);
   }
   chrome();
   Voice.onChange(() => {
@@ -221,12 +246,10 @@ export function ChatUI(host: HTMLElement, { compact = false } = {}) {
       return;
     }
     if (ev === "msg") {
-      $$(".cx-welcome,.cx-typing", log).forEach((x) => x.remove());
-      fol.innerHTML = "";
-      log.appendChild(bubble(m));
+      const wasNear = nearBottom();
+      full();
       if (m.who === "me") log.appendChild(typing());
-      else follow();
-      scroll();
+      scroll(wasNear);
     }
     if (ev === "clear") full();
     if (ev === "lang") {
@@ -281,6 +304,25 @@ export function ChatUI(host: HTMLElement, { compact = false } = {}) {
       $h<HTMLFormElement>(".cx-form").requestSubmit();
     }
   });
+  const Recognition = typeof window !== "undefined" && ((window as any).SpeechRecognition || (window as any).webkitSpeechRecognition);
+  mic.hidden = !Recognition;
+  if (Recognition) mic.addEventListener("click", () => {
+    const recognition = new Recognition();
+    recognition.lang = ({ en: "en-GB", az: "az-AZ", ru: "ru-RU" } as Record<Lang, string>)[ChatCore.lang];
+    recognition.interimResults = false;
+    recognition.continuous = false;
+    mic.classList.add("listening");
+    ChatCore.setState("listen");
+    recognition.onresult = (e: any) => { ta.value = e.results[0][0].transcript; grow(); };
+    recognition.onerror = () => { mic.classList.remove("listening"); ChatCore.setState("idle"); };
+    recognition.onend = () => {
+      mic.classList.remove("listening");
+      if (ta.value.trim()) $h<HTMLFormElement>(".cx-form").requestSubmit();
+      else ChatCore.setState("idle");
+    };
+    recognition.start();
+  });
+  newmsg.addEventListener("click", () => scroll(true));
   $h(".cx-form").addEventListener("submit", (e) => {
     e.preventDefault();
     const q = ta.value;

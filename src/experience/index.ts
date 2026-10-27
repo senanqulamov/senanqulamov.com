@@ -14,7 +14,7 @@ import { Loader } from "./loader";
 import { drawMenu, menuBusy, menuOpen } from "./menu";
 import "./palette";
 import { connectRouter, navigate, onRendered } from "./router";
-import { scrollTick } from "./scroll";
+import { cacheScrollLayout, scrollTick } from "./scroll";
 import { AMB, soundOn } from "./sound";
 import { GL, lenis, mouse, page, setGL, setLenis } from "./state";
 import { syncThemeButton } from "./theme";
@@ -113,6 +113,7 @@ export function start(router: Parameters<typeof connectRouter>[0], lang: Lang) {
     if (menuOpen) setTimeout(drawMenu, 100);
     if (document.querySelector("#heroName.gl-name")) setTimeout(drawHeroName, 120);
     lenis?.resize();
+    cacheScrollLayout();
     ScrollTrigger.refresh();
   });
 }

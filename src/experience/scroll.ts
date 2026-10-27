@@ -8,6 +8,7 @@ import { titleOf } from "./routes";
 import { GLT } from "./transitions";
 import { menuOpen } from "./menu";
 import { keptOnMobile, scenes } from "./gl/scenes";
+import { DIRECTOR_SHAPE } from "./gl/spirit";
 import { hdr } from "./header";
 import { lostDrops } from "./pages/notfound";
 
@@ -19,12 +20,15 @@ export function cacheScrollLayout() {
   const elements = new Set<HTMLElement>([
     ...page.sections,
     ...page.stacks,
-    ...["#hero", "[data-s='contact']", "#faceSlot"].map((selector) => $(selector, $("#view"))).filter(Boolean),
+    ...["#hero", "[data-s='contact']", "#faceSlot"]
+      .map((selector) => $(selector, $("#view")))
+      .filter(Boolean),
   ]);
   const metrics = new Map<HTMLElement, { top: number; height: number; bottom: number }>();
   elements.forEach((el) => {
-    const top = el.offsetTop;
-    const height = el.offsetHeight;
+    const rect = el.getBoundingClientRect();
+    const top = rect.top + scrollY;
+    const height = rect.height;
     metrics.set(el, { top, height, bottom: top + height });
   });
   page.metrics = metrics;
@@ -286,13 +290,14 @@ export function scrollTick(force = false) {
   if (route && route.k === "ask") {
     const fs = $("#faceSlot", view);
     if (fs) {
-      const metric = page.metrics?.get(fs);
-      const top = metric ? metric.top - y : Infinity;
-      if (metric && metric.bottom - y > 0 && top < innerHeight) {
-        scene.m = 6;
-        scene.u = 0.5;
-        scene.v = (top + metric.height * 0.4) / innerHeight;
-        scene.s = (metric.height * 0.36 * 3.125) / innerHeight;
+      // The face is framed by this live panel rect, including its responsive
+      // left column width. Cached vertical metrics alone cannot represent it.
+      const rect = fs.getBoundingClientRect();
+      if (rect.bottom > 0 && rect.top < innerHeight) {
+        scene.m = DIRECTOR_SHAPE;
+        scene.u = (rect.left + rect.width / 2) / innerWidth;
+        scene.v = (rect.top + rect.height * 0.4) / innerHeight;
+        scene.s = (Math.min(rect.width, rect.height) * 0.36 * 3.125) / innerHeight;
         scene.dim = 1;
       }
     }

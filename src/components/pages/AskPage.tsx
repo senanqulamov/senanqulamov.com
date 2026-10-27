@@ -14,26 +14,23 @@ export function AskPage({ t }: { t: Translate }) {
       />
       <section data-s="askface">
         <div className="ask-wrap">
-          <div className="ask-stage" id="askStage" data-cursor={t("Poke")}>
-            <div className="stage-top">
-              <span className="tag" id="askState">
-                {t("Listening")}
-              </span>
-              <button className="chip" id="voiceBtn" aria-pressed="false">
-                {t("Voice off")}
-              </button>
+          <aside className="ask-stage" id="askStage" data-cursor={t("Poke")}>
+            <div className="ask-orb">
+              <div className="ask-glow" aria-hidden="true" />
+              <div className="face-slot" id="faceSlot" aria-hidden="true" />
+              <p className="ask-poke" id="askPoke" role="status" />
             </div>
-            <div className="face-slot" id="faceSlot" aria-hidden="true" />
             <div className="stage-bot">
               <b>{t("The Director")}</b>
+              <span id="askState">{t("Listening")}</span>
               <p>
                 {t(
                   "Move your cursor and the Director will follow it. Click the face to start a conversation.",
                 )}
               </p>
             </div>
-          </div>
-          <div className="chat glass fade" id="askChat" />
+          </aside>
+          <div className="ask-chat fade" id="askChat" />
         </div>
       </section>
       <Footer t={t} />

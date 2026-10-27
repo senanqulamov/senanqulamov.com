@@ -1,4 +1,6 @@
 // Where the chrome object sits for each kind of section.
+import { DIRECTOR_SHAPE } from "./spirit";
+
 // m is the shape: 0 liquid blob, 1 sphere, 2 twisted column, 3 ring, 4 lattice, 5 two drops, 6 the Director.
 // u and v are screen positions from 0 to 1, s is size, dim is brightness.
 // The values starting with "m" (mu, mv, ms) are used on narrow screens.
@@ -30,7 +32,7 @@ export const scenes: Record<string, SceneConfig> = {
   post: { m: 1, u: 0.92, v: 0.5, s: 0.3, mu: 0.9, mv: 0.12, ms: 0.18, dim: 0.35 },
   start: { m: 2, u: 0.86, v: 0.36, s: 0.45, mu: 0.8, mv: 0.16, ms: 0.3, dim: 0.7 },
   credits: { m: 2, u: 0.86, v: 0.4, s: 0.48, mu: 0.8, mv: 0.16, ms: 0.3, dim: 0.65 },
-  askface: { m: 6, u: 0.25, v: 0.55, s: 0.5, mu: 0.5, mv: 0.4, ms: 0.3, dim: 1 },
+  askface: { m: DIRECTOR_SHAPE, u: 0.25, v: 0.55, s: 0.5, mu: 0.5, mv: 0.4, ms: 0.3, dim: 1 },
   ask: { m: 1, u: 0.84, v: 0.34, s: 0.5, mu: 0.78, mv: 0.18, ms: 0.3, dim: 0.8 },
   library: { m: 0, u: 0.9, v: 0.2, s: 0.28, mu: 0.85, mv: 0.12, ms: 0.2, dim: 0.7 },
   tour: { m: 0, u: 0.96, v: 0.14, s: 0.07, mu: 0.92, mv: 0.1, ms: 0.06, dim: 0.5 },

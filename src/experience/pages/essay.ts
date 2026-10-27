@@ -171,6 +171,9 @@ export const Essay = (() => {
       b = post;
       art = $("#essay");
       const bar = $("#readBar"),
+        essBar = $("#essBar"),
+        essLeft = $("#essLeft"),
+        essSec = $("#essSec"),
         links = $$(".toc a"),
         heads = links.map((a) => document.getElementById(a.getAttribute("href").slice(1)));
       const all = $$(":scope > *", art);
@@ -211,13 +214,16 @@ export const Essay = (() => {
         document.removeEventListener("mouseup", mu);
         document.removeEventListener("keyup", mu);
       });
-      page.tick = () => {
+      const tick = () => {
+        // The router can replace the journal DOM before the next animation frame.
+        // Do not let this page's frame callback touch the new page's missing controls.
+        if (!art.isConnected || !bar || !essBar || !essLeft || !essSec) return;
         const r = art.getBoundingClientRect(),
           p = clamp((innerHeight * 0.3 - r.top) / (r.height - innerHeight * 0.5), 0, 1);
         bar.style.transform = `scaleX(${p.toFixed(3)})`;
-        $("#essBar").style.transform = `scaleY(${p.toFixed(3)})`;
+        essBar.style.transform = `scaleY(${p.toFixed(3)})`;
         const left = Math.max(0, Math.ceil(b.minutes * (1 - p)));
-        $("#essLeft").textContent = p > 0.995 ? tr("Finished") : tr(`${left} min left`);
+        essLeft.textContent = p > 0.995 ? tr("Finished") : tr(`${left} min left`);
         let a = -1;
         heads.forEach((h, i) => {
           if (h && h.getBoundingClientRect().top < innerHeight * 0.4) a = i;
@@ -225,7 +231,7 @@ export const Essay = (() => {
         links.forEach((l, i) => l.classList.toggle("on", i === a));
         if (a !== lastSec) {
           lastSec = a;
-          $("#essSec").textContent = a >= 0 ? links[a].textContent.replace(/^\d+/, "") : "";
+          essSec.textContent = a >= 0 ? links[a].textContent.replace(/^\d+/, "") : "";
           if (a >= 0) {
             GL && (GL.pulse = 0.4);
           }
@@ -246,6 +252,10 @@ export const Essay = (() => {
           all.forEach((el) => el.classList.toggle("lit", el === best));
         }
       };
+      page.tick = tick;
+      cleanup.push(() => {
+        if (page?.tick === tick) page.tick = undefined;
+      });
     },
   };
 })();

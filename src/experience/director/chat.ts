@@ -17,6 +17,7 @@ export const ChatCore = (() => {
   let busy = false;
   let lang = sessionStorage.getItem("sq-chatlang") as Lang | null;
   let manualLang = false;
+  let lastPoke = -1;
   const asked = new Set(hist.filter((m) => m.who === "bot").map((m) => m.a.id));
   const save = () => sessionStorage.setItem("sq-chat2", JSON.stringify(hist.slice(-40)));
   const emit = (ev: string, m?: any) => subs.forEach((f) => f(ev, m));
@@ -119,8 +120,16 @@ export const ChatCore = (() => {
         ],
       };
       const P = lines[L()];
+      let i = (Math.random() * P.length) | 0;
+      if (P.length > 1 && i === lastPoke) i = (i + 1) % P.length;
+      lastPoke = i;
+      const line = P[i];
       MiniFace.poke();
-      reply({ say: P[(Math.random() * P.length) | 0], id: "greet", lang: L() });
+      setState("happy");
+      emit("poke", line);
+      if (Voice.on)
+        void Voice.say(line, L(), { onSyl: mouth, onEnd: () => setState("idle") });
+      else setTimeout(() => setState("idle"), 1000);
     },
     clear() {
       hist = [];

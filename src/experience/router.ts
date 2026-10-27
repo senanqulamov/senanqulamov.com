@@ -21,7 +21,7 @@ import { Start } from "./pages/start";
 import { mountWork } from "./pages/work";
 import { closePalette } from "./palette";
 import { numberOf, parseRoute, tintOf, titleOf, type Route } from "./routes";
-import { intro, introPage, scrollTick, setupScroll } from "./scroll";
+import { cacheScrollLayout, intro, introPage, queueScrollRefresh, scrollTick, setupScroll } from "./scroll";
 import { GL, cleanup, clicked, lenis, route, runCleanup, setPage, setRoute } from "./state";
 import { GLT, ProjectLoader, setTransitioning, transitioning } from "./transitions";
 import { copy } from "./ui";
@@ -116,6 +116,10 @@ function mountPage(pathname: string) {
     mounts[r.k]?.(view, r);
     setupScroll(view);
   }, view);
+  // Scene placement reads document-space metrics. They must exist before the
+  // first scrollTick, including direct loads of /ask.
+  cacheScrollLayout();
+  queueScrollRefresh();
   if (!body.classList.contains("loading") && !transitioning) setTimeout(introPage, 60);
 
   Dock.sync(r);

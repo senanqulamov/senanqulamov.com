@@ -131,7 +131,7 @@ vec3 n=nrm(p),v=-rd,r=reflect(rd,n),col=spiritChrome(r,n,v,uLight)+spiritEmissio
     st.blink = blink < 1 ? 1 - Math.sin(blink * Math.PI) : 1;
     st.smile = lerp(
       st.smile,
-      st.state === "think" ? -0.15 : st.state === "speak" ? 0.42 : st.state === "listen" ? 0.35 : 0.26,
+      st.state === "think" ? -0.15 : st.state === "speak" ? 0.42 : st.state === "listen" || st.state === "happy" ? 0.52 : 0.38,
       0.08,
     );
     st.wide = lerp(st.wide, st.state === "listen" ? 1 : st.state === "think" ? 0.55 : 0, 0.08);

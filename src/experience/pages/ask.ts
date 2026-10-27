@@ -1,79 +1,50 @@
-// Ask the Director page: the big chrome face beside the chat.
-
+// Ask page: the global WebGL object becomes the Director in this stage.
 import { $ } from "../dom";
 import { cleanup, GL } from "../state";
 import { tr } from "../i18n";
 import { SFX } from "../sound";
-import { Voice } from "../director/voice";
 import { ChatCore } from "../director/chat";
 import { ChatUI } from "../director/chat-ui";
 
-const Face = (() => {
-  const map = { think: "Thinking", speak: "Speaking", listen: "Listening", idle: "Listening" };
-  function label(s: string) {
-    const el = $("#askState");
-    if (el) {
-      el.textContent = tr(map[s] || "Listening");
-      el.dataset.s = s;
-    }
-  }
-  function syncV() {
-    const b = $("#voiceBtn");
-    if (!b) return;
-    b.hidden = !Voice.ok;
-    b.setAttribute("aria-pressed", String(Voice.on));
-    b.textContent = tr(Voice.on ? "Voice on" : "Voice off");
-  }
-  return {
-    state(s: string) {
-      GL && (GL.face.state = s);
-      label(s);
-    },
-    mount() {
-      if (GL) {
-        GL.face.on = true;
-        GL.face.next = performance.now() + 1500;
-      }
-      label("idle");
-      syncV();
-      const off = ChatCore.sub((ev, s) => {
-        if (!$("#askState")) {
-          off();
-          return;
-        }
-        if (ev === "state") label(s);
-      });
-      Voice.onChange(syncV);
-      $("#voiceBtn") &&
-        $("#voiceBtn").addEventListener("click", (e) => {
-          e.stopPropagation();
-          Voice.set(!Voice.on);
-          if (Voice.on) {
-            ChatCore.setState("speak");
-            Voice.say(
-              { en: "Voice on.", az: "Səs açıqdır.", ru: "Голос включён." }[ChatCore.lang],
-              ChatCore.lang,
-              { onSyl: ChatCore.mouth, onEnd: () => ChatCore.setState("idle") },
-            );
-          } else ChatCore.setState("idle");
-        });
-      cleanup.push(() => {
-        if (GL) GL.face.on = false;
-        Voice.stop();
-      });
-    },
-  };
-})();
+const labels: Record<string, Record<string, string>> = {
+  en: { think: "Thinking…", speak: "Speaking", listen: "Listening", idle: "Listening", happy: "Listening" },
+  az: { think: "D\u00fc\u015f\u00fcn\u00fcr…", speak: "Dan\u0131\u015f\u0131r", listen: "Dinl\u0259yir", idle: "Dinl\u0259yir", happy: "Dinl\u0259yir" },
+  ru: { think: "\u0414\u0443\u043c\u0430\u0435\u0442…", speak: "\u0413\u043e\u0432\u043e\u0440\u0438\u0442", listen: "\u0421\u043b\u0443\u0448\u0430\u0435\u0442", idle: "\u0421\u043b\u0443\u0448\u0430\u0435\u0442", happy: "\u0421\u043b\u0443\u0448\u0430\u0435\u0442" },
+};
 
-export function mountAsk(view: HTMLElement) {
-  Face.mount();
+export function mountAsk() {
+  if (GL) {
+    GL.face.on = true;
+    GL.face.next = performance.now() + 1500;
+  }
+  const status = $("#askState"), poke = $("#askPoke");
+  let currentState = "idle";
+  const renderState = (state: string) => {
+    if (!status) return;
+    currentState = state;
+    status.textContent = labels[ChatCore.lang]?.[state] || labels.en[state] || tr("Listening");
+    status.dataset.s = state;
+    $("#askStage")?.setAttribute("data-s", state);
+  };
+  renderState("idle");
+  const off = ChatCore.sub((ev, value) => {
+    if (!$("#askStage")) return off();
+    if (ev === "state") renderState(value);
+    if (ev === "lang") renderState(currentState);
+    if (ev === "poke" && poke) {
+      poke.textContent = value;
+      poke.classList.add("show");
+      setTimeout(() => poke.classList.remove("show"), 3000);
+    }
+  });
+  cleanup.push(() => { if (GL) GL.face.on = false; off(); });
   ChatUI($("#askChat"));
-  let poke = 0;
-  $("#askStage").addEventListener("click", (e) => {
-    if ((e.target as HTMLElement).closest<HTMLElement>("button")) return;
-    GL && GL.burst();
+  let pokes = 0;
+  $("#askStage")?.addEventListener("click", (e) => {
+    if ((e.target as HTMLElement).closest("button,a,textarea")) return;
+    GL?.burst();
     if (GL) GL.face.bt = performance.now();
-    SFX.glass(poke++);
+    SFX.glass(pokes++);
     ChatCore.poke();
   });
 }

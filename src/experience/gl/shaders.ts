@@ -1,6 +1,6 @@
 // GLSL for the chrome object, the composite pass and the post effects.
 
-import { SPIRIT_GLSL } from "./spirit";
+import { DIRECTOR_SHAPE, SPIRIT_GLSL } from "./spirit";
 
 export const COMMON = `
 float hash(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}
@@ -73,13 +73,13 @@ void main(){
   irid=mix(irid,uTint*1.1,uTintAmt*.55);
   vec3 e=mix(envD(r),envL(r),uLight);
   if(uHold>.01){ vec3 hc=texture2D(tEnv,vec2(.5)+r.xy*vec2(.42,.42)).rgb; e=mix(e,hc*1.25,uHold*.8*smoothstep(-.3,.5,r.z+.3)); }
-  vec3 col=uMorph>5.5?spiritChrome(r,n,v,uLight):e*mix(vec3(.85),irid*1.25,mix(.55,.4,uLight))+irid*fr*mix(.85,.5,uLight);
+  vec3 col=uMorph>${DIRECTOR_SHAPE - 0.5}?spiritChrome(r,n,v,uLight):e*mix(vec3(.85),irid*1.25,mix(.55,.4,uLight))+irid*fr*mix(.85,.5,uLight);
   col+=vec3(.9,.95,1.)*pow(max(dot(r,normalize(vec3(-.6,.65,.45))),0.),90.)*1.5;
   col*=.9+.1*vnoise(p.xy*40.);
   col+=mix(vec3(.9,.95,1.),irid,.35)*emb*.28;
   if(uLens>.5){ col=col*(fr*.8+.05); }
-  if(uMorph>5.2&&uMorph<5.8){ float ao=0.,sc=1.; for(int k=1;k<6;k++){ float h=.02+.05*float(k); ao+=(h-map(p+n*h))*sc; sc*=.7; } ao=clamp(1.-ao*3.2,0.,1.); col*=mix(1.,ao,.9); col+=vec3(.25,.22,.3)*pow(fr,3.)*(1.-uLight)*.4; }
-  if(uMorph>5.5){ vec3 markP=p; markP.xy-=uPos; markP/=max(uScale*uIntro,.02); col+=spiritEmission(markP); }
+  if(uMorph>5.2&&uMorph<${DIRECTOR_SHAPE - 0.2}){ float ao=0.,sc=1.; for(int k=1;k<6;k++){ float h=.02+.05*float(k); ao+=(h-map(p+n*h))*sc; sc*=.7; } ao=clamp(1.-ao*3.2,0.,1.); col*=mix(1.,ao,.9); col+=vec3(.25,.22,.3)*pow(fr,3.)*(1.-uLight)*.4; }
+  if(uMorph>${DIRECTOR_SHAPE - 0.5}){ vec3 markP=p; markP.xy-=uPos; markP/=max(uScale*uIntro,.02); col+=spiritEmission(markP); }
   gl_FragColor=vec4(col*ea,ea);
 }`;
 export const FLOW = `precision highp float;varying vec2 vUv;uniform sampler2D tPrev;uniform vec2 uM,uV,uSpC;uniform float uAsp,uDiss,uSp,uSpR;
