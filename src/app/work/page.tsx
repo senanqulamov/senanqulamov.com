@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { WorkPage } from "@/components/work/WorkPage";
 import { getT } from "@/i18n/server";
+import { createPageMetadata } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Work",
-  description: "Products I founded, platforms I led and systems I shipped for clients since 2021.",
-  alternates: { canonical: "/work" },
-};
+  description: "Selected products, platforms, and client systems built by Senan Qulamov.",
+  path: "/work",
+});
 
 export default async function Page() {
   const { t } = await getT();

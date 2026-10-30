@@ -1,16 +1,29 @@
 import type { MetadataRoute } from "next";
 import { essays } from "@/data/essays";
-import { pages } from "@/data/navigation";
-import { profile } from "@/data/profile";
+import { absoluteUrl } from "@/lib/site";
 import { projects } from "@/data/projects";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const url = (path: string) => `${profile.site}${path}`;
+  const publicPages = [
+    "/",
+    "/work",
+    "/journal",
+    "/services",
+    "/start",
+    "/credits",
+    "/ask",
+    "/gallery",
+    "/library",
+    "/lab",
+    "/press",
+    "/contact",
+  ];
+  const url = (path: string) => absoluteUrl(path);
   return [
-    ...pages.map((p) => ({
-      url: url(p.href),
+    ...publicPages.map((path) => ({
+      url: url(path),
       changeFrequency: "monthly" as const,
-      priority: p.key === "home" ? 1 : 0.7,
+      priority: path === "/" ? 1 : 0.7,
     })),
     ...projects.map((p) => ({
       url: url(`/work/${p.slug}`),

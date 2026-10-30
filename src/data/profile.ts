@@ -1,7 +1,9 @@
+import { absoluteUrl, siteUrl } from "@/lib/site";
+
 export const profile = {
   name: "Senan Qulamov",
-  alsoWritten: "Senan Gulamov",
-  site: "https://48team.space",
+  alsoWritten: "Sanan Gulamov",
+  site: siteUrl,
   email: "qulamovsenan@gmail.com",
   phone: "+994 51 583 80 95",
   phoneHref: "tel:+994515838095",
@@ -14,6 +16,7 @@ export const profile = {
   timezone: "Asia/Baku",
   availability: "Available from November",
   portrait: "/images/portrait.webp",
+  portraitUrl: absoluteUrl("/images/portrait.webp"),
   portraitAlt: "Senan Qulamov leaning against a wooden wall at night in Baku",
   roles: [
     { title: "Founder & CEO", place: "BidBary" },

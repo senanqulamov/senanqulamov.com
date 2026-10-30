@@ -660,7 +660,13 @@ export function initGL() {
         const bk = F.bt > 0 ? clamp((now - F.bt) / 170, 0, 1) : 1;
         F.blink = F.bt > 0 && bk < 1 ? 1 - Math.sin(bk * Math.PI) * 0.95 : 1;
         const sm =
-          F.state === "speak" ? 0.55 : F.state === "think" ? -0.1 : F.state === "listen" || F.state === "happy" ? 0.52 : 0.38;
+          F.state === "speak"
+            ? 0.55
+            : F.state === "think"
+              ? -0.1
+              : F.state === "listen" || F.state === "happy"
+                ? 0.52
+                : 0.38;
         F.smile = lerp(F.smile, sm, 0.06);
         F.wide = lerp(F.wide, F.state === "listen" ? 1 : 0, 0.08);
         F.mouth = lerp(F.mouth, 0, 1 - Math.pow(0.004, dt));

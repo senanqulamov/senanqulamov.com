@@ -19,6 +19,7 @@ import { mountProject } from "./pages/project";
 import { Library } from "./pages/library";
 import { Start } from "./pages/start";
 import { mountWork } from "./pages/work";
+import { mountGallery } from "./pages/gallery";
 import { closePalette } from "./palette";
 import { numberOf, parseRoute, tintOf, titleOf, type Route } from "./routes";
 import { cacheScrollLayout, intro, introPage, queueScrollRefresh, scrollTick, setupScroll } from "./scroll";
@@ -45,6 +46,7 @@ const mounts: Partial<Record<Route["k"], (view: HTMLElement, r: Route) => void>>
   start: () => Start.mount(),
   ask: mountAsk,
   library: () => Library.mount(),
+  gallery: mountGallery,
   lab: () => {
     void Promise.all([import("./lab/experiments"), import("./lab/sketches")]).then(
       ([{ LabX }, { Sketches }]) => {

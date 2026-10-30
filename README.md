@@ -1,6 +1,6 @@
 # Senan Qulamov — portfolio
 
-Personal site for [48team.space](https://48team.space). Built with Next.js, Three.js, GSAP and Lenis.
+Personal site for [senanqulamov.com](https://senanqulamov.com). Built with Next.js, Three.js, GSAP and Lenis.
 
 ## Running it
 
@@ -25,20 +25,20 @@ npm run dev
 
 Almost everything you will want to change lives in `src/data`:
 
-| File | What it holds |
-| --- | --- |
-| `profile.ts` | Name, email, phone, links, roles, the "Now" block |
-| `projects.ts` | All projects: text, tech, links, images, colors |
-| `essays.ts` | Essay titles, dates and tags. The text is in `src/content/essays/<slug>.md` |
-| `home.ts` | Hero, story scenes, BidBary section, live lot demo, studio cards, contact doors |
-| `services.ts` | Services, ways of working, process steps, FAQ |
-| `pricing.ts` | Prices, packages, extras, timelines, budgets, call slots |
-| `cv.ts` | The full CV on the Credits page |
-| `books.ts` | The library |
-| `press.ts` | Bios, talk topics, press facts |
-| `lab.ts` | Lab experiment titles and descriptions |
-| `assistant.ts` | Everything the Director knows, in English, Azerbaijani and Russian |
-| `navigation.ts` | Page order in the menu and header |
+| File            | What it holds                                                                   |
+| --------------- | ------------------------------------------------------------------------------- |
+| `profile.ts`    | Name, email, phone, links, roles, the "Now" block                               |
+| `projects.ts`   | All projects: text, tech, links, images, colors                                 |
+| `essays.ts`     | Essay titles, dates and tags. The text is in `src/content/essays/<slug>.md`     |
+| `home.ts`       | Hero, story scenes, BidBary section, live lot demo, studio cards, contact doors |
+| `services.ts`   | Services, ways of working, process steps, FAQ                                   |
+| `pricing.ts`    | Prices, packages, extras, timelines, budgets, call slots                        |
+| `cv.ts`         | The full CV on the Credits page                                                 |
+| `books.ts`      | The library                                                                     |
+| `press.ts`      | Bios, talk topics, press facts                                                  |
+| `lab.ts`        | Lab experiment titles and descriptions                                          |
+| `assistant.ts`  | Everything the Director knows, in English, Azerbaijani and Russian              |
+| `navigation.ts` | Page order in the menu and header                                               |
 
 Project screenshots are in `public/images/<project>/`. Add a file there and list its path in `projects.ts`.
 
@@ -79,7 +79,7 @@ To deliver them by email, create a [Resend](https://resend.com) account, verify 
 ```
 RESEND_API_KEY=...
 CONTACT_TO=qulamovsenan@gmail.com
-CONTACT_FROM=Portfolio <hello@48team.space>
+CONTACT_FROM=Portfolio <hello@senanqulamov.com>
 ```
 
 ## Deploying to Vercel
@@ -87,7 +87,7 @@ CONTACT_FROM=Portfolio <hello@48team.space>
 1. Push the project to a GitHub repository.
 2. In Vercel, choose **Add New → Project** and import the repository. The defaults are correct.
 3. Optionally add the email variables above under **Settings → Environment Variables**.
-4. Under **Settings → Domains**, add `48team.space` and follow the DNS instructions.
+4. Under **Settings → Domains**, add `senanqulamov.com` and follow the DNS instructions.
 5. Turn on **Analytics** in the project if you want visitor stats. The tracking script is already included.
 
 ## Notes
@@ -95,3 +95,27 @@ CONTACT_FROM=Portfolio <hello@48team.space>
 - Visitors can turn effects down from the menu ("Reduce effects"). The site also respects the system reduced-motion setting.
 - Sound is generated in the browser and stays off until the visitor chooses it.
 - The SQL playground loads `public/vendor/sql-wasm.js` and its `.wasm` file, the browser build of sql.js 1.13.
+
+## Gallery placeholder photos
+
+The gallery placeholder set is downloaded once from Picsum/Unsplash under the [Unsplash License](https://unsplash.com/license). Run `node scripts/fetch-gallery-placeholders.mjs` to refresh the fixed local WebP set and its author/source metadata.
+
+## SEO & Analytics Setup
+
+Set these Production environment variables in Vercel before deploying:
+
+```text
+NEXT_PUBLIC_SITE_URL=https://senanqulamov.com
+NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+```
+
+`NEXT_PUBLIC_GA_MEASUREMENT_ID` is optional; Google Analytics 4 does not load when it is absent. Vercel Analytics is already enabled in production Vercel deployments.
+
+1. In **Vercel → Project → Settings → Domains**, add `senanqulamov.com` and make it the primary domain. Add `www.senanqulamov.com` and configure it to redirect to the apex domain. Keep `senanqulamov.vercel.app` assigned so the application redirect can permanently forward it without affecting preview deployment hosts.
+2. In Cloudflare DNS, enter the exact record type, name, and target that Vercel shows for each domain. Do not substitute guessed values. Use the required proxy/DNS-only mode shown by Vercel while verification is in progress.
+3. In GA4, create or select the web data stream for `https://senanqulamov.com`, then add its measurement ID as `NEXT_PUBLIC_GA_MEASUREMENT_ID` in Vercel and redeploy.
+4. In Google Search Console, add a **Domain** property for `senanqulamov.com`. Copy its TXT verification value into Cloudflare DNS exactly as supplied by Google, verify, then retain the TXT record.
+5. Submit `https://senanqulamov.com/sitemap.xml` in Search Console after the production deployment is live.
+6. Validate representative URLs with [Google Rich Results Test](https://search.google.com/test/rich-results) and [Schema Markup Validator](https://validator.schema.org/).
+7. Use Search Console’s URL Inspection tool to request indexing for the homepage and newly important project or article pages after deployment.
+8. To migrate `48team.space`, add it and `www.48team.space` to the Vercel project, follow Vercel’s exact Cloudflare DNS prompts, then configure permanent `48team.space/*` and `www.48team.space/*` redirects to `https://senanqulamov.com/:path*`, preserving query strings. Confirm the redirects with `curl -I` before removing any old hosting configuration.

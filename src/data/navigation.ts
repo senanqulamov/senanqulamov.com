@@ -7,6 +7,7 @@ export type PageKey =
   | "credits"
   | "ask"
   | "library"
+  | "gallery"
   | "lab"
   | "press"
   | "contact";
@@ -58,6 +59,12 @@ export const pages: NavPage[] = [
     description: "An assistant that knows this site",
   },
   {
+    key: "gallery",
+    href: "/gallery",
+    title: "Gallery",
+    description: "Life, work, Baku and the rooms between",
+  },
+  {
     key: "library",
     href: "/library",
     title: "Library",
@@ -84,4 +91,4 @@ export const pages: NavPage[] = [
 ];
 
 /** The short list shown in the header pill. */
-export const headerLinks: PageKey[] = ["work", "journal", "services", "credits"];
+export const headerLinks: PageKey[] = ["work", "journal", "gallery", "services", "credits"];

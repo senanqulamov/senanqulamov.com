@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { JournalPage } from "@/components/pages/JournalPage";
 import { getT } from "@/i18n/server";
+import { createPageMetadata } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Journal",
-  description: "Essays from both sides of my work: building products and listening to people.",
-  alternates: { canonical: "/journal" },
-};
+  description: "Essays by Senan Qulamov on product building, engineering, and listening to people.",
+  path: "/journal",
+});
 
 export default async function Page() {
   const { t, lang } = await getT();

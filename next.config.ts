@@ -8,6 +8,23 @@ const config: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
   },
+  async redirects() {
+    if (process.env.VERCEL_ENV !== "production") return [];
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "senanqulamov.vercel.app" }],
+        destination: "https://senanqulamov.com/:path*",
+        permanent: true,
+      },
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.senanqulamov.com" }],
+        destination: "https://senanqulamov.com/:path*",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

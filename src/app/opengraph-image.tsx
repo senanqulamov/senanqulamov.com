@@ -20,7 +20,7 @@ export default function OpenGraphImage() {
           color: "#ECEBF2",
         }}
       >
-        <div style={{ display: "flex", fontSize: 26, opacity: 0.7 }}>48team.space</div>
+        <div style={{ display: "flex", fontSize: 26, opacity: 0.7 }}>senanqulamov.com</div>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ fontSize: 120, fontWeight: 700, letterSpacing: -6, lineHeight: 1 }}>Senan</div>
           <div style={{ fontSize: 120, fontWeight: 700, letterSpacing: -6, lineHeight: 1 }}>Qulamov</div>

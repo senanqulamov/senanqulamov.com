@@ -629,6 +629,17 @@ const az: Record<string, string> = {
   "Move your cursor and the Director will follow it. Click the face to start a conversation.":
     "Kursoru hərəkət etdir, Rejissor onu izləyəcək. Söhbətə başlamaq üçün üzə klik et.",
   "Sold to another bidder.": "Başqa iştirakçıya satıldı.",
+  Gallery: "Qalereya",
+  "Life, work, Baku and the rooms between": "Həyat, iş, Bakı və aradakı məkanlar",
+  "A few frames from the work, the city, and everything in between.":
+    "İşdən, şəhərdən və aradakı hər şeydən bir neçə kadr.",
+  "Filter gallery": "Qalereyanı filtrlə",
+  Life: "Həyat",
+  Events: "Tədbirlər",
+  "Between the builds": "İşlərin arasında",
+  "PLACEHOLDER — a workday": "YER TUTUCU — iş günü",
+  "PLACEHOLDER — city after dark": "YER TUTUCU — gecə şəhər",
+  "PLACEHOLDER — in the room": "YER TUTUCU — otaqda",
   heroIntro:
     "Bakıdan mühəndis. <b>PMIS (BP)-də texniki rəhbər</b>, <b>BidBary</b>-nin təsisçisi və yeddi il terapevt. İstifadə edəcək insanlar üçün proqram təminatı qururam.",
 };

@@ -626,6 +626,17 @@ const ru: Record<string, string> = {
   "Move your cursor and the Director will follow it. Click the face to start a conversation.":
     "Двигайте курсор, и режиссёр будет следить за ним. Нажмите на лицо, чтобы начать разговор.",
   "Sold to another bidder.": "Продано другому участнику.",
+  Gallery: "Галерея",
+  "Life, work, Baku and the rooms between": "Жизнь, работа, Баку и пространства между ними",
+  "A few frames from the work, the city, and everything in between.":
+    "Несколько кадров из работы, города и всего, что между ними.",
+  "Filter gallery": "Фильтр галереи",
+  Life: "Жизнь",
+  Events: "События",
+  "Between the builds": "Между делом",
+  "PLACEHOLDER — a workday": "ЗАПОЛНИТЕЛЬ — рабочий день",
+  "PLACEHOLDER — city after dark": "ЗАПОЛНИТЕЛЬ — город после заката",
+  "PLACEHOLDER — in the room": "ЗАПОЛНИТЕЛЬ — в зале",
   heroIntro:
     "Инженер из Баку. <b>Техлид в PMIS (BP)</b>, основатель <b>BidBary</b> и семь лет терапевт. Я создаю софт для людей, которые будут им пользоваться.",
 };

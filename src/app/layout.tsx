@@ -1,7 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Unbounded } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 import { profile } from "@/data/profile";
+import { absoluteUrl, jsonLd, siteUrl } from "@/lib/site";
 import { LangProvider } from "@/i18n/LangProvider";
 import { getT } from "@/i18n/server";
 import { Experience } from "@/components/shell/Experience";
@@ -27,19 +29,53 @@ const display = Unbounded({
 });
 const text = Geist({ subsets: ["latin", "latin-ext", "cyrillic"], variable: "--font-text", display: "swap" });
 const useAnalytics = process.env.NODE_ENV === "production" && process.env.VERCEL === "1";
-
 const description =
-  "Senan Qulamov is an engineer from Baku: Tech Lead at PMIS (BP), founder of BidBary, and for seven years a therapist.";
-
-export const metadata: Metadata = {
-  metadataBase: new URL(profile.site),
-  title: { default: "Senan Qulamov · Engineer, founder, listener", template: "%s · Senan Qulamov" },
+  "Senan Qulamov is a Baku-based engineer, Tech Lead at PMIS (BP), BidBary founder, and former therapist. Explore his work, writing, and ways to collaborate.";
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": `${siteUrl}/#person`,
+  name: profile.name,
+  alternateName: "Sanan Gulamov",
+  url: siteUrl,
+  image: profile.portraitUrl,
+  sameAs: [profile.linkedin, profile.github],
+  jobTitle: "Tech Lead",
+  worksFor: { "@type": "Organization", name: "PMIS (BP)" },
+  homeLocation: { "@type": "Place", name: profile.city },
+};
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${siteUrl}/#website`,
+  url: siteUrl,
+  name: profile.name,
   description,
-  openGraph: { type: "website", siteName: profile.name, title: profile.name, description, url: "/" },
-  twitter: { card: "summary_large_image", title: profile.name, description },
-  alternates: { canonical: "/" },
+  publisher: { "@id": `${siteUrl}/#person` },
 };
 
+export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
+  title: { default: "Senan Qulamov | Engineer, founder, listener", template: "%s | Senan Qulamov" },
+  description,
+  openGraph: {
+    type: "website",
+    siteName: profile.name,
+    title: "Senan Qulamov | Engineer, founder, listener",
+    description,
+    url: siteUrl,
+    images: [
+      { url: absoluteUrl("/opengraph-image"), alt: "Senan Qulamov — engineer, founder, and listener" },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Senan Qulamov | Engineer, founder, listener",
+    description,
+    images: [absoluteUrl("/opengraph-image")],
+  },
+  alternates: { canonical: "/" },
+};
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
@@ -49,8 +85,6 @@ export const viewport: Viewport = {
     { media: "(prefers-color-scheme: light)", color: "#EEEDF2" },
   ],
 };
-
-// Applies the saved theme before the first paint so the page never flashes.
 const themeScript = `try{var t=localStorage.getItem("sq-theme");document.documentElement.dataset.theme=t||(matchMedia("(prefers-color-scheme: light)").matches?"light":"dark")}catch(e){document.documentElement.dataset.theme="dark"}`;
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
@@ -59,6 +93,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang={lang} className={`${display.variable} ${text.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(personSchema) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(websiteSchema) }} />
       </head>
       <body className="loading" suppressHydrationWarning>
         <LangProvider lang={lang}>
@@ -83,6 +119,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <Experience lang={lang} />
         </LangProvider>
         {useAnalytics && <Analytics />}
+        <GoogleAnalytics />
       </body>
     </html>
   );

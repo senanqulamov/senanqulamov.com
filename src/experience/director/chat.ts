@@ -127,8 +127,7 @@ export const ChatCore = (() => {
       MiniFace.poke();
       setState("happy");
       emit("poke", line);
-      if (Voice.on)
-        void Voice.say(line, L(), { onSyl: mouth, onEnd: () => setState("idle") });
+      if (Voice.on) void Voice.say(line, L(), { onSyl: mouth, onEnd: () => setState("idle") });
       else setTimeout(() => setState("idle"), 1000);
     },
     clear() {

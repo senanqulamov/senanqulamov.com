@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { ProjectPage } from "@/components/project/ProjectPage";
 import { projects } from "@/data/projects";
 import { getT } from "@/i18n/server";
+import { absoluteUrl, createPageMetadata, jsonLd, siteUrl } from "@/lib/site";
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -14,16 +15,13 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
   const project = projects.find((p) => p.slug === slug);
   if (!project) return {};
-  return {
+  return createPageMetadata({
     title: project.title,
-    description: project.subtitle,
-    alternates: { canonical: `/work/${project.slug}` },
-    openGraph: {
-      title: project.title,
-      description: project.summary,
-      images: project.cover ? [project.cover] : [],
-    },
-  };
+    description: project.summary,
+    path: `/work/${project.slug}`,
+    image: project.cover || "/opengraph-image",
+    imageAlt: `${project.title} project screenshot`,
+  });
 }
 
 export default async function Page({ params }: Params) {
@@ -31,5 +29,21 @@ export default async function Page({ params }: Params) {
   const project = projects.find((p) => p.slug === slug);
   if (!project) notFound();
   const { t } = await getT();
-  return <ProjectPage project={project} t={t} />;
+  const projectSchema = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": `${siteUrl}/work/${project.slug}#creativework`,
+    url: absoluteUrl(`/work/${project.slug}`),
+    name: project.title,
+    description: project.summary,
+    author: { "@id": `${siteUrl}/#person` },
+    image: project.cover ? absoluteUrl(project.cover) : undefined,
+    keywords: project.tech.join(", "),
+  };
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(projectSchema) }} />
+      <ProjectPage project={project} t={t} />
+    </>
+  );
 }

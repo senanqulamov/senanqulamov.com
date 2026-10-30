@@ -377,6 +377,12 @@
   width: 100%;
   display: block;
 }
+.lb-caption {
+  margin: 12px 0 0;
+  color: var(--fg-2);
+  font-size: 13px;
+  text-align: center;
+}
 .lb-arrow {
   position: fixed;
   top: 50%;

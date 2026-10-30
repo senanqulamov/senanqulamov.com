@@ -8,7 +8,14 @@ export const Lightbox = (() => {
     stage = $("#lbStage"),
     track = $("#lbTrack"),
     closeButton = $("#lbClose");
-  let list: string[] = [],
+  let list: {
+      src: string;
+      alt?: string;
+      caption?: string;
+      place?: string;
+      year?: number;
+      credit?: string;
+    }[] = [],
     host = "",
     i = 0,
     open = false,
@@ -42,14 +49,14 @@ export const Lightbox = (() => {
     const escapedHost = esc(host);
     track.innerHTML = list
       .map(
-        (src, k) =>
-          `<article class="lb-frame" data-index="${k}" aria-label="Screen ${k + 1} of ${list.length}"><div class="bw-bar"><i></i><i></i><i></i><span>${escapedHost}</span></div><div class="lb-view" data-lenis-prevent><img src="${esc(src)}" alt="Project screen ${k + 1}" draggable="false"></div></article>`,
+        (item, k) =>
+          `<article class="lb-frame" data-index="${k}" aria-label="Screen ${k + 1} of ${list.length}"><div class="bw-bar"><i></i><i></i><i></i><span>${escapedHost}</span></div><div class="lb-view" data-lenis-prevent><img src="${esc(item.src)}" alt="${esc(item.alt || `Project screen ${k + 1}`)}" draggable="false">${item.caption ? `<p class="lb-caption">${esc(item.caption)}${item.place || item.year ? `<small>${esc([item.place, item.year].filter(Boolean).join(" · "))}</small>` : ""}${item.credit ? `<small>Photo: ${esc(item.credit)}</small>` : ""}</p>` : ""}</div></article>`,
       )
       .join("");
     $("#lbThumbs").innerHTML = list
       .map(
-        (src, k) =>
-          `<button data-k="${k}" aria-label="Screen ${k + 1}"><img src="${esc(src)}" alt=""></button>`,
+        (item, k) =>
+          `<button data-k="${k}" aria-label="Screen ${k + 1}"><img src="${esc(item.src)}" alt=""></button>`,
       )
       .join("");
   }
@@ -232,8 +239,13 @@ export const Lightbox = (() => {
   addEventListener("resize", () => open && setTrack());
   return {
     openAt,
-    mount(srcs: string[]) {
-      list = srcs || [];
+    mount(
+      items: (
+        | string
+        | { src: string; alt?: string; caption?: string; place?: string; year?: number; credit?: string }
+      )[],
+    ) {
+      list = (items || []).map((item) => (typeof item === "string" ? { src: item } : item));
       host = $(".tour-frame .bw-bar span")?.textContent || "";
       $("#lbTitle").textContent = route && route.k === "project" ? route.p.title : "";
     },

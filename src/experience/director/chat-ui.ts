@@ -97,7 +97,14 @@ export function ChatUI(host: HTMLElement, { compact = false } = {}) {
     const t = T();
     ta.placeholder = t.ph;
     send.setAttribute("aria-label", String(t.send));
-    const ui = { en: ["Speak your question", "New message ↓"], az: ["Sual\u0131n\u0131z\u0131 deyin", "Yeni mesaj ↓"], ru: ["\u0417\u0430\u0434\u0430\u0439\u0442\u0435 \u0432\u043e\u043f\u0440\u043e\u0441 \u0433\u043e\u043b\u043e\u0441\u043e\u043c", "\u041d\u043e\u0432\u043e\u0435 \u0441\u043e\u043e\u0431\u0449\u0435\u043d\u0438\u0435 ↓"] }[ChatCore.lang] || ["Speak your question", "New message ↓"];
+    const ui = {
+      en: ["Speak your question", "New message ↓"],
+      az: ["Sual\u0131n\u0131z\u0131 deyin", "Yeni mesaj ↓"],
+      ru: [
+        "\u0417\u0430\u0434\u0430\u0439\u0442\u0435 \u0432\u043e\u043f\u0440\u043e\u0441 \u0433\u043e\u043b\u043e\u0441\u043e\u043c",
+        "\u041d\u043e\u0432\u043e\u0435 \u0441\u043e\u043e\u0431\u0449\u0435\u043d\u0438\u0435 ↓",
+      ],
+    }[ChatCore.lang] || ["Speak your question", "New message ↓"];
     mic.setAttribute("aria-label", ui[0]);
     newmsg.textContent = ui[1];
     $h(".cx-new").textContent = t.nw;
@@ -220,7 +227,9 @@ export function ChatUI(host: HTMLElement, { compact = false } = {}) {
         const stamp = document.createElement("time");
         stamp.className = "cx-stamp";
         stamp.dateTime = new Date(m.t).toISOString();
-        stamp.textContent = new Intl.DateTimeFormat(undefined, { hour: "numeric", minute: "2-digit" }).format(m.t);
+        stamp.textContent = new Intl.DateTimeFormat(undefined, { hour: "numeric", minute: "2-digit" }).format(
+          m.t,
+        );
         log.appendChild(stamp);
       }
       const node = bubble(m);
@@ -304,24 +313,33 @@ export function ChatUI(host: HTMLElement, { compact = false } = {}) {
       $h<HTMLFormElement>(".cx-form").requestSubmit();
     }
   });
-  const Recognition = typeof window !== "undefined" && ((window as any).SpeechRecognition || (window as any).webkitSpeechRecognition);
+  const Recognition =
+    typeof window !== "undefined" &&
+    ((window as any).SpeechRecognition || (window as any).webkitSpeechRecognition);
   mic.hidden = !Recognition;
-  if (Recognition) mic.addEventListener("click", () => {
-    const recognition = new Recognition();
-    recognition.lang = ({ en: "en-GB", az: "az-AZ", ru: "ru-RU" } as Record<Lang, string>)[ChatCore.lang];
-    recognition.interimResults = false;
-    recognition.continuous = false;
-    mic.classList.add("listening");
-    ChatCore.setState("listen");
-    recognition.onresult = (e: any) => { ta.value = e.results[0][0].transcript; grow(); };
-    recognition.onerror = () => { mic.classList.remove("listening"); ChatCore.setState("idle"); };
-    recognition.onend = () => {
-      mic.classList.remove("listening");
-      if (ta.value.trim()) $h<HTMLFormElement>(".cx-form").requestSubmit();
-      else ChatCore.setState("idle");
-    };
-    recognition.start();
-  });
+  if (Recognition)
+    mic.addEventListener("click", () => {
+      const recognition = new Recognition();
+      recognition.lang = ({ en: "en-GB", az: "az-AZ", ru: "ru-RU" } as Record<Lang, string>)[ChatCore.lang];
+      recognition.interimResults = false;
+      recognition.continuous = false;
+      mic.classList.add("listening");
+      ChatCore.setState("listen");
+      recognition.onresult = (e: any) => {
+        ta.value = e.results[0][0].transcript;
+        grow();
+      };
+      recognition.onerror = () => {
+        mic.classList.remove("listening");
+        ChatCore.setState("idle");
+      };
+      recognition.onend = () => {
+        mic.classList.remove("listening");
+        if (ta.value.trim()) $h<HTMLFormElement>(".cx-form").requestSubmit();
+        else ChatCore.setState("idle");
+      };
+      recognition.start();
+    });
   newmsg.addEventListener("click", () => scroll(true));
   $h(".cx-form").addEventListener("submit", (e) => {
     e.preventDefault();

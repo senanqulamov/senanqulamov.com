@@ -275,6 +275,7 @@ export function scrollTick(force = false) {
     scene.v = lerp(g(a, "v"), g(b, "v"), k);
     scene.s = lerp(g(a, "s"), g(b, "s"), k);
     scene.dim = lerp(a.dim, b.dim, k);
+    if (body.classList.contains("gallery-pinned")) scene.dim = 0;
     if (innerWidth < 820 && !keptOnMobile.includes(s.dataset.s)) {
       scene.u = 0.86;
       scene.v = 0.9;
