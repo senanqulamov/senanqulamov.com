@@ -20,7 +20,9 @@ export function initGL() {
     return null;
   }
   if (!renderer.getContext()) return null;
-  const DPR = Math.min(devicePixelRatio || 1, lowEnd ? 1.5 : 2);
+  // Mobile chrome is decorative; cap its backing buffer before allocating the
+  // render targets so it cannot steal interaction responsiveness.
+  const DPR = Math.min(devicePixelRatio || 1, coarse ? 1 : lowEnd ? 1.5 : 2);
   renderer.setPixelRatio(DPR);
   const cam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
   const tri = new THREE.BufferGeometry();
@@ -55,8 +57,8 @@ export function initGL() {
     depthBuffer: false,
     stencilBuffer: false,
   };
-  let quality = lowEnd ? 0.55 : 1;
-  const maxPx = lowEnd ? 380000 : 1300000;
+  let quality = coarse ? 0.42 : lowEnd ? 0.55 : 1;
+  const maxPx = coarse ? 220000 : lowEnd ? 380000 : 1300000;
   const sceneRT = new THREE.WebGLRenderTarget(4, 4, rtOpts);
   let flowA = new THREE.WebGLRenderTarget(128, 128, rtOpts),
     flowB = new THREE.WebGLRenderTarget(128, 128, rtOpts);

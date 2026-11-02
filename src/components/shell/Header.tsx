@@ -80,7 +80,7 @@ export function Header({ t, lang }: { t: Translate; lang: Lang }) {
         <a className="chip solid talk hide-m" href="/start" data-mag>
           <Roll text={t("Start a project")} />
         </a>
-        <button className="burger" id="menuBtn" aria-expanded="false" aria-controls="menu">
+        <button className="burger" id="menuBtn" aria-label={t("Open menu")} aria-expanded="false" aria-controls="menu">
           <span className="bt">
             <span>{t("Menu")}</span>
             <span>{t("Close")}</span>

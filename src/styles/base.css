@@ -158,8 +158,8 @@ img {
   transform: translateY(-40px);
 }
 .ib {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   display: grid;
   place-items: center;
@@ -200,6 +200,7 @@ img {
     color 0.35s,
     border-color 0.35s;
   white-space: nowrap;
+  min-height: 44px;
 }
 .chip:hover,
 .chip[aria-pressed="true"] {
@@ -639,6 +640,115 @@ section {
   }
   .roles {
     gap: 14px;
+  }
+}
+
+/* The phone layout has one simple contract: content may shrink or wrap, never
+   widen the document. Individual data views opt into their own x scroller. */
+@media (max-width: 820px) {
+  :root {
+    --gut: clamp(16px, 5vw, 24px);
+    --side: var(--gut);
+    --hdr: 68px;
+  }
+  html,
+  body,
+  #view,
+  section,
+  main {
+    max-width: 100%;
+  }
+  :where(p, li, dd, dt, blockquote, figcaption, .lede, .pd-sub, .m-preview, .pl-sub) {
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+  :where(h1, h2, h3, h4, .h-xl, .h-l) {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+  .ib {
+    width: 44px;
+    height: 44px;
+  }
+  button,
+  input:not([type="hidden"]),
+  select,
+  textarea {
+    touch-action: manipulation;
+  }
+  .btn,
+  .chip,
+  .st-steps button,
+  .slots-days button,
+  .slots-times button,
+  .seg button,
+  .cv-nav a,
+  .lab-nav a {
+    min-height: 44px;
+  }
+  .table-scroll,
+  .sql-results,
+  .sql-out,
+  pre,
+  .code-block {
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  #toast,
+  .breath {
+    bottom: calc(92px + env(safe-area-inset-bottom, 0px));
+    max-width: calc(100vw - 2 * var(--gut) - 144px);
+  }
+  body:has(.est-bar:not(.gone)) #toast,
+  body:has(.est-bar:not(.gone)) .breath {
+    bottom: calc(104px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+@media (max-width: 1100px) {
+  /* Forms are embedded in several pages; letting a grid item retain its
+     intrinsic width was the source of the iPad overflow found in the audit. */
+  form,
+  .fl,
+  .two,
+  .st-wrap,
+  .talk-form {
+    min-width: 0;
+    max-width: 100%;
+  }
+  .st-wrap {
+    grid-template-columns: 1fr;
+  }
+  small,
+  sup {
+    font-size: max(12px, 0.75em);
+  }
+  .logo,
+  .tt,
+  #lGo,
+  #lSound,
+  .burger {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 500px) {
+  .two,
+  .opts,
+  .pgrid {
+    grid-template-columns: 1fr !important;
+  }
+  .est-bar {
+    left: 84px;
+    right: 84px;
+    padding-left: 12px;
+  }
+  .est-bar span,
+  .est-bar small {
+    display: none;
   }
 }
 @media print {

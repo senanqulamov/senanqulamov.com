@@ -49,6 +49,14 @@
   font-weight: 400;
   line-height: 1.2;
 }
+@media (min-width: 821px) {
+  .tt {
+    min-height: 44px;
+  }
+  #langCode {
+    font-size: 12px;
+  }
+}
 .pill {
   position: relative;
   display: flex;

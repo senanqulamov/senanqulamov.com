@@ -6,6 +6,8 @@
 .fl {
   position: relative;
   display: block;
+  min-width: 0;
+  max-width: 100%;
   margin-bottom: 16px;
 }
 .fl input,

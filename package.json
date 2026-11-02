@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "format": "prettier --write \"src/**/*.{ts,tsx,css}\""
+    "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
+    "mobile-audit": "node scripts/mobile-audit.mjs",
+    "mobile-audit:after": "set AUDIT_OUT=audit/after&& node scripts/mobile-audit.mjs",
+    "lighthouse:mobile": "npx lighthouse http://127.0.0.1:3015 --only-categories=accessibility,best-practices,performance --output=json --output-path=artifacts/lighthouse-mobile.json --chrome-flags=\"--headless\""
   },
   "dependencies": {
     "@vercel/analytics": "1.5.0",
@@ -22,6 +25,7 @@
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.3",
     "@types/three": "0.186.0",
+    "playwright": "^1.64.1",
     "prettier": "3.6.2",
     "typescript": "5.9.3"
   },
