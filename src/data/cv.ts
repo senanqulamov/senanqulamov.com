@@ -65,7 +65,7 @@ export const cv = {
       when: "2025 to now",
       current: true,
       title: "Tech Lead",
-      org: "PMIS (BP)",
+      org: "PMIS",
       location: "Baku, Azerbaijan",
       text: "Leading engineering on project controls systems used on BP projects.",
       highlights: [],

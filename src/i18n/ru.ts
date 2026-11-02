@@ -29,7 +29,7 @@ const ru: Record<string, string> = {
   Building: "Строю",
   "BidBary, the next release": "BidBary, следующий релиз",
   Leading: "Руковожу",
-  "Engineering at PMIS (BP)": "Инженерией в PMIS (BP)",
+  "Engineering at PMIS": "Инженерией в PMIS",
   "Open to": "Открыт для",
   "New projects from November": "Новых проектов с ноября",
   "Based in": "Нахожусь в",
@@ -103,8 +103,8 @@ const ru: Record<string, string> = {
   "Military service. Resilience, teamwork and command, learned the hard way.":
     "Военная служба. Стойкость, командная работа и управление, усвоенные на практике.",
   "Leading at scale": "Руковожу масштабно",
-  "Tech Lead at PMIS (BP), after building enterprise backends for Inci Group with Laravel and Java.":
-    "Техлид в PMIS (BP) после корпоративных бэкендов для Inci Group на Laravel и Java.",
+  "Tech Lead at PMIS, after building enterprise backends for Inci Group with Laravel and Java.":
+    "Техлид в PMIS после корпоративных бэкендов для Inci Group на Laravel и Java.",
   Now: "Сейчас",
   "The big idea": "Большая идея",
   "Founder and CEO of BidBary. One platform for every way people gather.":
@@ -564,7 +564,7 @@ const ru: Record<string, string> = {
   "Seat 48, Friday 20:00": "Место 48, пятница 20:00",
   Tungsten: "Вольфрам",
   Grain: "Зерно",
-  "Founder of BidBary, Tech Lead at PMIS (BP)": "Основатель BidBary, техлид в PMIS (BP)",
+  "Founder of BidBary, Tech Lead at PMIS": "Основатель BidBary, техлид в PMIS",
   "Technology, psychology, leadership, building products":
     "Технологии, психология, лидерство, создание продуктов",
   "I build scalable software and I have spent seven years helping people through hard moments. That mix shapes everything I do: I design systems for the people who will use them, and I lead teams the way I would want to be led.":
@@ -638,7 +638,7 @@ const ru: Record<string, string> = {
   "PLACEHOLDER — city after dark": "ЗАПОЛНИТЕЛЬ — город после заката",
   "PLACEHOLDER — in the room": "ЗАПОЛНИТЕЛЬ — в зале",
   heroIntro:
-    "Инженер из Баку. <b>Техлид в PMIS (BP)</b>, основатель <b>BidBary</b> и семь лет терапевт. Я создаю софт для людей, которые будут им пользоваться.",
+    "Инженер из Баку. <b>Техлид в PMIS</b>, основатель <b>BidBary</b> и семь лет терапевт. Я создаю софт для людей, которые будут им пользоваться.",
 };
 
 export default ru;

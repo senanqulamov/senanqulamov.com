@@ -2,7 +2,7 @@ export const hero = {
   status: "Open to new projects from November",
   edition: "Portfolio, 2026 edition",
   intro:
-    "Engineer from Baku. <b>Tech Lead at PMIS (BP)</b>, founder of <b>BidBary</b>, and for seven years, a therapist. I build software for the people who will use it.",
+    "Engineer from Baku. <b>Tech Lead at PMIS</b>, founder of <b>BidBary</b>, and for seven years, a therapist. I build software for the people who will use it.",
   portraitCaption: "Baku, 2025",
   portraitHint: "Move through the photo",
   badge: "ENGINEER · FOUNDER · LISTENER · SINCE 2019 · ",
@@ -61,7 +61,7 @@ export const story = {
     {
       year: "2025",
       title: "Leading at scale",
-      text: "Tech Lead at PMIS (BP), after building enterprise backends for Inci Group with Laravel and Java.",
+      text: "Tech Lead at PMIS, after building enterprise backends for Inci Group with Laravel and Java.",
     },
     {
       year: "Now",

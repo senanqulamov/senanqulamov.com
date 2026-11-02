@@ -30,7 +30,7 @@ const display = Unbounded({
 const text = Geist({ subsets: ["latin", "latin-ext", "cyrillic"], variable: "--font-text", display: "swap" });
 const useAnalytics = process.env.NODE_ENV === "production" && process.env.VERCEL === "1";
 const description =
-  "Senan Qulamov is a Baku-based engineer, Tech Lead at PMIS (BP), BidBary founder, and former therapist. Explore his work, writing, and ways to collaborate.";
+  "Senan Qulamov is a Baku-based engineer, Tech Lead at PMIS, BidBary founder, and former therapist. Explore his work, writing, and ways to collaborate.";
 const personSchema = {
   "@context": "https://schema.org",
   "@type": "Person",
@@ -41,7 +41,7 @@ const personSchema = {
   image: profile.portraitUrl,
   sameAs: [profile.linkedin, profile.github],
   jobTitle: "Tech Lead",
-  worksFor: { "@type": "Organization", name: "PMIS (BP)" },
+  worksFor: { "@type": "Organization", name: "PMIS" },
   homeLocation: { "@type": "Place", name: profile.city },
 };
 const websiteSchema = {

@@ -26,7 +26,7 @@ export default function OpenGraphImage() {
           <div style={{ fontSize: 120, fontWeight: 700, letterSpacing: -6, lineHeight: 1 }}>Qulamov</div>
         </div>
         <div style={{ display: "flex", fontSize: 30, opacity: 0.85 }}>
-          Tech Lead at PMIS (BP) · Founder of BidBary · Seven years a therapist
+          Tech Lead at PMIS · Founder of BidBary · Seven years a therapist
         </div>
       </div>
     ),

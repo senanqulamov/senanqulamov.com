@@ -29,7 +29,7 @@ const az: Record<string, string> = {
   Building: "Qururam",
   "BidBary, the next release": "BidBary, növbəti buraxılış",
   Leading: "Rəhbərlik edirəm",
-  "Engineering at PMIS (BP)": "PMIS (BP)-də mühəndislik",
+  "Engineering at PMIS": "PMIS-də mühəndislik",
   "Open to": "Açığam",
   "New projects from November": "Noyabrdan yeni layihələrə",
   "Based in": "Yaşayıram",
@@ -103,8 +103,8 @@ const az: Record<string, string> = {
   "Military service. Resilience, teamwork and command, learned the hard way.":
     "Hərbi xidmət. Dözümlülük, komanda işi və rəhbərlik, çətin yolla öyrənilmiş.",
   "Leading at scale": "Miqyasda rəhbərlik",
-  "Tech Lead at PMIS (BP), after building enterprise backends for Inci Group with Laravel and Java.":
-    "Inci Group üçün Laravel və Java ilə korporativ backend qurduqdan sonra PMIS (BP)-də texniki rəhbər.",
+  "Tech Lead at PMIS, after building enterprise backends for Inci Group with Laravel and Java.":
+    "Inci Group üçün Laravel və Java ilə korporativ backend qurduqdan sonra PMIS-də texniki rəhbər.",
   Now: "İndi",
   "The big idea": "Böyük ideya",
   "Founder and CEO of BidBary. One platform for every way people gather.":
@@ -567,7 +567,7 @@ const az: Record<string, string> = {
   "Seat 48, Friday 20:00": "48-ci yer, cümə 20:00",
   Tungsten: "Volfram",
   Grain: "Dən",
-  "Founder of BidBary, Tech Lead at PMIS (BP)": "BidBary-nin təsisçisi, PMIS (BP)-də texniki rəhbər",
+  "Founder of BidBary, Tech Lead at PMIS": "BidBary-nin təsisçisi, PMIS-də texniki rəhbər",
   "Technology, psychology, leadership, building products":
     "Texnologiya, psixologiya, rəhbərlik, məhsul qurma",
   "I build scalable software and I have spent seven years helping people through hard moments. That mix shapes everything I do: I design systems for the people who will use them, and I lead teams the way I would want to be led.":
@@ -641,7 +641,7 @@ const az: Record<string, string> = {
   "PLACEHOLDER — city after dark": "YER TUTUCU — gecə şəhər",
   "PLACEHOLDER — in the room": "YER TUTUCU — otaqda",
   heroIntro:
-    "Bakıdan mühəndis. <b>PMIS (BP)-də texniki rəhbər</b>, <b>BidBary</b>-nin təsisçisi və yeddi il terapevt. İstifadə edəcək insanlar üçün proqram təminatı qururam.",
+    "Bakıdan mühəndis. <b>PMIS-də texniki rəhbər</b>, <b>BidBary</b>-nin təsisçisi və yeddi il terapevt. İstifadə edəcək insanlar üçün proqram təminatı qururam.",
 };
 
 export default az;

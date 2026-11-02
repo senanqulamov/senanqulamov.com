@@ -133,9 +133,9 @@ export const Brain = (() => {
       a: (L: Lang) =>
         A(
           X(
-            "Senan Qulamov is an engineer from Baku: Tech Lead at PMIS (BP), founder and CEO of BidBary, and for seven years a therapist in parallel. He builds software for the people who will use it.",
-            "Senan Qulamov Bakıdan mühəndisdir: PMIS (BP)-də texniki rəhbər, BidBary-nin təsisçisi və CEO-su, paralel olaraq yeddi il terapevt. O, istifadə edəcək insanlar üçün proqram təminatı qurur.",
-            "Сенан Гуламов — инженер из Баку: техлид в PMIS (BP), основатель и CEO BidBary и параллельно семь лет терапевт. Он создаёт софт для людей, которые будут им пользоваться.",
+            "Senan Qulamov is an engineer from Baku: Tech Lead at PMIS, founder and CEO of BidBary, and for seven years a therapist in parallel. He builds software for the people who will use it.",
+            "Senan Qulamov Bakıdan mühəndisdir: PMIS-də texniki rəhbər, BidBary-nin təsisçisi və CEO-su, paralel olaraq yeddi il terapevt. O, istifadə edəcək insanlar üçün proqram təminatı qurur.",
+            "Сенан Гуламов — инженер из Баку: техлид в PMIS, основатель и CEO BidBary и параллельно семь лет терапевт. Он создаёт софт для людей, которые будут им пользоваться.",
           )(L),
           { acts: [ln("cv", "/credits", L)] },
         ),
@@ -363,9 +363,9 @@ export const Brain = (() => {
       a: (L: Lang) =>
         A(
           X(
-            "Yes. Senan leads engineering at PMIS (BP) today and led teams at Allrent and Deirvlon before. He can join as a tech lead, a senior engineer or an advisor. Fractional leadership starts from AZN 2,000 / month.",
-            "Bəli. Senan hazırda PMIS (BP)-də mühəndisliyə rəhbərlik edir, əvvəllər Allrent və Deirvlon-da komandalara rəhbərlik edib. Texniki rəhbər, senior mühəndis və ya məsləhətçi kimi qoşula bilər. Hissəvi rəhbərlik AZN 2,000 / ay-dan başlayır.",
-            "Да. Сейчас Сенан руководит инженерией в PMIS (BP), раньше вёл команды в Allrent и Deirvlon. Может присоединиться как техлид, senior-инженер или советник. Техлид на part-time — от AZN 2,000 / мес.",
+            "Yes. Senan leads engineering at PMIS today and led teams at Allrent and Deirvlon before. He can join as a tech lead, a senior engineer or an advisor. Fractional leadership starts from AZN 2,000 / month.",
+            "Bəli. Senan hazırda PMIS-də mühəndisliyə rəhbərlik edir, əvvəllər Allrent və Deirvlon-da komandalara rəhbərlik edib. Texniki rəhbər, senior mühəndis və ya məsləhətçi kimi qoşula bilər. Hissəvi rəhbərlik AZN 2,000 / ay-dan başlayır.",
+            "Да. Сейчас Сенан руководит инженерией в PMIS, раньше вёл команды в Allrent и Deirvlon. Может присоединиться как техлид, senior-инженер или советник. Техлид на part-time — от AZN 2,000 / мес.",
           )(L),
           { acts: [ln("start", "/start", L)] },
         ),
@@ -382,9 +382,9 @@ export const Brain = (() => {
       a: (L: Lang) =>
         A(
           X(
-            "Senan is currently Tech Lead at PMIS (BP) and building BidBary, so most new work is project-based or fractional. For a strong role, write to him and he'll answer honestly.",
-            "Senan hazırda PMIS (BP)-də texniki rəhbərdir və BidBary-ni qurur, ona görə yeni işlərin çoxu layihə əsaslı və ya hissəvidir. Güclü bir vəzifə üçün ona yazın, dürüst cavab verəcək.",
-            "Сейчас Сенан техлид в PMIS (BP) и строит BidBary, поэтому новая работа в основном проектная или частичная. Если роль сильная, напишите ему, он честно ответит.",
+            "Senan is currently Tech Lead at PMIS and building BidBary, so most new work is project-based or fractional. For a strong role, write to him and he'll answer honestly.",
+            "Senan hazırda PMIS-də texniki rəhbərdir və BidBary-ni qurur, ona görə yeni işlərin çoxu layihə əsaslı və ya hissəvidir. Güclü bir vəzifə üçün ona yazın, dürüst cavab verəcək.",
+            "Сейчас Сенан техлид в PMIS и строит BidBary, поэтому новая работа в основном проектная или частичная. Если роль сильная, напишите ему, он честно ответит.",
           )(L),
           { acts: [ln("email", "mailto:" + profile.email, L)] },
         ),
@@ -442,9 +442,9 @@ export const Brain = (() => {
       a: (L: Lang) =>
         A(
           X(
-            "Shipping production software since 2019: an internship at ATL Tech, then Ferrum Capital, Deirvlon, Allrent, GlobalSoft and Inci Group. Today he's Tech Lead at PMIS (BP) and founder of BidBary.",
-            "2019-dan real məhsul kodu: ATL Tech-də təcrübə, sonra Ferrum Capital, Deirvlon, Allrent, GlobalSoft və Inci Group. Hazırda PMIS (BP)-də texniki rəhbər və BidBary-nin təsisçisidir.",
-            "Пишет продакшн-софт с 2019 года: стажировка в ATL Tech, затем Ferrum Capital, Deirvlon, Allrent, GlobalSoft и Inci Group. Сейчас техлид в PMIS (BP) и основатель BidBary.",
+            "Shipping production software since 2019: an internship at ATL Tech, then Ferrum Capital, Deirvlon, Allrent, GlobalSoft and Inci Group. Today he's Tech Lead at PMIS and founder of BidBary.",
+            "2019-dan real məhsul kodu: ATL Tech-də təcrübə, sonra Ferrum Capital, Deirvlon, Allrent, GlobalSoft və Inci Group. Hazırda PMIS-də texniki rəhbər və BidBary-nin təsisçisidir.",
+            "Пишет продакшн-софт с 2019 года: стажировка в ATL Tech, затем Ferrum Capital, Deirvlon, Allrent, GlobalSoft и Inci Group. Сейчас техлид в PMIS и основатель BidBary.",
           )(L),
           { acts: [ln("cv", "/credits", L)] },
         ),
