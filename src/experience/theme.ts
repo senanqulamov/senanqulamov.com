@@ -7,6 +7,22 @@ import { tr } from "./i18n";
 import { blip } from "./sound";
 
 let themeBusy = false;
+export type ThemeMode = "dark" | "light" | "auto";
+
+export function setTheme(mode: ThemeMode) {
+  const resolved = mode === "auto" ? (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark") : mode;
+  root.dataset.theme = resolved;
+  root.dataset.themeMode = mode;
+  localStorage.setItem("sq-theme", mode);
+  syncThemeButton();
+  GL && GL.setLight(resolved === "light" ? 1 : 0, true);
+  $$('[data-theme-label]').forEach((e) => (e.textContent = tr(resolved === "light" ? "Light" : "Dark")));
+}
+
+matchMedia("(prefers-color-scheme: light)").addEventListener("change", () => {
+  if (localStorage.getItem("sq-theme") === "auto") setTheme("auto");
+});
+
 export async function toggleTheme(fromEl?: HTMLElement) {
   if (themeBusy) return;
   themeBusy = true;
@@ -15,11 +31,7 @@ export async function toggleTheme(fromEl?: HTMLElement) {
     x = r.left + r.width / 2,
     y = r.top + r.height / 2;
   const apply = () => {
-    root.dataset.theme = next;
-    syncThemeButton();
-    localStorage.setItem("sq-theme", next);
-    GL && GL.setLight(next === "light" ? 1 : 0, true);
-    $$("[data-theme-label]").forEach((e) => (e.textContent = tr(next === "light" ? "Light" : "Dark")));
+    setTheme(next);
   };
   blip(next === "light" ? 1180 : 520, 0.35);
   if ((document as any).startViewTransition && !reduce) {

@@ -1,9 +1,8 @@
-/* Phone fixes: loader, menu, dock section links, keyboard, Director, search, project tour.
+/* Phone fixes: loader, dock section links, keyboard, Director, search, project tour.
    Loaded last. Everything below 821px only, except the desktop guard at the top. */
 
 /* Phone-only markup never shows on desktop. */
 @media (min-width: 821px) {
-  .mobile-menu-settings,
   .mobile-dock-sub {
     display: none !important;
   }
@@ -46,51 +45,6 @@
     left: 20px;
     right: 20px;
     bottom: calc(30px + env(safe-area-inset-bottom, 0px));
-  }
-
-  /* ---------- Menu: tiles stay above the dock; current page readable in both themes ---------- */
-  #menu {
-    padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
-  }
-  .m-list a > :not(.mi-n):not(.mi-t),
-  .m-list a::before,
-  .m-list a::after,
-  .m-list .mi-t::after,
-  .m-list .mi-ar {
-    display: none !important;
-  }
-  .m-list a.cur-page,
-  .m-list a.cur-page .mi-n,
-  .m-list a.cur-page .mi-t,
-  .m-list a.cur-page .mi-t .ch {
-    color: var(--bg) !important;
-    background-color: var(--fg);
-  }
-  .m-list a.cur-page .mi-n,
-  .m-list a.cur-page .mi-t,
-  .m-list a.cur-page .mi-t .ch {
-    background: none;
-  }
-  @media (hover: none) {
-    .m-list a:hover {
-      transform: none;
-    }
-  }
-  @media (max-height: 800px) {
-    .m-list li,
-    .m-list a {
-      height: 44px;
-    }
-  }
-
-  /* The lens area at the top of the menu is a window onto the chrome behind it. */
-  #menu {
-    background: linear-gradient(to bottom, transparent 0, transparent 176px, var(--bg) 176px) !important;
-  }
-  body.menu-open #view,
-  body.menu-open .hdr .logo,
-  body.menu-open .hdr .pill {
-    visibility: hidden;
   }
 
   /* ---------- Section links in a second dock row ---------- */

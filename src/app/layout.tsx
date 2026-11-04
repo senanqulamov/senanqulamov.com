@@ -9,6 +9,7 @@ import { getT } from "@/i18n/server";
 import { Experience } from "@/components/shell/Experience";
 import { Header } from "@/components/shell/Header";
 import { Menu } from "@/components/shell/Menu";
+import { MobileMenu } from "@/components/shell/MobileMenu";
 import {
   CursorLayer,
   Director,
@@ -85,7 +86,7 @@ export const viewport: Viewport = {
     { media: "(prefers-color-scheme: light)", color: "#EEEDF2" },
   ],
 };
-const themeScript = `try{var t=localStorage.getItem("sq-theme");document.documentElement.dataset.theme=t||(matchMedia("(prefers-color-scheme: light)").matches?"light":"dark")}catch(e){document.documentElement.dataset.theme="dark"}`;
+const themeScript = `try{var t=localStorage.getItem("sq-theme"),s=matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";document.documentElement.dataset.theme=t==="auto"?s:(t||s);document.documentElement.dataset.themeMode=t||"auto"}catch(e){document.documentElement.dataset.theme="dark"}`;
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { lang, t } = await getT();
@@ -107,6 +108,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <Loader t={t} />
           <Header t={t} lang={lang} />
           <Menu t={t} lang={lang} />
+          <MobileMenu t={t} lang={lang} />
           <Palette t={t} />
           <SketchStage t={t} />
           <main id="view">{children}</main>

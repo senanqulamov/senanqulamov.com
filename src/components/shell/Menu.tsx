@@ -88,22 +88,6 @@ export function Menu({ t, lang }: { t: Translate; lang: Lang }) {
           </a>
           <span data-clock />
         </div>
-        <div className="mobile-menu-settings">
-          <div className="mobile-segment" role="group" aria-label={t("Theme")}>
-            <span>{t("Theme")}</span>
-            <button data-mobile-theme="dark">{t("Dark")}</button>
-            <button data-mobile-theme="light">{t("Light")}</button>
-          </div>
-          <div className="mobile-segment" role="group" aria-label={t("Language")}>
-            <span>{t("Language")}</span>
-            {languages.map((l) => <button key={l.code} data-mobile-lang={l.code} aria-pressed={l.code === lang}>{l.code.toUpperCase()}</button>)}
-          </div>
-          <div className="mobile-menu-actions">
-            <button data-sound aria-pressed="false"><Equalizer />{t("Sound")}</button>
-            <button data-open-palette>{t("Search")}</button>
-            <button id="mobileFxBtn" aria-pressed="false">{t("Reduce effects")}</button>
-          </div>
-        </div>
       </div>
     </div>
   );

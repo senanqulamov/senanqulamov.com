@@ -25,24 +25,13 @@ const menuEl = $("#menu"),
 export let menuOpen = false,
   menuBusy = false;
 let menuKb = false;
-/** Phones: the object rests in the lens area at the top of the menu, never over the tiles. */
-const mobileMenuTarget = () => ({
-  m: 1,
-  u: 0.5,
-  v: 92 / innerHeight,
-  s: 0.24,
-  dim: 1,
-});
-const menuTarget = () =>
-  isMobile()
-    ? mobileMenuTarget()
-    : {
+const menuTarget = () => ({
         m: 1,
         u: innerWidth < 980 ? 0.7 : 0.32,
         v: innerWidth < 980 ? 0.42 : 0.42,
         s: innerWidth < 980 ? 0.24 : 0.36,
         dim: 1,
-      };
+      });
 function menuItemsIn() {
   const chars = $$(".mi-t .ch", mList);
   gsap.fromTo(
@@ -67,6 +56,7 @@ function menuItemsIn() {
   );
 }
 export async function openMenu() {
+  if (isMobile()) return;
   if (menuOpen || menuBusy || GLT.busy) return;
   menuBusy = true;
   menuOpen = true;
@@ -76,14 +66,6 @@ export async function openMenu() {
   mPrev.textContent = tr(activePage.description);
   mBigT.innerHTML = `<span>${esc(tr(activePage.title))}</span>`;
   mBig.classList.add("on");
-  if (isMobile()) {
-    // The circle reveal is CSS (body.menu-open); the chrome glides into the lens area.
-    body.classList.add("menu-open", "menu-full");
-    menuItemsIn();
-    if (GL) GL.override = mobileMenuTarget();
-    menuBusy = false;
-    return;
-  }
   if (GLT.ok()) {
     const r = $("#menuBtn").getBoundingClientRect();
     await GLT.cover({
@@ -133,12 +115,8 @@ export function closeMenuInstant(keepGL?: boolean) {
   lenis && lenis.start();
 }
 export async function closeMenu() {
+  if (isMobile()) return;
   if (!menuOpen || menuBusy || GLT.busy) return;
-  if (isMobile()) {
-    closeMenuInstant();
-    scrollTick(true);
-    return;
-  }
   menuBusy = true;
   gsap.to($$(".mi-t .ch", mList), {
     yPercent: -120,
@@ -170,6 +148,7 @@ export async function closeMenu() {
   menuBusy = false;
 }
 $("#menuBtn").addEventListener("click", (e: MouseEvent) => {
+  if (isMobile()) return;
   menuKb = e.detail === 0;
   buzz(10);
   menuOpen ? closeMenu() : openMenu();

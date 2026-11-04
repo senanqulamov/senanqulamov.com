@@ -98,7 +98,7 @@ export function Header({ t, lang }: { t: Translate; lang: Lang }) {
         </button>
       </div>
       <nav className="mobile-dock-sub" id="dockSub" aria-label="Sections" />
-      <div className="mobile-dock" aria-label="Page controls">
+      <div className="mobile-dock" aria-label="Open menu" role="button" tabIndex={0}>
         <div className="mobile-dock-meta">
           <b id="dockTitle" />
           <span className="mobile-dock-progress" aria-hidden="true">

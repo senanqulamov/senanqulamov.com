@@ -14,6 +14,7 @@ import { Loader } from "./loader";
 import { drawMenu, menuBusy, menuOpen } from "./menu";
 import "./palette";
 import "./mobile";
+import "./mobile-menu";
 import { connectRouter, navigate, onRendered } from "./router";
 import { cacheScrollLayout, scrollTick } from "./scroll";
 import { AMB, soundOn } from "./sound";
