@@ -25,13 +25,14 @@ const menuEl = $("#menu"),
 export let menuOpen = false,
   menuBusy = false;
 let menuKb = false;
-const menuTarget = () => ({
-  m: 1,
-  u: innerWidth < 980 ? 0.7 : 0.32,
-  v: innerWidth < 980 ? 0.42 : 0.42,
-  s: innerWidth < 980 ? 0.24 : 0.36,
-  dim: 1,
-});
+const menuTarget = () => {
+  const stage = document.querySelector<HTMLElement>("#menu [data-gl-stage]");
+  if (innerWidth < 820 && stage) {
+    const r = stage.getBoundingClientRect();
+    return { m: 1, u: (r.left + r.width / 2) / innerWidth, v: (r.top + r.height / 2) / innerHeight, s: (Math.min(r.width, r.height) * 3.125 * .72) / innerHeight, dim: 1 };
+  }
+  return { m: 1, u: innerWidth < 980 ? 0.7 : 0.32, v: 0.42, s: innerWidth < 980 ? 0.24 : 0.36, dim: 1 };
+};
 function menuItemsIn() {
   const chars = $$(".mi-t .ch", mList);
   gsap.fromTo(

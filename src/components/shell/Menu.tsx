@@ -10,6 +10,7 @@ export function Menu({ t, lang }: { t: Translate; lang: Lang }) {
     <div id="menu" role="dialog" aria-modal="true" aria-label={t("Menu")}>
       <div className="m-panel" id="mPanel" aria-hidden="true" />
       <div className="m-big" id="mBig" aria-hidden="true">
+        <div className="mobile-menu-stage" data-gl-stage="sphere" data-gl-scale=".72" />
         <div className="mbt" id="mBigT" />
       </div>
       <ul className="m-list" id="mList">

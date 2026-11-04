@@ -1,23 +1,25 @@
+.mobile-menu-settings { display:none; }
 @media (max-width: 820px) {
   #menu { z-index:58; display:block; padding:0; overflow:hidden; background:var(--bg); visibility:hidden; pointer-events:none; clip-path:circle(0 at calc(100% - 38px) calc(100% - 38px)); transition:clip-path .8s cubic-bezier(.76,0,.24,1), visibility 0s .8s; }
   #menu::before { display:none; }
   body.menu-open #menu { visibility:visible; pointer-events:auto; clip-path:circle(150% at calc(100% - 38px) calc(100% - 38px)); transition-delay:0s; }
   #menu .m-panel, #menu .m-card, #menu .m-now, #menu .m-foot, #menu .m-row { display:none !important; }
   #menu > .m-big { display:block; position:relative; inset:auto; z-index:0; height:176px; overflow:hidden; opacity:1; border-bottom:1px solid var(--line); }
+  .mobile-menu-stage { position:absolute; z-index:2; left:50%; top:10px; width:150px; height:150px; transform:translateX(-50%); pointer-events:none; }
   .m-big .mbt { position:absolute; inset:19px 0 auto; display:block; animation:none; transform:none; font:600 clamp(56px,19vw,88px)/.9 var(--display); letter-spacing:-.08em; white-space:nowrap; color:color-mix(in srgb,var(--fg) 8%,transparent); }
   .m-big .mbt span { display:inline; }
   .m-preview { position:fixed; z-index:1; top:142px; left:16px; right:16px; margin:0; min-height:0; max-width:none; font:13px/1.2 var(--text); color:var(--fg-2); }
   .m-list { position:relative; display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:0; padding:10px 16px 8px; align-self:auto; }
-  .m-list li { min-width:0; height:48px; overflow:visible; border:0; }
-  .m-list a { height:48px; display:flex; align-items:center; gap:8px; padding:0 10px; transform:none; border:1px solid var(--line); border-radius:14px; background:color-mix(in srgb,var(--fg) 4%,transparent); }
+  .m-list li { min-width:0; height:56px; overflow:visible; border:0; }
+  .m-list a { height:56px; display:flex; align-items:center; gap:8px; padding:0 10px; transform:none; border:1px solid var(--line); border-radius:14px; background:color-mix(in srgb,var(--fg) 4%,transparent); }
   .m-list .mi-n { flex:0 0 auto; font-size:10px; }
   .m-list .mi-t { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font:500 12px/1 var(--text); letter-spacing:-.02em; }
   .m-list .mi-t .ch { display:inline !important; transform:none !important; }
-  .m-list .mi-d, .m-list .mi-ar { display:none; }
-  .m-list a.cur-page { color:var(--bg); background:var(--fg); border-color:var(--fg); }
+  .m-list .mi-d, .m-list .mi-ar { display:none !important; }
+  .m-list a.cur-page, .m-list a.cur-page .mi-n, .m-list a.cur-page .mi-t, .m-list a.cur-page .lv { color:var(--bg) !important; background:var(--fg); border-color:var(--fg); }
   .m-list a[data-k="start"] { background:linear-gradient(135deg,color-mix(in srgb,var(--ice) 24%,transparent),color-mix(in srgb,var(--lilac) 21%,transparent)); }
   .m-list a[data-k="start"].cur-page { background:var(--fg); }
-  .m-side { display:block; opacity:1; transform:none; padding:0 16px; }
+  .m-side { display:block; opacity:1; transform:none; padding:0 16px calc(80px + env(safe-area-inset-bottom,0px)); }
   .mobile-menu-settings { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
   .mobile-segment { display:flex; align-items:center; gap:2px; height:36px; padding:3px; border:1px solid var(--line); border-radius:12px; }
   .mobile-segment span { padding:0 5px; font-size:10px; color:var(--fg-2); }
@@ -28,5 +30,6 @@
   .mobile-menu-actions button { display:flex; align-items:center; justify-content:center; gap:5px; height:34px; padding:0 4px; border:1px solid var(--line); border-radius:12px; color:var(--fg); background:color-mix(in srgb,var(--fg) 3%,transparent); font-size:10px; white-space:nowrap; }
   .mobile-menu-actions svg { width:13px; height:13px; }
   body.menu-open .burger .bl i:first-child { transform:translateY(1px) rotate(45deg); } body.menu-open .burger .bl i:last-child { transform:translateY(-1px) rotate(-45deg); }
-  @media (min-height: 900px) { .m-list { gap:10px; padding-top:14px; } .m-list li, .m-list a { height:58px; } }
+  @media (max-height:800px) { .m-list { gap:6px; padding-top:6px; padding-bottom:5px; } .m-list li, .m-list a { height:48px; } .mobile-segment{height:32px}.mobile-menu-actions button{height:30px} }
+  @media (hover:hover) { .m-list a:hover .mi-t, .m-list a:focus-visible .mi-t { transform:none; } }
 }
