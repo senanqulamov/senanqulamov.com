@@ -416,6 +416,8 @@ export function initGL() {
   let frames = 0,
     acc = 0;
   const api = {
+    /** Called right after each frame is drawn (the phone menu copies the blob from it). */
+    afterRender: null as null | ((canvas: HTMLCanvasElement) => void),
     pTex,
     ready,
     get isReady() {
@@ -799,6 +801,7 @@ export function initGL() {
       renderer.setRenderTarget(null);
       renderer.setClearColor(0x000000, 0);
       renderer.render(comp.sc, cam);
+      api.afterRender?.(renderer.domElement);
       frames++;
       acc += dt;
       if (acc > 1.2) {
