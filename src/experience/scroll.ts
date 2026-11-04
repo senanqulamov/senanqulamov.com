@@ -7,7 +7,7 @@ import { tr } from "./i18n";
 import { titleOf } from "./routes";
 import { GLT } from "./transitions";
 import { menuOpen } from "./menu";
-import { keptOnMobile, scenes } from "./gl/scenes";
+import { scenes } from "./gl/scenes";
 import { DIRECTOR_SHAPE } from "./gl/spirit";
 import { hdr } from "./header";
 import { lostDrops } from "./pages/notfound";
@@ -249,6 +249,7 @@ export function setupScroll(view: HTMLElement) {
 let lastY = 0;
 export function scrollTick(force = false) {
   if (!page) return;
+  const view = $("#view");
   const y = scrollY,
     mid = innerHeight * 0.5,
     narrow = innerWidth < 980,
@@ -276,14 +277,8 @@ export function scrollTick(force = false) {
     scene.s = lerp(g(a, "s"), g(b, "s"), k);
     scene.dim = lerp(a.dim, b.dim, k);
     if (body.classList.contains("gallery-pinned")) scene.dim = 0;
-    if (innerWidth < 820 && !keptOnMobile.includes(s.dataset.s)) {
-      scene.u = 0.86;
-      scene.v = 0.9;
-      scene.s = 0.1;
-      scene.dim = 0.65;
-    }
+    if (innerWidth < 820) setMobileStage(view);
   }
-  const view = $("#view");
   const ct = $("[data-s='contact']", view);
   const contact = ct && page.metrics?.get(ct);
   scene.join = contact ? smoothstep(0.1, 0.9, (innerHeight - (contact.top - y)) / innerHeight) : 0;
@@ -342,6 +337,8 @@ export function scrollTick(force = false) {
   if (hs.textContent !== lblT) hs.textContent = lblT;
   if (!menuOpen) {
     hdr.classList.toggle("compact", y > 110);
+    const dockProg = document.querySelector<HTMLElement>("#dockProg");
+    if (dockProg) dockProg.style.width = `${Math.min(100, Math.max(0, pr * 100))}%`;
     if (!force) {
       if (y > lastY + 6 && y > innerHeight * 1.2) hdr.classList.add("hide");
       else if (y < lastY - 4) hdr.classList.remove("hide");
@@ -367,4 +364,30 @@ export function scrollTick(force = false) {
     c.style.transform = `scale(${(1 - p * 0.07).toFixed(4)}) rotateX(${(p * 6).toFixed(2)}deg)`;
     c.style.filter = `brightness(${(1 - p * 0.4).toFixed(3)})`;
   });
+}
+
+const stageShapes: Record<string, number> = { blob: 0, sphere: 1, column: 2, ring: 3 };
+/** Resolves the most visible empty mobile stage directly from its live rect. */
+function setMobileStage(view: HTMLElement) {
+  const stages = $$<HTMLElement>("[data-gl-stage]", view);
+  let chosen: HTMLElement | null = null;
+  let score = 0;
+  for (const el of stages) {
+    const r = el.getBoundingClientRect();
+    const visible = Math.max(0, Math.min(r.bottom, innerHeight) - Math.max(r.top, 0));
+    const fraction = visible / Math.max(1, Math.min(r.height, innerHeight));
+    if (fraction > score) { score = fraction; chosen = el; }
+  }
+  if (chosen && score > 0.25) {
+    const r = chosen.getBoundingClientRect();
+    const scale = Number(chosen.dataset.glScale) || 0.7;
+    scene.m = stageShapes[chosen.dataset.glStage || "blob"] ?? 0;
+    scene.u = (r.left + r.width / 2) / innerWidth;
+    scene.v = (r.top + r.height / 2) / innerHeight;
+    scene.s = (Math.min(r.width, r.height) * scale * 3.125) / innerHeight;
+    scene.dim = 1;
+  } else {
+    // A deliberate, unobtrusive top-bar parking spot when no empty stage is visible.
+    scene.m = 0; scene.u = 0.91; scene.v = 0.07; scene.s = 0.075; scene.dim = 0.78;
+  }
 }

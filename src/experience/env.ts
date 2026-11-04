@@ -11,7 +11,9 @@ export const reduce =
 
 export const coarse = matchMedia("(pointer: coarse)").matches;
 
-export const lowEnd = coarse || innerWidth < 820 || (navigator.hardwareConcurrency || 8) <= 4;
+// Pointer type and viewport are not a useful proxy for GPU capability. Phones
+// start at full fidelity and the renderer's FPS loop is allowed to step down.
+export const lowEnd = (navigator.hardwareConcurrency || 8) <= 4;
 
 /** Phones and small tablets get shorter, lighter motion. */
 export const isMobile = () => innerWidth < 820 || coarse;

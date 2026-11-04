@@ -35,15 +35,15 @@ $(".skip")?.addEventListener("click", (e) => {
 });
 
 const effectsReduced = localStorage.getItem("sq-reduce") === "1";
-const fxButton = $("#fxBtn");
-if (fxButton) {
+const fxButtons = [$("#fxBtn"), $("#mobileFxBtn")].filter(Boolean) as HTMLElement[];
+fxButtons.forEach((fxButton) => {
   fxButton.setAttribute("aria-pressed", String(effectsReduced));
   fxButton.textContent = tr(effectsReduced ? "Full effects" : "Reduce effects");
   fxButton.addEventListener("click", () => {
     localStorage.setItem("sq-reduce", effectsReduced ? "0" : "1");
     location.reload();
   });
-}
+});
 
 // Keep keyboard focus inside the menu while it is open.
 addEventListener("keydown", (e) => {

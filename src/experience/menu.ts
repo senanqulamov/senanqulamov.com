@@ -61,9 +61,10 @@ export async function openMenu() {
   menuOpen = true;
   $("#menuBtn").setAttribute("aria-expanded", String(true));
   lenis && lenis.stop();
-  mPrev.textContent = tr(
-    (pages.find((p) => p.key === (route ? sectionOf(route) : "home")) || pages[0]).description,
-  );
+  const activePage = pages.find((p) => p.key === (route ? sectionOf(route) : "home")) || pages[0];
+  mPrev.textContent = tr(activePage.description);
+  mBigT.innerHTML = `<span>${esc(tr(activePage.title))}</span>`;
+  mBig.classList.add("on");
   if (GLT.ok()) {
     const r = $("#menuBtn").getBoundingClientRect();
     await GLT.cover({

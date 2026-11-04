@@ -22,3 +22,10 @@
 @import "./contact.css";
 @import "./notfound.css";
 @import "./footer.css";
+@import "./mobile/shell.css";
+@import "./mobile/menu.css";
+@import "./mobile/director.css";
+@import "./mobile/pages.css";
+@import "./mobile/loader.css";
+@import "./mobile/home.css";
+@import "./mobile/remaining-pages.css";

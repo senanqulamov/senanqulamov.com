@@ -27,6 +27,17 @@ addEventListener(
   },
   { passive: true },
 );
+addEventListener(
+  "touchstart",
+  (e) => {
+    const t = e.touches[0];
+    if (!t) return;
+    mouse.x = t.clientX;
+    mouse.y = t.clientY;
+    mouse.active = true;
+  },
+  { passive: true },
+);
 
 export let GL: GLApi | null = null;
 export let lenis: Lenis | null = null;

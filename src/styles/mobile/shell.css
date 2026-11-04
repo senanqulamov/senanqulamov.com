@@ -1,0 +1,26 @@
+/* Phone shell — loaded last so desktop remains untouched. */
+.mobile-dock { display:none; }
+@media (max-width: 820px) {
+  body { padding-bottom: calc(104px + env(safe-area-inset-bottom, 0px)); }
+  .hdr { position: relative; padding: calc(14px + env(safe-area-inset-top, 0px)) 16px 12px; display: flex; align-items: center; min-height: 64px; }
+  .hdr .hdr-r > :not(.burger), .hdr .pill .pg-links, .hdr .pill .pg-prog { display: none !important; }
+  .hdr .pill { background: none; border: 0; box-shadow: none; padding: 0; }
+  .hdr .pill .pg-t { max-width: 44vw; }
+  .hdr .hdr-r { margin-left: auto; display: contents; }
+  .mobile-dock { display:block; position: fixed; z-index: 62; left: 16px; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); height: 64px; max-width: 488px; margin: auto; pointer-events: none; border: 1px solid var(--line-2); border-radius: 32px; background: color-mix(in srgb, var(--bg-2) 88%, transparent); box-shadow: 0 18px 50px rgba(0,0,0,.35); backdrop-filter: blur(18px) saturate(140%); -webkit-backdrop-filter: blur(18px) saturate(140%); opacity: 0; transform: translateY(14px); transition: opacity .5s var(--ease), transform .5s var(--ease); }
+  body.ready .mobile-dock { opacity: 1; transform: none; }
+  .mobile-dock-meta { position: absolute; left: 66px; right: 66px; top: 14px; min-width: 0; }
+  .mobile-dock-meta b { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:13px; font-weight:500; }
+  .mobile-dock-progress { display:block; height:3px; overflow:hidden; border-radius:3px; margin-top:7px; background:var(--line); }
+  .mobile-dock-progress i { display:block; width:0; height:100%; border-radius:inherit; background:var(--fg); transition:width .12s linear; }
+  .burger { position:fixed; z-index:63; right:26px; bottom:calc(26px + env(safe-area-inset-bottom, 0px)); width:44px; height:44px; padding:0; border:0; border-radius:50%; background:var(--fg); color:var(--bg); box-shadow:none; }
+  .burger .bl { width:22px; height:22px; background:transparent; }
+  .burger .bl i { width:18px; background:var(--bg); }
+  .dir-btn { z-index:63; left:26px; bottom:calc(26px + env(safe-area-inset-bottom, 0px)); width:44px; height:44px; box-shadow:none; filter:none; }
+  .dir-btn .dir-fallback { inset:3px; }
+  .dir-btn .dir-dot { width:9px; height:9px; right:0; top:0; }
+  .loading .burger, .loading .dir-btn, .dir-hide .dir-btn { opacity:0; pointer-events:none; }
+  .menu-open .dir-btn { opacity:1; transform:none; pointer-events:auto; }
+  .menu-open .mobile-dock { opacity:1; transform:none; }
+  .hdr.hide { transform:none !important; }
+}

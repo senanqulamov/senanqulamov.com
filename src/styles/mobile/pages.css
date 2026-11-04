@@ -1,0 +1,6 @@
+.mobile-gl-stage { display:none; }
+@media (max-width: 820px) {
+  .mobile-gl-stage { display:block; height:clamp(150px,48vw,220px); pointer-events:none; }
+  .hero-gl-stage { position:absolute; right:4%; top:13%; width:min(72vw,360px); height:min(72vw,360px); z-index:0; }
+  #hero > :not(.mobile-gl-stage) { position:relative; z-index:1; }
+}

@@ -91,6 +91,12 @@ export function Header({ t, lang }: { t: Translate; lang: Lang }) {
           </span>
         </button>
       </div>
+      <div className="mobile-dock" aria-label="Page controls">
+        <div className="mobile-dock-meta">
+          <b id="dockTitle" />
+          <span className="mobile-dock-progress" aria-hidden="true"><i id="dockProg" /></span>
+        </div>
+      </div>
     </header>
   );
 }

@@ -15,8 +15,9 @@ export function HomePage({ t, lang }: { t: Translate; lang: Lang }) {
   return (
     <>
       <section id="hero" data-s="hero">
+        <div className="mobile-gl-stage hero-gl-stage" data-gl-stage="blob" data-gl-scale=".72" aria-hidden="true" />
         <div className="hero-top">
-          <span className="tag">{t(hero.status)}</span>
+          <span className="tag hero-status"><i aria-hidden="true" />{t("Open from November")}</span>
           <span>
             {t(profile.city)} <b data-clock />
           </span>
@@ -35,6 +36,9 @@ export function HomePage({ t, lang }: { t: Translate; lang: Lang }) {
         </div>
         <div className="portrait-slot" id="pSlot" data-cursor={t("Hello")}>
           <img alt={profile.portraitAlt} src={profile.portrait} />
+          <h1 className="mobile-photo-name" aria-label={profile.name}>
+            {profile.name.split(" ").map((word) => <span key={word}>{word}</span>)}
+          </h1>
           <div className="badge" aria-hidden="true">
             <svg viewBox="0 0 124 124">
               <defs>
@@ -90,6 +94,7 @@ export function HomePage({ t, lang }: { t: Translate; lang: Lang }) {
             {t(belief.text)}
           </p>
           <p className="belief-note">{t(belief.note)}</p>
+          <div className="mobile-gl-stage" data-gl-stage="sphere" data-gl-scale=".66" aria-hidden="true" />
         </div>
       </section>
 
@@ -107,6 +112,7 @@ export function HomePage({ t, lang }: { t: Translate; lang: Lang }) {
       </section>
 
       <section id="story" data-s="story">
+        <div className="mobile-gl-stage" data-gl-stage="column" data-gl-scale=".58" aria-hidden="true" />
         <div className="story-sticky">
           <div className="story-top">
             <span>{t("The story, in seven scenes")}</span>
@@ -134,6 +140,7 @@ export function HomePage({ t, lang }: { t: Translate; lang: Lang }) {
       </section>
 
       <section id="bidbary" data-s="bidbary">
+        <div className="mobile-gl-stage" data-gl-stage="ring" data-gl-scale=".62" aria-hidden="true" />
         <div className="bb-copy">
           <span className="tag">{t(bidbary.tag)}</span>
           <h2 className="h-xl" data-split>

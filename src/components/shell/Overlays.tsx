@@ -156,6 +156,7 @@ export function Director({ t }: { t: Translate }) {
         </header>
         <div className="dir-chat" id="dirChat" />
       </section>
+      <div className="dir-scrim" id="dirScrim" aria-hidden="true" />
       <div className="dir-fig" id="dirFig" hidden title={t("Poke the Director")}>
         <span className="dir-shadow" aria-hidden="true" />
         <span className="dir-fig-face" id="dirFigFace" />

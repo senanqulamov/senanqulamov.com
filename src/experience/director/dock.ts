@@ -151,6 +151,24 @@ export const Dock = (() => {
   btn.addEventListener("click", () => setOpen(!open));
   $("#dirClose").addEventListener("click", () => setOpen(false));
   $("#dirFull").addEventListener("click", () => setOpen(false));
+  $("#dirScrim").addEventListener("click", () => setOpen(false));
+  let dragStart: number | null = null;
+  panel.addEventListener("pointerdown", (e) => {
+    if (!mobile() || !(e.target as HTMLElement).closest(".dir-grab, .dir-h")) return;
+    dragStart = e.clientY;
+    panel.setPointerCapture?.(e.pointerId);
+  });
+  panel.addEventListener("pointermove", (e) => {
+    if (dragStart === null) return;
+    gsap.set(panel, { y: Math.max(0, e.clientY - dragStart) });
+  });
+  panel.addEventListener("pointerup", (e) => {
+    if (dragStart === null) return;
+    const offset = e.clientY - dragStart;
+    dragStart = null;
+    if (offset > 110) setOpen(false);
+    else gsap.to(panel, { y: 0, duration: 0.3, ease: "power3.out" });
+  });
   fig.addEventListener("click", () => {
     ChatCore.poke();
     SFX.glass(1);

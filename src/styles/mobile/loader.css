@@ -1,0 +1,10 @@
+@media (max-width: 820px) {
+  #loader { display:grid; grid-template-rows:auto 1fr auto; align-items:stretch; max-width:520px; margin:auto; padding:calc(20px + env(safe-area-inset-top,0px)) 20px calc(20px + env(safe-area-inset-bottom,0px)); }
+  .l-top { align-self:start; font-size:12px; }
+  .l-enter3 { position:relative; bottom:auto; align-self:center; opacity:0; }
+  .l-enter3.on { opacity:1; }
+  .l-go3 { font-size:14px; }
+  .l-bot { position:relative; inset:auto; align-self:end; }
+  #loader .odo { font-size:clamp(42px,14vw,72px); }
+  .l-bar { left:20px; right:20px; bottom:calc(12px + env(safe-area-inset-bottom,0px)); }
+}

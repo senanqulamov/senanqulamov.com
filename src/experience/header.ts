@@ -8,6 +8,8 @@ import { setSound, soundOn } from "./sound";
 import { numberOf, sectionOf, titleOf } from "./routes";
 import { openPalette } from "./palette";
 import { toggleTheme } from "./theme";
+import { switchLang } from "./language";
+import { root } from "./dom";
 
 export const hdr = $("#hdr"),
   pgN = $("#pgN"),
@@ -18,6 +20,11 @@ $("#themeBtn").addEventListener("click", (e) => toggleTheme(e.currentTarget as H
 $("#mTheme").addEventListener("click", (e) => toggleTheme(e.currentTarget as HTMLElement));
 $$("[data-sound]").forEach((b) => b.addEventListener("click", () => setSound(!soundOn)));
 $("#palBtn").addEventListener("click", () => openPalette());
+$$('[data-mobile-theme]').forEach((b) => b.addEventListener("click", () => {
+  const next = (b as HTMLElement).dataset.mobileTheme;
+  if (next && root.dataset.theme !== next) toggleTheme(b as HTMLElement);
+}));
+$$('[data-mobile-lang]').forEach((b) => b.addEventListener("click", () => switchLang((b as HTMLElement).dataset.mobileLang as any)));
 export function moveInd(a: HTMLElement) {
   if (!a) {
     ind.style.opacity = "0";
@@ -48,6 +55,8 @@ setInterval(clockTick, 15000);
 export function setHeader(r: Route) {
   pgN.textContent = numberOf(r) + " / " + pad2(pages.length);
   scramble(pgT, titleOf(r), 600);
+  const dockTitle = $("#dockTitle");
+  if (dockTitle) dockTitle.textContent = titleOf(r);
   $$(".pill .pg-links a").forEach((a) =>
     a.classList.toggle("on", a.getAttribute("href") === "/" + sectionOf(r)),
   );
