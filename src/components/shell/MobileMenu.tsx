@@ -202,29 +202,31 @@ export function MobileMenu({ t, lang }: { t: Translate; lang: Lang }) {
                 </button>
               </div>
               <p className="mm-label">{t("About this site")}</p>
-              <article className="mm-about">
-                <span className="mm-aorb" aria-hidden="true" />
-                <small>{t("Portfolio · 2026 edition")}</small>
-                <b>{t("Designed and built by Senan in Baku.")}</b>
-                <p>
-                  Next.js · WebGL · GSAP
-                  <br />
-                  {t("Real-time chrome, rendered on your phone.")}
-                </p>
-              </article>
-              <div className="mm-contacts">
-                <button data-mm-copy={profile.email}>
-                  <span>{profile.email}</span>
-                  <small>{t("Copy")}</small>
-                </button>
-                <a href={profile.linkedin} target="_blank" rel="noopener">
-                  <span>LinkedIn</span>
-                  <small>↗</small>
-                </a>
-                <a href={profile.github} target="_blank" rel="noopener">
-                  <span>GitHub</span>
-                  <small>↗</small>
-                </a>
+              <div className="mm-ab2">
+                <article className="mm-about">
+                  <span className="mm-aorb" aria-hidden="true" />
+                  <small>{t("Portfolio · 2026 edition")}</small>
+                  <b>{t("Designed and built by Senan in Baku.")}</b>
+                  <p>
+                    Next.js · WebGL · GSAP
+                    <br />
+                    {t("Real-time chrome, rendered on your phone.")}
+                  </p>
+                </article>
+                <div className="mm-contacts">
+                  <button data-mm-copy={profile.email} aria-label={profile.email}>
+                    <span>{t("Email")}</span>
+                    <small>{t("Copy")}</small>
+                  </button>
+                  <a href={profile.linkedin} target="_blank" rel="noopener">
+                    <span>LinkedIn</span>
+                    <small>↗</small>
+                  </a>
+                  <a href={profile.github} target="_blank" rel="noopener">
+                    <span>GitHub</span>
+                    <small>↗</small>
+                  </a>
+                </div>
               </div>
             </div>
           </div>

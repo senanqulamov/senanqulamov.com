@@ -11,7 +11,7 @@
     position: fixed;
     inset: 0;
     z-index: 57;
-    background: rgba(3, 3, 8, 0.42);
+    background: rgba(3, 3, 8, 0.55);
     opacity: 0;
     pointer-events: none;
   }
@@ -33,10 +33,21 @@
     border: 1px solid var(--line);
     border-radius: 30px 30px 0 0;
     background: var(--bg);
-    box-shadow: 0 -30px 80px rgba(0, 0, 0, 0.45);
+    box-shadow: 0 -20px 50px rgba(0, 0, 0, 0.35);
+    contain: layout paint;
     scrollbar-width: none;
     -ms-overflow-style: none;
     overscroll-behavior: contain;
+  }
+  /* while the sheet morphs, nothing expensive is repainted */
+  .mm-sheet.moving {
+    box-shadow: none;
+    will-change: left, right, bottom, height, border-radius;
+  }
+  .mm-pane::after {
+    content: "";
+    display: block;
+    height: 18px;
   }
   .mm-sheet::-webkit-scrollbar,
   .mm-reel::-webkit-scrollbar {
@@ -288,8 +299,8 @@
   }
   .mm-card {
     flex: none;
-    width: 148px;
-    height: 148px;
+    width: min(64vw, 240px);
+    height: 168px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -664,5 +675,51 @@
   .mm-contacts small {
     font-size: 12px;
     color: var(--fg-2);
+  }
+}
+
+@media (max-width: 820px) {
+  /* About and contacts share one row */
+  .mm-ab2 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .mm-ab2 .mm-about {
+    padding: 14px 12px;
+    min-height: 152px;
+  }
+  .mm-ab2 .mm-about b {
+    max-width: none;
+    margin-top: 44px;
+    font-size: 13.5px;
+  }
+  .mm-ab2 .mm-about p {
+    font-size: 11px;
+    line-height: 1.45;
+  }
+  .mm-ab2 .mm-aorb {
+    right: -10px;
+    top: -10px;
+    width: 64px;
+    height: 64px;
+  }
+  .mm-ab2 .mm-contacts {
+    margin-top: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .mm-ab2 .mm-contacts > * {
+    flex: 1;
+    height: auto;
+    min-height: 44px;
+    padding: 0 14px;
+    font-size: 13.5px;
+  }
+}
+@media (max-width: 820px) {
+  .mm-ab2 .mm-about small {
+    display: block;
+    max-width: 62%;
   }
 }

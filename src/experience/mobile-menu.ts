@@ -68,8 +68,10 @@ function blobToHeader(on: boolean) {
     return r;
   };
   place();
+  let frame = 0;
   GL.afterRender = (gl: HTMLCanvasElement) => {
-    if (!octx) return;
+    // Copy at half rate and never while the sheet is still moving: reading pixels back is costly on phones.
+    if (!octx || busy || frame++ % 2) return;
     const r = place();
     const k = gl.width / innerWidth;
     octx.clearRect(0, 0, orb.width, orb.height);
@@ -98,6 +100,7 @@ function openMenu() {
   body.classList.add("mobile-menu-open", "mm-merged");
   lenis?.stop();
   gsap.set(sheet.children, { opacity: 1 });
+  sheet.classList.add("moving");
   const to = sheetBox();
   const from = dockBox();
   gsap.fromTo(sheet, from, {
@@ -106,15 +109,9 @@ function openMenu() {
     ease: "expo.out",
     onComplete: () => {
       gsap.set(sheet, { height: "auto", overflowY: "auto" });
+      sheet.classList.remove("moving");
       busy = false;
     },
-  });
-  gsap.to("#view", {
-    scale: 0.93,
-    opacity: 0.55,
-    transformOrigin: "50% 0%",
-    duration: D(0.7),
-    ease: "expo.out",
   });
   gsap.to(scrim, { opacity: 1, duration: D(0.5) });
   gsap.fromTo(
@@ -127,7 +124,7 @@ function openMenu() {
     { y: 26, opacity: 0, scale: 0.96 },
     { y: 0, opacity: 1, scale: 1, duration: D(0.6), ease: "expo.out", stagger: 0.025, delay: D(0.18) },
   );
-  requestAnimationFrame(() => blobToHeader(true));
+  blobToHeader(true);
   dock.setAttribute("aria-expanded", "true");
 }
 function closeMenu() {
@@ -135,6 +132,7 @@ function closeMenu() {
   busy = true;
   blobToHeader(false);
   gsap.set(sheet, { overflowY: "hidden" });
+  sheet.classList.add("moving");
   gsap.to(sheet.children, { opacity: 0, duration: D(0.18) });
   gsap.fromTo(
     sheet,
@@ -146,19 +144,13 @@ function closeMenu() {
       delay: D(0.08),
       onComplete: () => {
         gsap.set(sheet, { display: "none" });
+        sheet.classList.remove("moving");
         body.classList.remove("mobile-menu-open", "mm-merged");
         sheet.setAttribute("aria-hidden", "true");
         open = busy = false;
       },
     },
   );
-  gsap.to("#view", {
-    scale: 1,
-    opacity: 1,
-    duration: D(0.55),
-    ease: "expo.out",
-    clearProps: "transform,opacity",
-  });
   gsap.to(scrim, { opacity: 0, duration: D(0.35) });
   lenis?.start();
   dock.setAttribute("aria-expanded", "false");
@@ -368,3 +360,30 @@ sheet?.addEventListener("click", (e) => {
   // any other link inside the sheet: close first, then the router takes over
   if (t.closest("a[href]")) closeMenu();
 });
+
+/* ---------- Director card: orb on the top edge, state from the chat ---------- */
+const dirPanel = $("#dirPanel");
+const dirState = $("#dirState");
+if (dirPanel && !$(".dir-orb", dirPanel)) {
+  const o = document.createElement("span");
+  o.className = "dir-orb";
+  o.setAttribute("aria-hidden", "true");
+  o.innerHTML = '<i class="r"></i><i class="r"></i><i class="r"></i><i class="o"></i>';
+  dirPanel.prepend(o);
+}
+if (dirPanel && dirState) {
+  const sync = () => {
+    if (dirState.dataset.s) dirPanel.dataset.s = dirState.dataset.s;
+  };
+  new MutationObserver(sync).observe(dirState, { attributes: true, attributeFilter: ["data-s"] });
+  sync();
+}
+// the orb pops onto the card's edge as the card rises
+new MutationObserver(() => {
+  if (!isMobile() || !body.classList.contains("dir-open") || !dirPanel) return;
+  gsap.fromTo(
+    $(".dir-orb", dirPanel),
+    { y: 46, scale: 0.4, opacity: 0 },
+    { y: 0, scale: 1, opacity: 1, duration: D(0.8), ease: "back.out(1.8)", delay: D(0.25) },
+  );
+}).observe(body, { attributes: true, attributeFilter: ["class"] });
