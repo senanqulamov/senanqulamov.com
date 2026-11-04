@@ -304,8 +304,10 @@ export function scrollTick(force = false) {
     const hb = heroMetric && { top: heroMetric.top - y, bottom: heroMetric.bottom - y };
     const heroOn =
       !!hb && hb.bottom > innerHeight * 0.45 && !menuOpen && !GLT.busy && body.classList.contains("ready");
-    GL.heroLensT = heroOn ? 1 : 0;
-    if (heroOn && mouse.active && mouse.y < hb.bottom) {
+    // Phones keep the photo clean: the glass lens over the hero is a desktop effect.
+    GL.heroLensT = heroOn && !isMobile() ? 1 : 0;
+    // Desktop only: on phones the tap that enters the site would pin the blob to that spot.
+    if (heroOn && !isMobile() && mouse.active && mouse.y < hb.bottom) {
       const k = smoothstep(innerHeight * 0.45, innerHeight * 0.9, hb.bottom);
       scene.u = lerp(scene.u, mouse.x / innerWidth, k);
       scene.v = lerp(scene.v, mouse.y / innerHeight, k);
@@ -376,7 +378,10 @@ function setMobileStage(view: HTMLElement) {
     const r = el.getBoundingClientRect();
     const visible = Math.max(0, Math.min(r.bottom, innerHeight) - Math.max(r.top, 0));
     const fraction = visible / Math.max(1, Math.min(r.height, innerHeight));
-    if (fraction > score) { score = fraction; chosen = el; }
+    if (fraction > score) {
+      score = fraction;
+      chosen = el;
+    }
   }
   if (chosen && score > 0.25) {
     const r = chosen.getBoundingClientRect();
@@ -388,6 +393,10 @@ function setMobileStage(view: HTMLElement) {
     scene.dim = 1;
   } else {
     // A deliberate, unobtrusive top-bar parking spot when no empty stage is visible.
-    scene.m = 0; scene.u = 0.91; scene.v = 0.07; scene.s = 0.075; scene.dim = 0.78;
+    scene.m = 0;
+    scene.u = 0.91;
+    scene.v = 0.07;
+    scene.s = 0.075;
+    scene.dim = 0.78;
   }
 }

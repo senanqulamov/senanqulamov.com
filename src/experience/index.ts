@@ -5,7 +5,7 @@ import { isLang, type Lang } from "@/i18n";
 import { Cursor, magTick } from "./cursor";
 import { Dock } from "./director/dock";
 import { $$, body, lerp, root } from "./dom";
-import { gsap, reduce, ScrollTrigger } from "./env";
+import { gsap, isMobile, reduce, ScrollTrigger } from "./env";
 import { gpuIdle, startExtras } from "./extras";
 import { drawHeroName } from "./pages/home";
 import { setLang } from "./i18n";
@@ -98,7 +98,7 @@ export function start(router: Parameters<typeof connectRouter>[0], lang: Lang) {
       const v = lenis ? Math.min(1, Math.abs(lenis.velocity || 0) / 25) : 0;
       AMB.filter.frequency.setTargetAtTime(650 + v * 900 + (menuOpen ? 250 : 0), AMB.ctx.currentTime, 0.25);
     }
-    if (menuOpen && GL && GL.lens > 0.5 && GL.override && !menuBusy) {
+    if (menuOpen && GL && GL.lens > 0.5 && GL.override && !menuBusy && !isMobile()) {
       GL.override.u = lerp(GL.override.u, mouse.x / innerWidth, 0.12);
       GL.override.v = lerp(GL.override.v, mouse.y / innerHeight, 0.12);
     }

@@ -80,7 +80,13 @@ export function Header({ t, lang }: { t: Translate; lang: Lang }) {
         <a className="chip solid talk hide-m" href="/start" data-mag>
           <Roll text={t("Start a project")} />
         </a>
-        <button className="burger" id="menuBtn" aria-label={t("Open menu")} aria-expanded="false" aria-controls="menu">
+        <button
+          className="burger"
+          id="menuBtn"
+          aria-label={t("Open menu")}
+          aria-expanded="false"
+          aria-controls="menu"
+        >
           <span className="bt">
             <span>{t("Menu")}</span>
             <span>{t("Close")}</span>
@@ -91,10 +97,13 @@ export function Header({ t, lang }: { t: Translate; lang: Lang }) {
           </span>
         </button>
       </div>
+      <nav className="mobile-dock-sub" id="dockSub" aria-label="Sections" />
       <div className="mobile-dock" aria-label="Page controls">
         <div className="mobile-dock-meta">
           <b id="dockTitle" />
-          <span className="mobile-dock-progress" aria-hidden="true"><i id="dockProg" /></span>
+          <span className="mobile-dock-progress" aria-hidden="true">
+            <i id="dockProg" />
+          </span>
         </div>
       </div>
     </header>

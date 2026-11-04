@@ -7,7 +7,7 @@ import { profile } from "@/data/profile";
 import { projects } from "@/data/projects";
 import { services } from "@/data/services";
 import { $, $$, body, esc, fonts, root, scramble } from "./dom";
-import { gsap } from "./env";
+import { gsap, isMobile } from "./env";
 import { GL, lenis, route, scene } from "./state";
 import { tr } from "./i18n";
 import { buzz } from "./ui";
@@ -25,14 +25,24 @@ const menuEl = $("#menu"),
 export let menuOpen = false,
   menuBusy = false;
 let menuKb = false;
-const menuTarget = () => {
-  const stage = document.querySelector<HTMLElement>("#menu [data-gl-stage]");
-  if (innerWidth < 820 && stage) {
-    const r = stage.getBoundingClientRect();
-    return { m: 1, u: (r.left + r.width / 2) / innerWidth, v: (r.top + r.height / 2) / innerHeight, s: (Math.min(r.width, r.height) * 3.125 * .72) / innerHeight, dim: 1 };
-  }
-  return { m: 1, u: innerWidth < 980 ? 0.7 : 0.32, v: 0.42, s: innerWidth < 980 ? 0.24 : 0.36, dim: 1 };
-};
+/** Phones: the object rests in the lens area at the top of the menu, never over the tiles. */
+const mobileMenuTarget = () => ({
+  m: 1,
+  u: 0.5,
+  v: 92 / innerHeight,
+  s: 0.24,
+  dim: 1,
+});
+const menuTarget = () =>
+  isMobile()
+    ? mobileMenuTarget()
+    : {
+        m: 1,
+        u: innerWidth < 980 ? 0.7 : 0.32,
+        v: innerWidth < 980 ? 0.42 : 0.42,
+        s: innerWidth < 980 ? 0.24 : 0.36,
+        dim: 1,
+      };
 function menuItemsIn() {
   const chars = $$(".mi-t .ch", mList);
   gsap.fromTo(
@@ -66,6 +76,14 @@ export async function openMenu() {
   mPrev.textContent = tr(activePage.description);
   mBigT.innerHTML = `<span>${esc(tr(activePage.title))}</span>`;
   mBig.classList.add("on");
+  if (isMobile()) {
+    // The circle reveal is CSS (body.menu-open); the chrome glides into the lens area.
+    body.classList.add("menu-open", "menu-full");
+    menuItemsIn();
+    if (GL) GL.override = mobileMenuTarget();
+    menuBusy = false;
+    return;
+  }
   if (GLT.ok()) {
     const r = $("#menuBtn").getBoundingClientRect();
     await GLT.cover({
@@ -116,6 +134,11 @@ export function closeMenuInstant(keepGL?: boolean) {
 }
 export async function closeMenu() {
   if (!menuOpen || menuBusy || GLT.busy) return;
+  if (isMobile()) {
+    closeMenuInstant();
+    scrollTick(true);
+    return;
+  }
   menuBusy = true;
   gsap.to($$(".mi-t .ch", mList), {
     yPercent: -120,

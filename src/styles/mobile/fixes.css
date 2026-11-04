@@ -1,0 +1,275 @@
+/* Phone fixes: loader, menu, dock section links, keyboard, Director, search, project tour.
+   Loaded last. Everything below 821px only, except the desktop guard at the top. */
+
+/* Phone-only markup never shows on desktop. */
+@media (min-width: 821px) {
+  .mobile-menu-settings,
+  .mobile-dock-sub {
+    display: none !important;
+  }
+}
+
+.mobile-dock-sub {
+  display: none;
+}
+
+@media (max-width: 820px) {
+  /* ---------- Loader: blob becomes the chrome name in the centre; enter prompt sits below it ---------- */
+  body.loading #view,
+  body.loading .hdr {
+    visibility: hidden;
+  }
+  #loader {
+    display: block;
+  }
+  #loader .l-top {
+    position: absolute;
+    top: calc(18px + env(safe-area-inset-top, 0px));
+    left: 20px;
+    right: 20px;
+  }
+  #loader .l-enter3 {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: auto;
+    bottom: calc(118px + env(safe-area-inset-bottom, 0px));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    text-align: center;
+    transform: none;
+  }
+  #loader .l-bot {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    bottom: calc(30px + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* ---------- Menu: tiles stay above the dock; current page readable in both themes ---------- */
+  #menu {
+    padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+  }
+  .m-list a > :not(.mi-n):not(.mi-t),
+  .m-list a::before,
+  .m-list a::after,
+  .m-list .mi-t::after,
+  .m-list .mi-ar {
+    display: none !important;
+  }
+  .m-list a.cur-page,
+  .m-list a.cur-page .mi-n,
+  .m-list a.cur-page .mi-t,
+  .m-list a.cur-page .mi-t .ch {
+    color: var(--bg) !important;
+    background-color: var(--fg);
+  }
+  .m-list a.cur-page .mi-n,
+  .m-list a.cur-page .mi-t,
+  .m-list a.cur-page .mi-t .ch {
+    background: none;
+  }
+  @media (hover: none) {
+    .m-list a:hover {
+      transform: none;
+    }
+  }
+  @media (max-height: 800px) {
+    .m-list li,
+    .m-list a {
+      height: 44px;
+    }
+  }
+
+  /* The lens area at the top of the menu is a window onto the chrome behind it. */
+  #menu {
+    background: linear-gradient(to bottom, transparent 0, transparent 176px, var(--bg) 176px) !important;
+  }
+  body.menu-open #view,
+  body.menu-open .hdr .logo,
+  body.menu-open .hdr .pill {
+    visibility: hidden;
+  }
+
+  /* ---------- Section links in a second dock row ---------- */
+  body.has-dock-sub .mobile-dock-sub {
+    display: flex;
+    position: fixed;
+    z-index: 62;
+    left: 16px;
+    right: 16px;
+    bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+    max-width: 488px;
+    height: 44px;
+    margin: 0 auto;
+    padding: 0 6px;
+    align-items: center;
+    gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    border: 1px solid var(--line-2);
+    border-radius: 22px;
+    background: color-mix(in srgb, var(--bg-2) 90%, transparent);
+    box-shadow: 0 12px 34px rgba(0, 0, 0, 0.28);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    transition:
+      opacity 0.3s,
+      transform 0.3s;
+  }
+  .mobile-dock-sub::-webkit-scrollbar {
+    display: none;
+  }
+  .ds-chip {
+    flex: none;
+    height: 32px;
+    padding: 0 13px;
+    border: 0;
+    border-radius: 16px;
+    background: transparent;
+    color: var(--fg-2);
+    font: 500 13px var(--text);
+    white-space: nowrap;
+  }
+  .ds-chip.on {
+    background: var(--fg);
+    color: var(--bg);
+  }
+  body.has-dock-sub {
+    padding-bottom: calc(156px + env(safe-area-inset-bottom, 0px));
+  }
+  body.loading .mobile-dock-sub,
+  body.menu-open .mobile-dock-sub,
+  body.dir-open .mobile-dock-sub {
+    opacity: 0;
+    pointer-events: none;
+  }
+  /* the originals move into the dock */
+  .cv-nav,
+  .lab-nav,
+  .toc,
+  .st-steps,
+  .filters button[data-f],
+  .filters button[data-bf],
+  .filters .sp {
+    display: none !important;
+  }
+
+  /* ---------- Keyboard open: the dock steps aside ---------- */
+  body.kb-open .mobile-dock,
+  body.kb-open .mobile-dock-sub,
+  body.kb-open .burger,
+  body.kb-open .dir-btn {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: translateY(140%) !important;
+    transition:
+      opacity 0.25s,
+      transform 0.25s !important;
+  }
+
+  /* ---------- Director: a chrome orb in the dock instead of the old face ---------- */
+  .dir-btn .dir-face {
+    display: none !important;
+  }
+  .dir-btn {
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 31% 24%, #fff 0, rgba(255, 255, 255, 0) 18%),
+      linear-gradient(
+        174deg,
+        #f6f7fc 0%,
+        #cfd1e4 16%,
+        #7a7da3 32%,
+        #23243c 46%,
+        #090a14 52%,
+        #1d1e33 58%,
+        #6b6e94 70%,
+        #d9dbee 84%,
+        #8a8db0 100%
+      ) !important;
+    box-shadow:
+      inset -6px -8px 14px rgba(168, 224, 255, 0.55),
+      inset 6px 4px 10px rgba(255, 120, 190, 0.3),
+      0 0 0 1px rgba(185, 167, 255, 0.5) !important;
+  }
+  .dir-btn .dir-fallback {
+    display: none !important;
+  }
+
+  /* ---------- Director sheet ---------- */
+  .dir-panel {
+    background: var(--bg) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  .dir-panel .cx-top,
+  .dir-panel .cx-set {
+    display: none !important;
+  }
+  .cx-m .cx-b {
+    display: flex;
+    flex-direction: column;
+  }
+  .cx-m .cx-tools {
+    position: static !important;
+    order: 10;
+    align-self: flex-start;
+    margin-top: 8px;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .cx-form textarea {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .cx-form textarea:focus {
+    white-space: normal;
+  }
+  body.dir-open #gl,
+  body:has(#pal.open) #gl {
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  /* ---------- Search ---------- */
+  #pal .pal-box {
+    left: 16px;
+    right: 16px;
+    width: auto;
+  }
+  @media (hover: none) {
+    #pal .pal-foot {
+      display: none;
+    }
+  }
+
+  /* ---------- Project: the guided tour as a swipeable gallery ---------- */
+  .tour-stage {
+    display: none !important;
+  }
+  .tour-steps {
+    display: flex !important;
+    gap: 12px;
+    margin: 0 -20px;
+    padding: 0 20px 6px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .tour-steps::-webkit-scrollbar {
+    display: none;
+  }
+  .tstep {
+    flex: 0 0 min(82vw, 360px) !important;
+    scroll-snap-align: center;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .tstep-img {
+    display: block !important;
+  }
+}

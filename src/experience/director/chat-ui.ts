@@ -1,3 +1,4 @@
+import { tr } from "../i18n";
 import type { Lang } from "@/i18n";
 // The chat interface used on the Ask page and in the floating panel.
 
@@ -95,7 +96,7 @@ export function ChatUI(host: HTMLElement, { compact = false } = {}) {
     newmsg = $h<HTMLButtonElement>(".cx-newmsg");
   const chrome = () => {
     const t = T();
-    ta.placeholder = t.ph;
+    ta.placeholder = innerWidth <= 820 ? tr("Ask me anything") : t.ph;
     send.setAttribute("aria-label", String(t.send));
     const ui = {
       en: ["Speak your question", "New message ↓"],

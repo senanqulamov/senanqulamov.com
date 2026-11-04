@@ -4,7 +4,8 @@
 
 import { Dock } from "./director/dock";
 import { $, $$, body } from "./dom";
-import { gsap, ScrollTrigger } from "./env";
+import { gsap, isMobile, ScrollTrigger } from "./env";
+import { mountMobile } from "./mobile";
 import { announce, focusHeading } from "./extras";
 import { initFields } from "./forms";
 import { setHeader } from "./header";
@@ -34,6 +35,26 @@ let nextRouter: NextRouter | null = null;
 let waitingForRender: ((pathname: string) => void) | null = null;
 let firstRender = true;
 let pageContext: gsap.Context | null = null;
+
+// The site restores scroll itself: a new page always opens at the top.
+if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+let navStartedAt = 0;
+let userScrolledAt = 0;
+for (const ev of ["wheel", "touchstart", "keydown"])
+  addEventListener(ev, () => (userScrolledAt = performance.now()), { passive: true });
+function toTop() {
+  if (lenis) lenis.scrollTo(0, { immediate: true, force: true });
+  scrollTo(0, 0);
+}
+/** Re-applies the reset while late layout (images, pins, momentum) could move it, unless the visitor scrolls. */
+function holdTop() {
+  const started = navStartedAt;
+  for (const ms of [0, 120, 400, 900]) {
+    setTimeout(() => {
+      if (navStartedAt === started && userScrolledAt < started && scrollY > 2) toTop();
+    }, ms);
+  }
+}
 
 export const connectRouter = (router: NextRouter) => (nextRouter = router);
 
@@ -109,10 +130,13 @@ function mountPage(pathname: string) {
     GL.nameEl = null;
     GL.holdOn = r.k === "work" || r.k === "home";
   }
-  if (lenis) lenis.scrollTo(0, { immediate: true, force: true });
-  else scrollTo(0, 0);
+  navStartedAt = performance.now();
+  toTop();
+  document.documentElement.style.overflow = "";
+  holdTop();
 
   wireCommonControls(view);
+  mountMobile(view);
   setPage({ sections: $$("[data-s]", view), skew: $$("[data-skew]", view), stacks: $$(".scard,.pcd", view) });
   pageContext = gsap.context(() => {
     mounts[r.k]?.(view, r);
@@ -171,6 +195,11 @@ export async function navigate(href: string) {
     return;
   }
   closePalette();
+  // On phones this stops any momentum scroll still running from the old page.
+  if (isMobile()) {
+    document.documentElement.style.overflow = "hidden";
+    setTimeout(() => (document.documentElement.style.overflow = ""), 4000);
+  }
   const target = parseRoute(url.pathname);
   const destination = url.pathname + url.search;
   const rect = clicked.rect;
