@@ -17,6 +17,7 @@
   body.loading #view,
   body.loading .hdr {
     visibility: hidden;
+    opacity: 0 !important;
   }
   #loader {
     display: block;

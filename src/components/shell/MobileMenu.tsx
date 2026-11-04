@@ -30,6 +30,7 @@ export function MobileMenu({ t, lang }: { t: Translate; lang: Lang }) {
     <>
       <div className="mm-scrim" id="mmScrim" />
       <section
+        data-lenis-prevent
         className="mm-sheet"
         id="mobileMenu"
         role="dialog"
@@ -51,7 +52,7 @@ export function MobileMenu({ t, lang }: { t: Translate; lang: Lang }) {
           <div className="mm-head">
             <span className="mm-orb-wrap">
               <i className="mm-gl-stage" />
-              <canvas className="mm-orb" id="mmOrb" width="116" height="116" aria-hidden="true" />
+              <span className="mm-orb" aria-hidden="true" />
             </span>
             <label className="mm-search">
               <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
@@ -82,7 +83,7 @@ export function MobileMenu({ t, lang }: { t: Translate; lang: Lang }) {
           <div className="mm-track" id="mmTrack">
             <div className="mm-pane" data-mm-pane="pages">
               <p className="mm-label">{t("What's new")}</p>
-              <div className="mm-reel">
+              <div className="mm-reel" data-lenis-prevent>
                 <a className="mm-card mm-edge mm-premiere" href="/start">
                   <small>
                     {t("Premiere")} · {t("Available from November")}

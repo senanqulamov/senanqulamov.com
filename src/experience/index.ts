@@ -106,7 +106,7 @@ export function start(router: Parameters<typeof connectRouter>[0], lang: Lang) {
     page?.tick?.(dt, now);
     frameCount++;
     const idle = gpuIdle();
-    if (GL?.isReady && !document.hidden && !(idle && frameCount % 2)) GL.render(idle ? dt * 2 : dt);
+    if (GL?.isReady && !GL.paused && !document.hidden && !(idle && frameCount % 2)) GL.render(idle ? dt * 2 : dt);
     requestAnimationFrame(frame);
   };
   requestAnimationFrame(frame);

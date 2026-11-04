@@ -12,7 +12,6 @@ export function Loader({ t }: { t: Translate }) {
         <span>{t(hero.edition)}</span>
       </div>
       <div className="l-enter3" id="lEnter">
-        <div className="l-chrome-name" aria-hidden="true">Senan Qulamov</div>
         <button className="l-go3" id="lGo">
           {t("Click anywhere to enter")}
         </button>

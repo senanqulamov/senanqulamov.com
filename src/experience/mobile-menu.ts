@@ -21,7 +21,6 @@ const results = $("#mmResults");
 const track = $("#mmTrack");
 const viewport = $("#mmViewport");
 const tabbar = $(".mm-tabs");
-const orb = $<HTMLCanvasElement>("#mmOrb");
 const WAVE = "M0 24 Q25 4 50 24 T100 24 T150 24 T200 24 T250 24 T300 24 T350 24 T400 24";
 const FLAT = "M0 24 Q25 24 50 24 T100 24 T150 24 T200 24 T250 24 T300 24 T350 24 T400 24";
 const D = (s: number) => (reduce ? 0 : s);
@@ -45,38 +44,9 @@ function sheetBox() {
   return { left: side, right: side, bottom: 0, height: sheet.offsetHeight, borderRadius: "30px 30px 0 0" };
 }
 
-/* ---------- the live chrome blob in the header ---------- */
-// The 3D layer sits under the sheet, so the blob is rendered at the header's position
-// and copied into a small canvas there after every frame.
-const octx = orb?.getContext("2d");
-function blobToHeader(on: boolean) {
-  if (!GL) return;
-  if (!on) {
-    GL.override = null;
-    GL.afterRender = null;
-    return;
-  }
-  const place = () => {
-    const r = orb.getBoundingClientRect();
-    GL.override = {
-      m: 0,
-      u: (r.left + r.width / 2) / innerWidth,
-      v: (r.top + r.height / 2) / innerHeight,
-      s: (r.width * 0.78 * 3.125) / innerHeight,
-      dim: 1,
-    };
-    return r;
-  };
-  place();
-  let frame = 0;
-  GL.afterRender = (gl: HTMLCanvasElement) => {
-    // Copy at half rate and never while the sheet is still moving: reading pixels back is costly on phones.
-    if (!octx || busy || frame++ % 2) return;
-    const r = place();
-    const k = gl.width / innerWidth;
-    octx.clearRect(0, 0, orb.width, orb.height);
-    octx.drawImage(gl, r.left * k, r.top * k, r.width * k, r.height * k, 0, 0, orb.width, orb.height);
-  };
+/* ---------- the 3D scene rests while the menu covers the screen ---------- */
+function pauseScene(on: boolean) {
+  if (GL) GL.paused = on;
 }
 
 /* ---------- open / close ---------- */
@@ -101,6 +71,7 @@ function openMenu() {
   lenis?.stop();
   gsap.set(sheet.children, { opacity: 1 });
   sheet.classList.add("moving");
+  pauseScene(true);
   const to = sheetBox();
   const from = dockBox();
   gsap.fromTo(sheet, from, {
@@ -124,13 +95,15 @@ function openMenu() {
     { y: 26, opacity: 0, scale: 0.96 },
     { y: 0, opacity: 1, scale: 1, duration: D(0.6), ease: "expo.out", stagger: 0.025, delay: D(0.18) },
   );
-  blobToHeader(true);
+  setTimeout(() => {
+    if (open) gsap.set(sheet, { overflowY: "auto" });
+  }, 1200);
   dock.setAttribute("aria-expanded", "true");
 }
 function closeMenu() {
   if (!open || busy) return;
   busy = true;
-  blobToHeader(false);
+  pauseScene(false);
   gsap.set(sheet, { overflowY: "hidden" });
   sheet.classList.add("moving");
   gsap.to(sheet.children, { opacity: 0, duration: D(0.18) });
@@ -387,3 +360,6 @@ new MutationObserver(() => {
     { y: 0, scale: 1, opacity: 1, duration: D(0.8), ease: "back.out(1.8)", delay: D(0.25) },
   );
 }).observe(body, { attributes: true, attributeFilter: ["class"] });
+
+// the chat scrolls on its own, not through the page's smooth scrolling
+$("#dirChat")?.setAttribute("data-lenis-prevent", "");

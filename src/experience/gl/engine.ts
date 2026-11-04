@@ -416,6 +416,8 @@ export function initGL() {
   let frames = 0,
     acc = 0;
   const api = {
+    /** When true the frame loop skips drawing (the phone menu covers the screen). */
+    paused: false,
     /** Called right after each frame is drawn (the phone menu copies the blob from it). */
     afterRender: null as null | ((canvas: HTMLCanvasElement) => void),
     pTex,
