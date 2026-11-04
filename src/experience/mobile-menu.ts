@@ -11,7 +11,7 @@ import { switchLang } from "./language";
 import { setSound, soundOn } from "./sound";
 import { GL, lenis } from "./state";
 import { Dock } from "./director/dock";
-import { setTheme, type ThemeMode } from "./theme";
+import { setThemeAnimated, type ThemeMode } from "./theme";
 
 const sheet = $("#mobileMenu");
 const scrim = $("#mmScrim");
@@ -99,6 +99,7 @@ function openMenu() {
     if (open) gsap.set(sheet, { overflowY: "auto" });
   }, 1200);
   dock.setAttribute("aria-expanded", "true");
+  popButton();
 }
 function closeMenu() {
   if (!open || busy) return;
@@ -127,8 +128,19 @@ function closeMenu() {
   gsap.to(scrim, { opacity: 0, duration: D(0.35) });
   lenis?.start();
   dock.setAttribute("aria-expanded", "false");
+  popButton();
   dock.focus({ preventScroll: true });
 }
+function popButton() {
+  const b = $("#menuBtn");
+  if (b && !reduce)
+    gsap.fromTo(
+      b,
+      { rotate: -90, scale: 0.82 },
+      { rotate: 0, scale: 1, duration: 0.6, ease: "back.out(2.2)", clearProps: "transform" },
+    );
+}
+
 export const MobileMenu = { open: openMenu, close: closeMenu, isOpen: () => open };
 
 /* ---------- the whole dock toggles the menu; only the orb opens the Director ---------- */
@@ -202,22 +214,6 @@ addEventListener("pointerup", (e) => {
   const dy = e.clientY - sy;
   sx = null;
   if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.4) setTab(dx < 0 ? "settings" : "pages");
-});
-
-/* ---------- drag the sheet down to close ---------- */
-let dragY: number | null = null;
-sheet?.addEventListener("pointerdown", (e) => {
-  if (e.clientY - sheet.getBoundingClientRect().top < 60) dragY = e.clientY;
-});
-addEventListener("pointermove", (e) => {
-  if (dragY !== null && open && !busy) gsap.set(sheet, { y: Math.max(0, e.clientY - dragY) });
-});
-addEventListener("pointerup", (e) => {
-  if (dragY === null) return;
-  const d = e.clientY - dragY;
-  dragY = null;
-  gsap.set(sheet, { y: 0 });
-  if (d > 110) closeMenu();
 });
 
 /* ---------- chrome edge follows the finger ---------- */
@@ -294,7 +290,11 @@ sheet?.addEventListener("click", (e) => {
   }
   const look = t.closest<HTMLElement>("[data-mm-theme]");
   if (look) {
-    setTheme(look.dataset.mmTheme as ThemeMode);
+    pauseScene(false);
+    setThemeAnimated(look.dataset.mmTheme as ThemeMode, look).then(() => {
+      syncSettings();
+      if (open) pauseScene(true);
+    });
     syncSettings();
     return;
   }

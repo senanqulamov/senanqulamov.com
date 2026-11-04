@@ -10,20 +10,32 @@ let themeBusy = false;
 export type ThemeMode = "dark" | "light" | "auto";
 
 export function setTheme(mode: ThemeMode) {
-  const resolved = mode === "auto" ? (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark") : mode;
+  const resolved =
+    mode === "auto" ? (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark") : mode;
   root.dataset.theme = resolved;
   root.dataset.themeMode = mode;
   localStorage.setItem("sq-theme", mode);
   syncThemeButton();
   GL && GL.setLight(resolved === "light" ? 1 : 0, true);
-  $$('[data-theme-label]').forEach((e) => (e.textContent = tr(resolved === "light" ? "Light" : "Dark")));
+  $$("[data-theme-label]").forEach((e) => (e.textContent = tr(resolved === "light" ? "Light" : "Dark")));
 }
 
 matchMedia("(prefers-color-scheme: light)").addEventListener("change", () => {
   if (localStorage.getItem("sq-theme") === "auto") setTheme("auto");
 });
 
-export async function toggleTheme(fromEl?: HTMLElement) {
+/** Switch to a mode with the same circular reveal as the desktop toggle, from the tapped element. */
+export function setThemeAnimated(mode: ThemeMode, fromEl?: HTMLElement) {
+  const resolved =
+    mode === "auto" ? (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark") : mode;
+  if (resolved === root.dataset.theme) {
+    setTheme(mode);
+    return Promise.resolve();
+  }
+  return toggleTheme(fromEl, mode);
+}
+
+export async function toggleTheme(fromEl?: HTMLElement, mode?: ThemeMode) {
   if (themeBusy) return;
   themeBusy = true;
   const next = root.dataset.theme === "light" ? "dark" : "light";
@@ -31,7 +43,7 @@ export async function toggleTheme(fromEl?: HTMLElement) {
     x = r.left + r.width / 2,
     y = r.top + r.height / 2;
   const apply = () => {
-    setTheme(next);
+    setTheme(mode || next);
   };
   blip(next === "light" ? 1180 : 520, 0.35);
   if ((document as any).startViewTransition && !reduce) {
