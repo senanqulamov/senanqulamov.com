@@ -223,7 +223,7 @@ export function HomePage({ t, lang }: { t: Translate; lang: Lang }) {
             {t("Selected work")}
           </h2>
           <a className="btn ghost" href="/work" data-mag>
-            <Roll text={t("All 24 projects")} /> <Arrow />
+            <Roll text={t("All 25 projects")} /> <Arrow />
           </a>
         </div>
         <ul className="plist">

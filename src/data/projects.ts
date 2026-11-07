@@ -1323,4 +1323,71 @@ export const projects: Project[] = [
     featuredOrder: 2,
     date: "2026",
   },
+  {
+    slug: "1bilet",
+    title: "1bilet.az",
+    subtitle: "Online Exam & Assessment Platform",
+    client: "1bilet.az",
+    year: "2026",
+    type: "Startup",
+    status: "Active Development",
+    summary:
+      "1bilet.az is an online exam and assessment platform for creating tests, managing question banks, running timed attempts, grading results and issuing certificates.",
+    story: [
+      "1bilet.az is the public product identity for Talentry-v2, a Laravel-based assessment platform built around clear exam workflows and modular domain logic. The system supports administrators, examiners and students across the full lifecycle of an assessment.",
+      "The platform includes exam creation and publishing guards, reusable exam templates, categorized question banks, invite-link access, autosaved attempts, objective grading, result visibility controls, chance packages, certificate issuance and analytics. Azerbaijani, English and Russian localization are included in the application foundation.",
+    ],
+    problem:
+      "Schools, training teams and exam organizers need more control than a basic quiz form provides, including reusable content, secure attempts, grading, certificates and operational reporting.",
+    solution:
+      "Built a modular Laravel and Livewire platform with action-driven exam workflows, snapshot-based question attachment, role-aware access, autosave and submission logic, reusable templates, package-based attempt controls and certificate management.",
+    impact:
+      "Provides a structured foundation for digital assessments, from authoring and delivery through grading, reporting and learner achievements.",
+    role: "Full-stack developer responsible for the Laravel domain architecture, Livewire interfaces, exam workflows, access control, localization, admin console and assessment operations.",
+    metrics: [
+      {
+        label: "Assessment Roles",
+        value: "3",
+      },
+      {
+        label: "Question Formats",
+        value: "Multiple",
+      },
+      {
+        label: "Locales",
+        value: "3",
+      },
+    ],
+    note:
+      "The core challenge was making assessment rules explicit and dependable: publishing, snapshots, attempts, grading, result visibility and certificates all need to remain consistent under real exam workflows.",
+    features: [
+      "Exam Authoring",
+      "Question Bank",
+      "Exam Templates",
+      "Timed Attempts & Autosave",
+      "Auto-Grading",
+      "Certificates",
+      "Chance Packages",
+      "Admin Analytics",
+    ],
+    tech: ["Laravel 13", "PHP 8.3", "Livewire 4", "Tailwind CSS", "TallCraftUI", "PowerGrid", "MySQL"],
+    cover: null,
+    images: [],
+    liveUrl: "https://1bilet.az",
+    githubUrl: "https://github.com/senanqulamov/Talentry-v2",
+    colors: ["#2563eb", "#172554"],
+    yearRange: "2026",
+    shortDescription: "Online exam and assessment platform for 1bilet.az.",
+    longDescription:
+      "1bilet.az is an online exam and assessment platform for creating tests, managing question banks, running timed attempts, grading results and issuing certificates.",
+    description: "Exam authoring, assessment delivery, grading, packages, certificates and analytics.",
+    techTags: ["Laravel", "PHP", "Livewire", "Tailwind CSS", "PowerGrid", "MySQL"],
+    technologies: ["Laravel 13", "PHP 8.3", "Livewire 4", "TallCraftUI", "Livewire PowerGrid", "Tailwind CSS"],
+    personalNote:
+      "1bilet.az is built around explicit assessment rules and reusable domain workflows rather than a single-purpose quiz screen.",
+    category: "Startups",
+    featured: true,
+    featuredOrder: 3,
+    date: "2026",
+  },
 ];

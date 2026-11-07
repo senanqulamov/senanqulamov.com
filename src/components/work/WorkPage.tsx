@@ -54,7 +54,7 @@ export function WorkPage({ t }: { t: Translate }) {
               <span className="sp-meta" id="spMeta" />
             </div>
             <div className="sp-side">
-              <span>{t("Scroll to fly through 24 projects. Click a card to open it.")}</span>
+              <span>{t("Scroll to fly through 25 projects. Click a card to open it.")}</span>
               <div className="sp-prog">
                 <i id="spBar" />
               </div>
