@@ -1186,4 +1186,69 @@ export const projects: Project[] = [
     githubUrl: "",
     colors: ["#fbbf24", "#f97316"],
   },
+  {
+    slug: "aureliomilan",
+    title: "Aurelio Milan",
+    subtitle: "Editorial Model Portfolio",
+    client: "Aurelio Milan",
+    year: "2026",
+    type: "Personal",
+    status: "Live",
+    summary:
+      "AurelioMilan.com is an editorial portfolio and booking platform for model, athlete and entrepreneur Aurelio Milan, presenting fashion work, press appearances, gallery stories and direct booking enquiries.",
+    story: [
+      "AurelioMilan.com was designed as a cinematic digital portfolio rather than a conventional résumé site. The experience brings together red-carpet appearances, studio editorials, street series, press coverage and a personal story across a visual, image-led interface.",
+      "The site includes dedicated fashion-work, press, blog, gallery, about and contact experiences, with responsive art direction, a theme switcher, smooth transitions, WebGL image treatment, structured SEO metadata and a booking flow that works across desktop and mobile.",
+    ],
+    problem:
+      "Aurelio needed a premium web presence that could present a growing international modelling career while keeping the work, story and booking path easy to navigate.",
+    solution:
+      "Built a responsive Next.js portfolio with editorial layouts, immersive motion, optimized photography, structured content, gallery mapping and direct booking contact.",
+    impact:
+      "Created a polished international showcase for campaigns, editorials, runway opportunities and brand partnerships, with a clear path from discovery to enquiry.",
+    role: "Product designer and full-stack developer responsible for the visual direction, Next.js application, content system, motion, image pipeline, SEO and deployment setup.",
+    metrics: [
+      {
+        label: "Dedicated Sections",
+        value: "6",
+      },
+      {
+        label: "Image Pipeline",
+        value: "Responsive WebP",
+      },
+      {
+        label: "Availability",
+        value: "Worldwide",
+      },
+    ],
+    note:
+      "Aurelio Milan combines fashion storytelling with a genuinely useful booking experience. The challenge was making a large visual archive feel calm, fast and intentional on every screen.",
+    features: [
+      "Editorial Portfolio",
+      "Fashion Work Archive",
+      "Press & Events",
+      "Interactive Gallery",
+      "Booking Enquiries",
+      "SEO & Structured Data",
+    ],
+    tech: ["Next.js", "React", "JavaScript", "GSAP", "Lenis", "Three.js", "Vercel"],
+    cover: null,
+    images: [],
+    liveUrl: "https://aureliomilan.com",
+    githubUrl: "https://github.com/senanqulamov/aureliomilan",
+    colors: ["#b89a6a", "#171310"],
+    yearRange: "2026",
+    shortDescription: "Editorial model portfolio and booking platform for Aurelio Milan.",
+    longDescription:
+      "AurelioMilan.com is an editorial portfolio and booking platform for model, athlete and entrepreneur Aurelio Milan, presenting fashion work, press appearances, gallery stories and direct booking enquiries.",
+    description: "Editorial portfolio, fashion archive, press, gallery and booking experience.",
+    techTags: ["Next.js", "React", "GSAP", "Lenis", "Three.js", "Vercel"],
+    technologies: ["Next.js 16", "React 19", "GSAP", "Lenis", "Three.js", "WebP", "Vercel"],
+    personalNote:
+      "The site was shaped to feel closer to an editorial publication than a traditional portfolio, while keeping booking and navigation practical.",
+    category: "Personal",
+    featured: true,
+    featuredOrder: 1,
+    date: "2026",
+  },
 ];

@@ -154,7 +154,7 @@ const ru: Record<string, string> = {
   "Run it again": "Ещё раз",
   "Interface demo. Names and amounts are illustrative.": "Демо интерфейса. Имена и суммы условные.",
   "Selected work": "Избранные работы",
-  "All 22 projects": "Все 22 проекта",
+  "All 23 projects": "Все 23 проекта",
   live: "live",
   "Also in the studio": "Также в студии",
   "Work with me": "Работать со мной",
@@ -182,8 +182,8 @@ const ru: Record<string, string> = {
   Space: "Космос",
   List: "Список",
   Grid: "Сетка",
-  "Scroll to fly through 22 projects. Click a card to open it.":
-    "Листайте, чтобы пролететь через 22 проекта. Нажмите на карточку, чтобы открыть.",
+  "Scroll to fly through 23 projects. Click a card to open it.":
+    "Листайте, чтобы пролететь через 23 проекта. Нажмите на карточку, чтобы открыть.",
   Overview: "Обзор",
   "The story": "История",
   "Problem, solution, impact": "Проблема, решение, результат",

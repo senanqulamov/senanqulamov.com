@@ -154,7 +154,7 @@ const az: Record<string, string> = {
   "Run it again": "Yenidən başla",
   "Interface demo. Names and amounts are illustrative.": "İnterfeys demosu. Adlar və məbləğlər nümunədir.",
   "Selected work": "Seçilmiş işlər",
-  "All 22 projects": "Bütün 22 layihə",
+  "All 23 projects": "Bütün 23 layihə",
   live: "canlı",
   "Also in the studio": "Studiyada həmçinin",
   "Work with me": "Mənimlə işlə",
@@ -183,8 +183,8 @@ const az: Record<string, string> = {
   Space: "Kosmos",
   List: "Siyahı",
   Grid: "Şəbəkə",
-  "Scroll to fly through 22 projects. Click a card to open it.":
-    "22 layihənin arasından uçmaq üçün sürüşdür. Açmaq üçün karta klik et.",
+  "Scroll to fly through 23 projects. Click a card to open it.":
+    "23 layihənin arasından uçmaq üçün sürüşdür. Açmaq üçün karta klik et.",
   Overview: "Ümumi baxış",
   "The story": "Hekayə",
   "Problem, solution, impact": "Problem, həll, nəticə",
