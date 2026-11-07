@@ -154,7 +154,7 @@ const az: Record<string, string> = {
   "Run it again": "Yenidən başla",
   "Interface demo. Names and amounts are illustrative.": "İnterfeys demosu. Adlar və məbləğlər nümunədir.",
   "Selected work": "Seçilmiş işlər",
-  "All 23 projects": "Bütün 23 layihə",
+  "All 24 projects": "Bütün 24 layihə",
   live: "canlı",
   "Also in the studio": "Studiyada həmçinin",
   "Work with me": "Mənimlə işlə",
@@ -183,8 +183,8 @@ const az: Record<string, string> = {
   Space: "Kosmos",
   List: "Siyahı",
   Grid: "Şəbəkə",
-  "Scroll to fly through 23 projects. Click a card to open it.":
-    "23 layihənin arasından uçmaq üçün sürüşdür. Açmaq üçün karta klik et.",
+  "Scroll to fly through 24 projects. Click a card to open it.":
+    "24 layihənin arasından uçmaq üçün sürüşdür. Açmaq üçün karta klik et.",
   Overview: "Ümumi baxış",
   "The story": "Hekayə",
   "Problem, solution, impact": "Problem, həll, nəticə",
@@ -532,8 +532,8 @@ const az: Record<string, string> = {
   "You are leading. Reserve not met yet.": "Siz öndəsiniz. Rezervə hələ çatılmayıb.",
   "You have been outbid. Reserve not met yet.": "Təklifiniz keçildi. Rezervə hələ çatılmayıb.",
   "Reserve not met.": "Rezervə çatılmadı.",
-  "It has read every page of this site: 23 projects, 5 essays, the full CV, the service list and the price table.":
-    "Bu saytın hər səhifəsini oxuyub: 23 layihə, 5 esse, tam CV, xidmətlər siyahısı və qiymət cədvəli.",
+  "It has read every page of this site: 24 projects, 5 essays, the full CV, the service list and the price table.":
+    "Bu saytın hər səhifəsini oxuyub: 24 layihə, 5 esse, tam CV, xidmətlər siyahısı və qiymət cədvəli.",
   "Good for:": "Uyğundur:",
   "Discovery and scope in plain language": "Sadə dildə araşdırma və həcm",
   "User flows and interface direction": "İstifadəçi axınları və interfeys istiqaməti",

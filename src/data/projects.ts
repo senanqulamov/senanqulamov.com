@@ -1251,4 +1251,76 @@ export const projects: Project[] = [
     featuredOrder: 1,
     date: "2026",
   },
+  {
+    slug: "sisufreesoul",
+    title: "SISU Free Soul",
+    subtitle: "Editorial Storytelling & Conversation Platform",
+    client: "Təhminə Doruk",
+    year: "2026",
+    type: "Personal",
+    status: "Active Development",
+    summary:
+      "SISU Free Soul is an editorial platform for Təhminə Doruk about freedom, self-authorship, honest conversations and the courage to choose your own life.",
+    story: [
+      "SISU Free Soul was created as a cinematic digital home for ideas that need more room than a conventional personal website can provide. The platform combines Təhminə Doruk's story and manifesto with essays, podcast conversations, short films and real-life stories.",
+      "The experience uses large-format media, editorial typography, scroll-led motion and a calm visual system to make reflection feel intentional rather than transactional. It also includes an authenticated content workspace at /admin, where drafts can be previewed and published to GitHub through a single commit and the normal Vercel deployment flow.",
+    ],
+    problem:
+      "Təhminə needed a distinctive platform for publishing personal ideas, conversations and visual stories without reducing them to a static profile or social feed.",
+    solution:
+      "Designed and built a Next.js editorial platform with cinematic media, structured content sections, podcast and video archives, journal pages, story collections, responsive motion and a Git-backed CMS.",
+    impact:
+      "Created a durable home for SISU's voice and content, giving the project a strong public identity while making publishing and future editorial growth manageable.",
+    role: "Product designer and full-stack developer responsible for the visual language, Next.js application, motion system, content architecture, admin workspace and deployment workflow.",
+    metrics: [
+      {
+        label: "Editorial Sections",
+        value: "6",
+      },
+      {
+        label: "Content Formats",
+        value: "4",
+      },
+      {
+        label: "Publishing",
+        value: "Git-backed CMS",
+      },
+    ],
+    note:
+      "SISU is deliberately slower and more spacious than a typical content platform. The most important design decision was to make the interface feel like an editorial room for thought while keeping the publishing system practical.",
+    features: [
+      "Cinematic Homepage",
+      "Podcast Archive",
+      "Journal & Essays",
+      "Video Stories",
+      "Git-Backed CMS",
+      "Responsive Editorial Motion",
+    ],
+    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Motion", "GSAP", "Lenis", "Vercel"],
+    cover: "/images/sisufreesoul/sisu-hero-poster.png",
+    images: [
+      "/images/sisufreesoul/sisu-hero-poster.png",
+      "/images/sisufreesoul/sisu-outdoor.png",
+      "/images/sisufreesoul/sisu-closing.png",
+      "/images/sisufreesoul/podcast-featured.png",
+      "/images/sisufreesoul/journal-1.png",
+      "/images/sisufreesoul/story-1.png",
+    ],
+    liveUrl: "https://sisufreesoul.com",
+    githubUrl: "https://github.com/senanqulamov/sisu-free-soul",
+    colors: ["#c88842", "#171512"],
+    yearRange: "2026",
+    shortDescription: "Editorial storytelling and conversation platform for SISU Free Soul.",
+    longDescription:
+      "SISU Free Soul is an editorial platform for Təhminə Doruk about freedom, self-authorship, honest conversations and the courage to choose your own life.",
+    description: "Editorial storytelling, podcasts, journal, video essays, stories and CMS publishing.",
+    techTags: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Motion", "Vercel"],
+    technologies: ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS 4", "Motion", "GSAP", "Lenis"],
+    personalNote:
+      "The platform balances a highly authored visual experience with a content system that can continue growing without losing its editorial rhythm.",
+    category: "Personal",
+    featured: true,
+    featuredOrder: 2,
+    date: "2026",
+  },
 ];

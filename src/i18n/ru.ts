@@ -154,7 +154,7 @@ const ru: Record<string, string> = {
   "Run it again": "Ещё раз",
   "Interface demo. Names and amounts are illustrative.": "Демо интерфейса. Имена и суммы условные.",
   "Selected work": "Избранные работы",
-  "All 23 projects": "Все 23 проекта",
+  "All 24 projects": "Все 24 проекта",
   live: "live",
   "Also in the studio": "Также в студии",
   "Work with me": "Работать со мной",
@@ -182,8 +182,8 @@ const ru: Record<string, string> = {
   Space: "Космос",
   List: "Список",
   Grid: "Сетка",
-  "Scroll to fly through 23 projects. Click a card to open it.":
-    "Листайте, чтобы пролететь через 23 проекта. Нажмите на карточку, чтобы открыть.",
+  "Scroll to fly through 24 projects. Click a card to open it.":
+    "Листайте, чтобы пролететь через 24 проекта. Нажмите на карточку, чтобы открыть.",
   Overview: "Обзор",
   "The story": "История",
   "Problem, solution, impact": "Проблема, решение, результат",
@@ -531,8 +531,8 @@ const ru: Record<string, string> = {
   "You are leading. Reserve not met yet.": "Вы лидируете. Резерв пока не достигнут.",
   "You have been outbid. Reserve not met yet.": "Вашу ставку перебили. Резерв пока не достигнут.",
   "Reserve not met.": "Резерв не достигнут.",
-  "It has read every page of this site: 23 projects, 5 essays, the full CV, the service list and the price table.":
-    "Он прочитал каждую страницу сайта: 23 проекта, 5 эссе, полное резюме, список услуг и прайс.",
+  "It has read every page of this site: 24 projects, 5 essays, the full CV, the service list and the price table.":
+    "Он прочитал каждую страницу сайта: 24 проекта, 5 эссе, полное резюме, список услуг и прайс.",
   "Good for:": "Подходит для:",
   "Discovery and scope in plain language": "Исследование и объём простым языком",
   "User flows and interface direction": "Пользовательские сценарии и направление интерфейса",
