@@ -16,13 +16,13 @@ function BrowserBar({ host, id }: { host: string; id?: string }) {
   );
 }
 
-/** Pairs each screen with a feature and a sentence from the story. */
+/** Pairs each configured screen with a feature and a sentence from the story. */
 function tourSteps(p: Project) {
   const sentences = [...p.story, p.solution, p.impact]
     .join(" ")
     .split(/(?<=[.!?])\s+/)
     .filter((s) => s.length > 30);
-  return p.images.slice(1, 9).map((src, i) => ({
+  return p.images.map((src, i) => ({
     src,
     title: p.features[i] || p.subtitle,
     text: sentences[i] || p.summary,
