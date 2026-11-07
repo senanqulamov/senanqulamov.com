@@ -531,8 +531,8 @@ const ru: Record<string, string> = {
   "You are leading. Reserve not met yet.": "Вы лидируете. Резерв пока не достигнут.",
   "You have been outbid. Reserve not met yet.": "Вашу ставку перебили. Резерв пока не достигнут.",
   "Reserve not met.": "Резерв не достигнут.",
-  "It has read every page of this site: 22 projects, 5 essays, the full CV, the service list and the price table.":
-    "Он прочитал каждую страницу сайта: 22 проекта, 5 эссе, полное резюме, список услуг и прайс.",
+  "It has read every page of this site: 23 projects, 5 essays, the full CV, the service list and the price table.":
+    "Он прочитал каждую страницу сайта: 23 проекта, 5 эссе, полное резюме, список услуг и прайс.",
   "Good for:": "Подходит для:",
   "Discovery and scope in plain language": "Исследование и объём простым языком",
   "User flows and interface direction": "Пользовательские сценарии и направление интерфейса",

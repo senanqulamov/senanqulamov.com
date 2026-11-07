@@ -532,8 +532,8 @@ const az: Record<string, string> = {
   "You are leading. Reserve not met yet.": "Siz öndəsiniz. Rezervə hələ çatılmayıb.",
   "You have been outbid. Reserve not met yet.": "Təklifiniz keçildi. Rezervə hələ çatılmayıb.",
   "Reserve not met.": "Rezervə çatılmadı.",
-  "It has read every page of this site: 22 projects, 5 essays, the full CV, the service list and the price table.":
-    "Bu saytın hər səhifəsini oxuyub: 22 layihə, 5 esse, tam CV, xidmətlər siyahısı və qiymət cədvəli.",
+  "It has read every page of this site: 23 projects, 5 essays, the full CV, the service list and the price table.":
+    "Bu saytın hər səhifəsini oxuyub: 23 layihə, 5 esse, tam CV, xidmətlər siyahısı və qiymət cədvəli.",
   "Good for:": "Uyğundur:",
   "Discovery and scope in plain language": "Sadə dildə araşdırma və həcm",
   "User flows and interface direction": "İstifadəçi axınları və interfeys istiqaməti",
