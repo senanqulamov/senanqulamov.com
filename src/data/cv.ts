@@ -40,10 +40,10 @@ export const cv = {
       title: "Founder & CEO",
       org: "BidBary",
       location: "Baku, Azerbaijan",
-      text: "One platform for every way people gather: auctions, concerts, private dinners, tours and workshops, each with its own rules for pricing and access.",
+      text: "An event discovery and ticketing platform for concerts, auctions, parties, tours, workshops, exhibitions, and other live experiences, with booking, payments, seat selection, and operational tools in one place.",
       highlights: [
         "Product vision, architecture and fundraising",
-        "Building the platform and the founding team",
+        "Building the platform, founding team, and event operations workflows",
       ],
     },
     {

@@ -66,20 +66,20 @@ export const story = {
     {
       year: "Now",
       title: "The big idea",
-      text: "Founder and CEO of BidBary. One platform for every way people gather.",
+      text: "Founder and CEO of BidBary, a modern event discovery and ticketing platform.",
     },
   ],
 };
 
 export const bidbary = {
-  tag: "Now playing on bidbary.me",
-  text: "Auctions, concerts, private dinners, tours and workshops in one place. Every kind of evening keeps its own rules for pricing, access and who gets in.",
+  tag: "Discover live experiences on bidbary.me",
+  text: "A modern event platform for discovering, booking, hosting, and managing live experiences. Find events, choose seats, pay securely, and keep every ticket in one place.",
   formats: [
-    { name: "Auctions", rule: "Live bids with a reserve price, for verified bidders" },
-    { name: "Concerts", rule: "Fixed ticket tiers on an open sale" },
-    { name: "Private dinners", rule: "Bid for the table, approved by the host" },
-    { name: "Tours", rule: "Priced per person, capped by capacity" },
-    { name: "Workshops", rule: "Priced per seat, open or by application" },
+    { name: "Concerts", rule: "Choose ticket tiers and reserve your place" },
+    { name: "Auctions", rule: "Join live bids with verified access and clear rules" },
+    { name: "Parties", rule: "Manage invitations, tickets, and attendee lists" },
+    { name: "Tours", rule: "Book by capacity with digital tickets and check-in" },
+    { name: "Workshops", rule: "Reserve seats, manage applications, and validate entry" },
   ],
 };
 
@@ -129,7 +129,7 @@ export const contactDoors = [
   { title: "Invest", text: "Talk about backing BidBary at an early stage.", subject: "Investing in BidBary" },
   {
     title: "Partner",
-    text: "Bring your auctions, concerts, dinners or tours to BidBary.",
+    text: "Bring your events, tickets, attendees, and check-in workflows to BidBary.",
     subject: "Partnering with BidBary",
   },
   {

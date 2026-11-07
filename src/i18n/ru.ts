@@ -1,5 +1,22 @@
 // Keys are the English text exactly as it appears on the site.
 const ru: Record<string, string> = {
+  "Founder and CEO of BidBary, a modern event discovery and ticketing platform.":
+    "Основатель и CEO BidBary — современной платформы для поиска событий и продажи билетов.",
+  "Discover live experiences on bidbary.me": "Открывайте живые впечатления на bidbary.me",
+  "A modern event platform for discovering, booking, hosting, and managing live experiences. Find events, choose seats, pay securely, and keep every ticket in one place.":
+    "Современная платформа для поиска, бронирования, проведения и управления живыми событиями. Находите события, выбирайте места, безопасно оплачивайте и храните все билеты в одном месте.",
+  "Choose ticket tiers and reserve your place": "Выбирайте категории билетов и бронируйте место",
+  "Join live bids with verified access and clear rules":
+    "Участвуйте в торгах с проверенным доступом и понятными правилами",
+  Parties: "Вечеринки",
+  "Manage invitations, tickets, and attendee lists":
+    "Управляйте приглашениями, билетами и списками участников",
+  "Book by capacity with digital tickets and check-in":
+    "Бронируйте с учётом вместимости, цифровыми билетами и регистрацией",
+  "Reserve seats, manage applications, and validate entry":
+    "Бронируйте места, управляйте заявками и проверяйте вход",
+  "Bring your events, tickets, attendees, and check-in workflows to BidBary.":
+    "Перенесите в BidBary события, билеты, участников и процессы регистрации.",
   "Available from November": "Свободен с ноября",
   "Start a project": "Начать проект",
   Menu: "Меню",
@@ -639,29 +656,29 @@ const ru: Record<string, string> = {
   "PLACEHOLDER — in the room": "ЗАПОЛНИТЕЛЬ — в зале",
   heroIntro:
     "Инженер из Баку. <b>Техлид в PMIS</b>, основатель <b>BidBary</b> и семь лет терапевт. Я создаю софт для людей, которые будут им пользоваться.",
-  "Settings": "Настройки",
+  Settings: "Настройки",
   "What's new": "Что нового",
   "Latest project": "Последний проект",
   "New essay": "Новое эссе",
   "From AZN": "От AZN",
-  "Latest": "Последний",
+  Latest: "Последний",
   "New:": "Новое:",
-  "Appearance": "Оформление",
-  "Auto": "Авто",
+  Appearance: "Оформление",
+  Auto: "Авто",
   "Sound and motion": "Звук и движение",
-  "Sound": "Звук",
-  "Motion": "Движение",
-  "On": "Вкл",
-  "Off": "Выкл",
-  "Full": "Полное",
-  "Calm": "Спокойное",
+  Sound: "Звук",
+  Motion: "Движение",
+  On: "Вкл",
+  Off: "Выкл",
+  Full: "Полное",
+  Calm: "Спокойное",
   "About this site": "Об этом сайте",
   "Portfolio · 2026 edition": "Портфолио · издание 2026",
   "Designed and built by Senan in Baku.": "Спроектирован и создан Сенаном в Баку.",
   "Real-time chrome, rendered on your phone.": "Хром в реальном времени, отрисованный на вашем телефоне.",
   "Search the site": "Поиск по сайту",
-  "Page": "Страница",
-  "Essay": "Эссе",
+  Page: "Страница",
+  Essay: "Эссе",
 };
 
 export default ru;

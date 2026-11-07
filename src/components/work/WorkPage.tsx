@@ -20,7 +20,7 @@ export function WorkPage({ t }: { t: Translate }) {
         t={t}
         crumb="Work"
         title="Selected work"
-        lede="Products I founded, platforms I led and systems I shipped for clients since 2021. Open any row to step into its story."
+        lede="Products I founded, platforms I led and systems I shipped for clients since 2021. Open any row to step into its story. Note that some projects are confidential and I cannot share them."
         scene="workpage"
       />
       <section data-s="workpage">

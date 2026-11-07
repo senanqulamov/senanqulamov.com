@@ -24,6 +24,19 @@ export type Project = {
   githubUrl: string;
   /** Two colors used behind the screenshots while they load. */
   colors: [string, string];
+  /** Extended case-study metadata for richer project records. */
+  yearRange?: string;
+  shortDescription?: string;
+  longDescription?: string;
+  description?: string;
+  blog?: string;
+  techTags?: string[];
+  technologies?: string[];
+  personalNote?: string;
+  category?: string;
+  featured?: boolean;
+  featuredOrder?: number;
+  date?: string;
 };
 
 export const projectTypeLabel: Record<ProjectType, string> = {
@@ -36,46 +49,81 @@ export const projects: Project[] = [
   {
     slug: "bidbary",
     title: "BidBary",
-    subtitle: "Auction Platform",
-    client: "Startup Venture",
-    year: "2024 to Present",
+    subtitle: "Event Discovery & Ticketing Platform",
+    client: "BidBary",
+    year: "2025 – Present",
     type: "Startup",
     status: "In Development",
-    summary:
-      "BidBary redefines the auction experience for collectors and sellers with a focus on transparency, engagement, and modern UI. The platform features live bidding, detailed collector profiles, comprehensive auction history, and a dark-themed interface designed with Motiff.",
+    summary: "Full-featured event platform for discovering, booking, hosting, and managing live experiences.",
     story: [
-      "BidBary redefines the auction experience for collectors and sellers. With live bidding, collector profiles, auction history, and a modern UI designed with Motiff, it creates a transparent and engaging platform for rare items and collectibles.",
-      "The platform prioritizes real-time engagement with seamless bidding flows and comprehensive item provenance tracking to build trust in the collecting community.",
+      "BidBary is a modern event platform that connects attendees with concerts, auctions, parties, tours, workshops, exhibitions, and other live experiences. The platform includes event discovery, authentication, ticket booking, seat selection, payment processing, organizer tools, attendee management, admin moderation, QR ticket scanning, and multilingual support.",
+      "The platform also provides organizers with event creation and editing tools, ticket tiers, media management, seatmap configuration, attendee analytics, check-in workflows, and QR-based ticket validation. Its frontend uses a modern responsive interface with multilingual support, dark mode, animations, PWA capabilities, and real backend API integration.",
     ],
     problem:
-      "Traditional auction platforms lack engagement features and transparent bidding processes that modern collectors expect.",
+      "Event discovery and ticketing often require separate tools for browsing events, booking seats, processing payments, managing attendees, and validating tickets.",
     solution:
-      "Built a collector-focused auction platform with real-time bidding, detailed provenance tracking, and community features to enhance trust and engagement.",
+      "Built an integrated event marketplace with public event discovery, authenticated booking and payment flows, configurable seatmaps, organizer dashboards, admin moderation, attendee management, and QR-based check-in.",
     impact:
-      "Created a more transparent and engaging auction experience that builds trust between buyers and sellers in collectible markets.",
-    role: "Backend developer responsible for bidding systems, real-time updates, and data integrity.",
+      "Created a unified experience for attendees, organizers, and administrators while supporting real API-backed commerce flows, multilingual navigation, digital tickets, and operational event management.",
+    role: "Frontend developer responsible for the Next.js application, API integration, authentication flows, booking and payment UX, seatmap tooling, organizer dashboards, and ticket validation interfaces.",
     metrics: [
       {
-        label: "Bid Transparency Score",
-        value: "9.4/10",
+        label: "Supported Languages",
+        value: "8",
       },
       {
-        label: "Average Auction Engagement",
-        value: "4.2x industry standard",
+        label: "User Roles",
+        value: "5",
       },
       {
-        label: "Collector Retention",
-        value: "87%",
+        label: "Seatmap Experiences",
+        value: "2D and 3D",
       },
     ],
-    note: "Working with collectors showed me how important trust and provenance are in this market—it influenced how we designed our data models and verification flows.",
-    features: ["Real-time Bidding", "Collector Profiles", "Auction History", "Modern Dark UI"],
-    tech: ["Java", "Javalin", "Next.js", "Tailwind"],
-    cover: "/images/bidbary/1.webp",
-    images: ["/images/bidbary/1.webp", "/images/bidbary/2.webp"],
+    note: "BidBary combines marketplace, commerce, and event-operations workflows in one product. The most interesting challenge was keeping discovery, booking, payments, seat availability, organizer tools, and check-in flows consistent across different user roles.",
+    features: [
+      "Event Discovery",
+      "Ticket Booking",
+      "Seatmap Builder",
+      "Payment Processing",
+      "Organizer Dashboards",
+      "QR Ticket Check-in",
+      "Admin Moderation",
+      "Multilingual Support",
+    ],
+    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Three.js", "Framer Motion"],
+    cover: "/images/bidbary/1.png",
+    images: ["/images/bidbary/1.png", "/images/bidbary/2.png", "/images/bidbary/3.png", "/images/bidbary/4.png", "/images/bidbary/5.png", "/images/bidbary/6.png", "/images/bidbary/7.png", "/images/bidbary/8.png", "/images/bidbary/9.png", "/images/bidbary/10.png"],
     liveUrl: "https://bidbary.me",
-    githubUrl: "",
+    githubUrl: "https://github.com/senanqulamov/BidBary",
     colors: ["#c084fc", "#f472b6"],
+    yearRange: "2025 – Present",
+    shortDescription:
+      "Full-featured event platform for discovering, booking, hosting, and managing live experiences.",
+    longDescription:
+      "BidBary is a modern event platform that connects attendees with concerts, auctions, parties, tours, workshops, exhibitions, and other live experiences. The platform includes event discovery, authentication, ticket booking, seat selection, payment processing, organizer tools, attendee management, admin moderation, QR ticket scanning, and multilingual support.",
+    description: "Event discovery, ticketing, booking, organizer management, payments, and seatmap tooling.",
+    blog: "<p>BidBary is an all-in-one event platform built for discovering, booking, hosting, and managing live experiences. Attendees can browse events, save favorites, reserve seats, complete payments, and access digital tickets.</p><p>The platform also provides organizers with event creation and editing tools, ticket tiers, media management, seatmap configuration, attendee analytics, check-in workflows, and QR-based ticket validation. Its frontend uses a modern responsive interface with multilingual support, dark mode, animations, PWA capabilities, and real backend API integration.</p>",
+    techTags: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Three.js", "Framer Motion"],
+    technologies: [
+      "Next.js 16",
+      "React 19",
+      "TypeScript",
+      "Tailwind CSS 4",
+      "Radix UI",
+      "Framer Motion",
+      "Three.js",
+      "React Three Fiber",
+      "Konva",
+      "Next-intl",
+      "JWT",
+    ],
+    personalNote:
+      "BidBary combines marketplace, commerce, and event-operations workflows in one product. The most interesting challenge was keeping discovery, booking, payments, seat availability, organizer tools, and check-in flows consistent across different user roles.",
+    category: "Startups",
+    featured: false,
+    featuredOrder: 11,
+    date: "2025 - Present",
   },
   {
     slug: "scmai",

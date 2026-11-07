@@ -1,5 +1,22 @@
 // Keys are the English text exactly as it appears on the site.
 const az: Record<string, string> = {
+  "Founder and CEO of BidBary, a modern event discovery and ticketing platform.":
+    "BidBary-nin təsisçisi və CEO-su, müasir tədbir kəşfi və bilet platforması.",
+  "Discover live experiences on bidbary.me": "bidbary.me-də canlı təcrübələri kəşf edin",
+  "A modern event platform for discovering, booking, hosting, and managing live experiences. Find events, choose seats, pay securely, and keep every ticket in one place.":
+    "Canlı təcrübələri kəşf etmək, bron etmək, keçirmək və idarə etmək üçün müasir tədbir platforması. Tədbirləri tapın, yerləri seçin, təhlükəsiz ödəyin və bütün biletləri bir yerdə saxlayın.",
+  "Choose ticket tiers and reserve your place": "Bilet kateqoriyalarını seçin və yerinizi bron edin",
+  "Join live bids with verified access and clear rules":
+    "Təsdiqlənmiş giriş və aydın qaydalarla canlı təkliflərə qoşulun",
+  Parties: "Partilər",
+  "Manage invitations, tickets, and attendee lists":
+    "Dəvətnamələri, biletləri və iştirakçı siyahılarını idarə edin",
+  "Book by capacity with digital tickets and check-in":
+    "Tutuma görə bron edin, rəqəmsal biletlərdən və qeydiyyatdan istifadə edin",
+  "Reserve seats, manage applications, and validate entry":
+    "Yerləri bron edin, müraciətləri idarə edin və girişi yoxlayın",
+  "Bring your events, tickets, attendees, and check-in workflows to BidBary.":
+    "Tədbirlərinizi, biletlərinizi, iştirakçılarınızı və qeydiyyat proseslərinizi BidBary-yə gətirin.",
   "Available from November": "Noyabrdan əlçatanam",
   "Start a project": "Layihəyə başla",
   Menu: "Menyu",
@@ -642,29 +659,29 @@ const az: Record<string, string> = {
   "PLACEHOLDER — in the room": "YER TUTUCU — otaqda",
   heroIntro:
     "Bakıdan mühəndis. <b>PMIS-də texniki rəhbər</b>, <b>BidBary</b>-nin təsisçisi və yeddi il terapevt. İstifadə edəcək insanlar üçün proqram təminatı qururam.",
-  "Settings": "Ayarlar",
+  Settings: "Ayarlar",
   "What's new": "Yeniliklər",
   "Latest project": "Son layihə",
   "New essay": "Yeni esse",
   "From AZN": "AZN-dən",
-  "Latest": "Son",
+  Latest: "Son",
   "New:": "Yeni:",
-  "Appearance": "Görünüş",
-  "Auto": "Avto",
+  Appearance: "Görünüş",
+  Auto: "Avto",
   "Sound and motion": "Səs və hərəkət",
-  "Sound": "Səs",
-  "Motion": "Hərəkət",
-  "On": "Açıq",
-  "Off": "Bağlı",
-  "Full": "Tam",
-  "Calm": "Sakit",
+  Sound: "Səs",
+  Motion: "Hərəkət",
+  On: "Açıq",
+  Off: "Bağlı",
+  Full: "Tam",
+  Calm: "Sakit",
   "About this site": "Bu sayt haqqında",
   "Portfolio · 2026 edition": "Portfolio · 2026 buraxılışı",
   "Designed and built by Senan in Baku.": "Bakıda Sənan tərəfindən dizayn edilib və qurulub.",
   "Real-time chrome, rendered on your phone.": "Real vaxtda xrom, telefonunuzda çəkilir.",
   "Search the site": "Saytda axtar",
-  "Page": "Səhifə",
-  "Essay": "Esse",
+  Page: "Səhifə",
+  Essay: "Esse",
 };
 
 export default az;

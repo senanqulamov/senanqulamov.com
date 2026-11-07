@@ -39,9 +39,9 @@ export const essays: Essay[] = [
   },
   {
     slug: "bidbary-auction-platform-innovation",
-    title: "BidBary: The Future of Digital Auctions",
+    title: "BidBary: Building Better Live Experiences",
     excerpt:
-      "From concept to execution: How we built BidBary to solve trust and transparency issues in digital auction platforms.",
+      "How BidBary brings discovery, ticketing, seat selection, payments, and event operations into one modern platform.",
     date: "2024-12-10",
     minutes: 12,
     tags: ["Startup"],

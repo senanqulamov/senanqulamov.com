@@ -4,7 +4,7 @@ export const experiments: { key: ExperimentKey; title: string; text: string; inP
   {
     key: "sql",
     title: "SQL playground",
-    text: "A real SQLite database running in your browser, filled with a BidBary-style auction dataset. Write queries, read the plan, chart the result.",
+    text: "A real SQLite database running in your browser, filled with a BidBary-style event and ticketing dataset. Write queries, read the plan, chart the result.",
     inProduction: "PostgreSQL with partial indexes on live lots, read replicas for analytics.",
   },
   {

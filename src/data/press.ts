@@ -7,7 +7,7 @@ export const bios: { length: string; text: string }[] = [
   },
   {
     length: "Medium",
-    text: "Senan Qulamov is a software engineer, tech lead and founder based in Baku, Azerbaijan. He leads engineering at PMIS and is building BidBary, a platform for auctions, concerts, private dinners, tours and workshops. Alongside engineering, he spent seven years as a therapist, which shapes how he leads teams and designs products.",
+    text: "Senan Qulamov is a software engineer, tech lead and founder based in Baku, Azerbaijan. He leads engineering at PMIS and is building BidBary, an event discovery and ticketing platform for concerts, auctions, parties, tours, workshops, exhibitions, and other live experiences. Alongside engineering, he spent seven years as a therapist, which shapes how he leads teams and designs products.",
   },
   {
     length: "Long",

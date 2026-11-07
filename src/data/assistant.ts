@@ -148,9 +148,9 @@ export const Brain = (() => {
       a: (L: Lang) =>
         A(
           X(
-            "BidBary is Senan's company: one platform for every way people gather. Auctions, concerts, private dinners, tours and workshops, each with its own rules for pricing, access and who gets in.",
-            "BidBary Senanın şirkətidir: insanların bir araya gəldiyi hər format üçün bir platforma. Hərraclar, konsertlər, özəl şam yeməkləri, turlar və emalatxanalar, hər birinin qiymət, giriş və iştirak qaydaları ilə.",
-            "BidBary — компания Сенана: одна платформа для всех способов собираться вместе. Аукционы, концерты, частные ужины, туры и мастер-классы, у каждого свои правила цены, доступа и участия.",
+            "BidBary is Senan's event discovery and ticketing platform. It brings concerts, auctions, parties, tours, workshops, exhibitions, and other live experiences together with booking, seat selection, payments, organizer tools, and QR ticket check-in.",
+            "BidBary Senanın tədbir kəşfi və bilet platformasıdır. Konsertləri, hərracları, partiləri, turları, emalatxanaları, sərgiləri və digər canlı təcrübələri bron, yer seçimi, ödəniş, təşkilatçı alətləri və QR bilet yoxlaması ilə bir araya gətirir.",
+            "BidBary — платформа Сенана для поиска событий и продажи билетов. Она объединяет концерты, аукционы, вечеринки, туры, мастер-классы, выставки и другие живые события с бронированием, выбором мест, оплатой, инструментами организатора и QR-проверкой билетов.",
           )(L),
           { acts: [ln("bidbary", "/work/bidbary", L), ["bidbary.me", "https://bidbary.me"]] },
         ),
@@ -311,7 +311,7 @@ export const Brain = (() => {
             list: [
               "BidBary — " +
                 X(
-                  "events and auctions platform",
+                  "event discovery and ticketing platform",
                   "tədbir və hərrac platforması",
                   "платформа событий и аукционов",
                 )(L),
@@ -339,9 +339,9 @@ export const Brain = (() => {
       a: (L: Lang) =>
         A(
           X(
-            "Yes: BidBary (events and auctions), AllRent (rentals) and NeoSphere (a gig and union hub). Marketplaces start from AZN 7,000 and usually take 12 to 20 weeks.",
-            "Bəli: BidBary (tədbir və hərraclar), AllRent (icarə) və NeoSphere (gig və həmkarlar mərkəzi). Marketpleyslər AZN 7,000-dən başlayır və adətən 12-20 həftə çəkir.",
-            "Да: BidBary (события и аукционы), AllRent (аренда) и NeoSphere (гиг-платформа). Маркетплейсы — от AZN 7,000, обычно 12–20 недель.",
+            "Yes: BidBary (event discovery and ticketing), AllRent (rentals) and NeoSphere (a gig and union hub). Marketplaces start from AZN 7,000 and usually take 12 to 20 weeks.",
+            "Bəli: BidBary (tədbir kəşfi və bilet satışı), AllRent (icarə) və NeoSphere (gig və həmkarlar mərkəzi). Marketpleyslər AZN 7,000-dən başlayır və adətən 12-20 həftə çəkir.",
+            "Да: BidBary (поиск событий и билеты), AllRent (аренда) и NeoSphere (гиг-платформа). Маркетплейсы — от AZN 7,000, обычно 12–20 недель.",
           )(L),
           {
             acts: [
